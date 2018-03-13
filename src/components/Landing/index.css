@@ -1,0 +1,44 @@
+body {
+    padding-top: 54px;
+    background-color: #f2f2f2;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* LOGIN */
+.login {
+    margin-top: 20px;
+}
+
+#login-right-panel {
+    margin-top: 20px;
+    height: 450px;
+    max-width: 350px; 
+    padding: 30px;
+    background-color: #fff;
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+}
+
+@media (max-width: 992px) {
+    #login-img {
+        width: 175px;
+        margin-top: 100px;
+    }
+}
+
+@media (max-width: 550px) {
+    #login-img {
+        width: 100px;
+        margin-top: 100px;
+    }
+}
