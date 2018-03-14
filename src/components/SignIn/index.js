@@ -95,8 +95,8 @@ class SignInForm extends Component {
                                     Sign In
                                 </Button>
                             </FormGroup>
-                            <FormGroup>
-                                {   error && <p> {error.message} </p>   }
+                            <FormGroup>                               
+                               {error && <p style={{ color: 'red' }}> <small>{error.message}</small> </p>}                               
                             </FormGroup>
                         </Form>
                         <PasswordForgetLink />

@@ -44,24 +44,32 @@ class SignUpForm extends Component {
       history,
     } = this.props;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-          
-        db.doCreateUser(authUser.uid, username, email)
-          .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
-            history.push(routes.HOME);
-          })
-          .catch(error => {
-            this.setState(updateByPropertyName('error', error));
-          });
-
-      })
-      .catch(error => {
-        this.setState(updateByPropertyName('error', error));
-      });
-
     event.preventDefault();
+    var self = this;
+    //check if username is taken
+    db.isUsernameAvailable(username)
+        .then(function (res) {
+            auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+                .then(authUser => {
+                    db.doCreateUser(authUser.uid, username, email)
+                        .then(() => {
+                            self.setState(() => ({ ...INITIAL_STATE }));
+                            history.push(routes.HOME);
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            self.setState(updateByPropertyName('error', error));
+                        });
+                })
+                .catch(error => {
+                    //TODO figure out why this is hit everytime
+                    self.setState(updateByPropertyName('error', error));                   
+                });
+        })
+        .catch(e => {
+            alert('This username is already taken')
+            self.setState(updateByPropertyName('error', 'this username is already taken.'));
+        })
   }
 
   render() {
@@ -128,7 +136,7 @@ class SignUpForm extends Component {
                                 <Button disabled={isInvalid} type="submit" style={{ width: '100%' }}>Sign Up</Button>
                             </FormGroup>
                             <FormGroup>
-                                {error && <p>{error.message}</p>}
+                                {error && <p style={{ color: 'red' }}> <small>{error.message}</small> </p>}
                             </FormGroup>
                         </Form>
                         <Button color="link" onClick={() => { window.history.go(-1) }}>Go Back</Button>
