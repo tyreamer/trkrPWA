@@ -53,7 +53,7 @@ class MainFeed extends Component {
         var idx;
 
         for (var i = 0; i < this.state.feedList.length; i++) {
-            if (this.state.feedList[i].id == key) {
+            if (this.state.feedList[i].id === key) {
                 idx = i;
                 break;
             }
@@ -68,7 +68,7 @@ class MainFeed extends Component {
         var list = []
         this.state.feedList.map(item => {
             switch (item.type) {
-                case "treks": list.push(<Row style={{ margin: '0 auto' }}><TrekDetail key={item.id} id={item.id} trekRecord={item.details} navigation={this.props.navigation} handleDeletedTrek={this.removeItem} /></Row>)
+                case "treks": list.push(<Row style={{ marginBottom: 50 }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} navigation={this.props.navigation} handleDeletedTrek={this.removeItem} /></Row>)
                     break;
 
                /* case "resources": list.push(<Card style={{ width: '100%' }} key={item.id}>
