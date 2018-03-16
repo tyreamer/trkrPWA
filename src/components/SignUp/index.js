@@ -39,11 +39,7 @@ class SignUpForm extends Component {
       email,
       passwordOne,
     } = this.state;
-
-    const {
-      history,
-    } = this.props;
-
+      
     event.preventDefault();
     var self = this;
     //check if username is taken
@@ -54,7 +50,7 @@ class SignUpForm extends Component {
                     db.doCreateUser(authUser.uid, username, email)
                         .then(() => {
                             self.setState(() => ({ ...INITIAL_STATE }));
-                            history.push(routes.HOME);
+                            this.props.history.push(routes.HOME);
                         })
                         .catch(error => {
                             console.log(error)

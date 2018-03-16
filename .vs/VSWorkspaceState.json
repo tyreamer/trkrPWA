@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\components",
+    "\\src\\components\\App",
+    "\\src\\components\\Landing",
+    "\\src\\components\\SignIn",
+    "\\src\\components\\SignOut",
+    "\\src\\components\\SignUp",
+    "\\src\\firebase"
+  ],
+  "SelectedNode": "\\src\\firebase\\db.js",
+  "PreviewInSolutionExplorer": false
+}

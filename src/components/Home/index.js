@@ -1,46 +1,46 @@
 import React, { Component } from 'react';
-
+import MainFeed from '../MainFeed'
 import withAuthorization from '../Session/withAuthorization';
-import { db } from '../../firebase';
+import { Form, FormGroup, Input, InputGroup, Container, Row, Col } from 'reactstrap'
 
 class HomePage extends Component {
+
   constructor(props) {
     super(props);
 
     this.state = {
-      users: {}
+        searchText: ''
     };
   }
 
-  componentDidMount() {
-    db.onceGetUsers().then(snapshot =>
-      this.setState(() => ({ users: snapshot.val() }))
-    );
-  }
-
   render() {
-    const { users } = this.state;
-
-    return (
-      <div>
-        <h1>Home</h1>
-        <p>The Home Page is accessible by every signed in user.</p>
-
-        { !!users && <UserList users={users} /> }
-      </div>
-    );
+      console.log(this.state.searchText)
+        return (       
+            <Container style={{ paddingTop: 10 }}>
+                <Row>
+                    <Col xs="12">
+                        <Form>
+                            <FormGroup>
+                                <InputGroup>
+                                    <Input
+                                        onChange={event => this.setState(updateByPropertyName('searchText', event.target.value))}
+                                        value={this.state.searchText}
+                                        type="text"
+                                        placeholder="search" />
+                                </InputGroup>                                
+                            </FormGroup>
+                        </Form>
+                    </Col>
+                </Row>
+                <MainFeed />
+            </Container>
+        );
   }
 }
 
-const UserList = ({ users }) =>
-  <div>
-    <h2>List of Usernames of Users</h2>
-    <p>(Saved on Sign Up in Firebase Database)</p>
-
-    {Object.keys(users).map(key =>
-      <div key={key}>{users[key].username}</div>
-    )}
-  </div>
+const updateByPropertyName = (propertyName, value) => () => ({
+    [propertyName]: value,
+});
 
 const authCondition = (authUser) => !!authUser;
 
