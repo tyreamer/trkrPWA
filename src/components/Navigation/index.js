@@ -1,30 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap'
+import * as firebase from 'firebase'
+import * as FontAwesome from 'react-icons/lib/fa'
 
 import SignOutButton from '../SignOut';
 import * as routes from '../../constants/routes';
 
-const Navigation = (props, { authUser }) =>
-  <div>
-    {   
-        authUser
-        ? <NavigationAuth />
-        : <NavigationNonAuth />
-    }
-  </div>
+const Navigation = (props, { authUser }) => 
+
+    <Container style={{ position: 'fixed', bottom: 0, height: '56px' }}>
+        {
+            authUser
+                ? <NavigationAuth />
+                : <NavigationNonAuth />
+        }
+    </Container>
+
 
 Navigation.contextTypes = {
   authUser: PropTypes.object,
 };
 
-const NavigationAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.HOME}>Home</Link></li>
-    <li><Link to={routes.ACCOUNT}>Account</Link></li>
-    <li><SignOutButton /></li>
-  </ul>
+const NavigationAuth = () =>  
+    <Row>
+        <Col xs="4" style={styles.NavigationStyle}>
+            <Link style={{ color: '#fff' }} to={routes.HOME}>
+                <FontAwesome.FaHome style={styles.IconStyle} />
+            </Link>
+        </Col>
+        <Col xs="4" style={styles.NavigationStyle}>
+            <Link style={{ color: '#fff' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser === null ? '' : firebase.auth().currentUser.displayName } }}>
+                <FontAwesome.FaUser style={styles.IconStyle} />
+            </Link>
+        </Col>
+        <Col xs="4" style={styles.NavigationStyle}>
+            <SignOutButton style={styles.IconStyle} />
+        </Col>
+    </Row>
+
+const styles = {
+    NavigationStyle: {
+        padding: 0, 
+        paddingTop: 10,           
+        textAlign: 'center',
+        height: '56px',    
+        backgroundColor: '#6db5ff',
+        color: '#fff'
+    },
+    IconStyle: {
+        fontSize: '30px'
+    }
+}
 
 const NavigationNonAuth = () => null
 

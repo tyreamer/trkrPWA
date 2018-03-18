@@ -63,7 +63,7 @@ class SignInForm extends Component {
       email === '';
 
     return (
-        <div className="row">
+        <div className="row" style={{ marginTop: 100 }}>
             <div className="center-block">
                 <div className="row">
                     <div className="col-xs-6">

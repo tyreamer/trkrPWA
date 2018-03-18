@@ -1,13 +1,12 @@
 import React from 'react';
+import * as FontAwesome from 'react-icons/lib/fa'
 
 import { auth } from '../../firebase';
 
 const SignOutButton = () =>
-  <button
-    type="button"
-    onClick={auth.doSignOut}
-  >
-    Sign Out
-  </button>
+    <div onClick={auth.doSignOut}>
+        <FontAwesome.FaSignOut  size={30} />
+    </div>
+
 
 export default SignOutButton;

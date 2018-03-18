@@ -22,4 +22,4 @@ export const doPasswordUpdate = (password) =>
 
 //Current User
 export const currentUser = () =>
-    auth().currentUser;
+    auth.currentUser.displayName

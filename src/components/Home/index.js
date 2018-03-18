@@ -6,7 +6,7 @@ import { Form, FormGroup, Input, InputGroup, Container, Row, Col } from 'reactst
 class HomePage extends Component {
 
   constructor(props) {
-    super(props);
+      super(props);
 
     this.state = {
         searchText: ''
@@ -14,9 +14,8 @@ class HomePage extends Component {
   }
 
   render() {
-      console.log(this.state.searchText)
         return (       
-            <Container style={{ paddingTop: 10 }}>
+            <div style={{ paddingTop: 10 }}>
                 <Row>
                     <Col xs="12">
                         <Form>
@@ -33,7 +32,7 @@ class HomePage extends Component {
                     </Col>
                 </Row>
                 <MainFeed />
-            </Container>
+            </div>
         );
   }
 }

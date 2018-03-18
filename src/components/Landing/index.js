@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import {
     Link,
     withRouter,
@@ -7,7 +7,8 @@ import {
 import './index.css';
 import logo from '../../images/logo.png';
 import * as routes from '../../constants/routes';
-import { firebase } from '../../firebase';
+import * as firebase from 'firebase';
+import Spinner from '../Misc/Spinner'
 
 class LandingPage extends Component {
     
@@ -15,19 +16,39 @@ class LandingPage extends Component {
         super(props);
 
         this.state = {
-            authUser: null
+            authUser: null,
+            isAuthenticating: true
         }
     }    
 
-    componentDidMount() {
-        firebase.auth.onAuthStateChanged(authUser => {
-            authUser
-                ? this.setState(() => ({ authUser }))
-                : this.setState(() => ({ authUser: null }));
+    componentDidMount() {        
+        this.authUser().then((user) => {
+            this.setState({ isAuthenticating: false });
+        }, (error) => {
+            this.setState({ isAuthenticating: false });
+            console.log(error);
+        });
+    }
+
+    authUser() {
+        var self = this;
+        return new Promise(function (resolve, reject) {
+            firebase.auth().onAuthStateChanged(function (authUser) {
+                if (authUser) {
+                    self.setState(() => ({ authUser }))
+                    resolve(authUser);
+                } else {
+                    self.setState(() => ({ authUser: null }))
+                    reject('User not logged in');
+                }
+            });
         });
     }
     
     render() {
+
+        if (this.state.isAuthenticating)
+            return (<div style={{ display: 'flex', justifyContent: 'center' }}> <Spinner /></div>);
 
         //If we're logged in, go to home page
         if (this.state.authUser != null) {
@@ -35,33 +56,30 @@ class LandingPage extends Component {
         }
 
         return (
-            <div className="row">
+            <Row style={{marginTop: 100}}>
                 <div className="center-block">
-                    <div className="row">
-                        <div className="col-xs-6">
+                    <Row>
+                        <Col xs="auto">
                             <img id="login-img" src={logo} alt="" />
-                        </div>
-                        <div className="col-xs-6" id="login-right-panel">
-                            <div className="row">
+                        </Col>
+                        <Col xs="6" id="login-right-panel">
+                            <Row>
                                 <h1 className="mt-5">Trekker</h1>
                                 <p className="lead">Sign up to start discovering new places and sharing trips of your own.</p>
-                            </div>
-                            <div className="row">
+                            </Row>
+                            <Row>
                                 <Link to={routes.SIGN_IN} style={{ color: '#fff', width: '100%' }}>
                                     <Button color="primary" style={{ width: '100%' }}>Login</Button>
                                 </Link>
-                            </div>
+                            </Row>
                             <hr />
-                            <div className="row">
-                                <p>Don't have an account?</p> &ensp; <Link to={routes.SIGN_UP}>Sign up</Link>
-                            </div>
-                            <div className="row">
-                                <Link to={routes.PASSWORD_FORGET}>Forgot password?</Link>
-                            </div>
-                        </div>
-                    </div>
+                            <Row>
+                                <p>Don't have an account? <Link to={routes.SIGN_UP}>Sign up</Link></p>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
-            </div>
+            </Row>
         );
     } 
 }

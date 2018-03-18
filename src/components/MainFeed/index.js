@@ -68,7 +68,7 @@ class MainFeed extends Component {
         var list = []
         this.state.feedList.map(item => {
             switch (item.type) {
-                case "treks": list.push(<Row style={{ marginBottom: 50 }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} navigation={this.props.navigation} handleDeletedTrek={this.removeItem} /></Row>)
+                case "treks": list.push(<div style={{ display: 'flex', justifyContent: 'center', marginBottom: 50 }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} handleDeletedTrek={this.removeItem} /></div>)
                     break;
 
                /* case "resources": list.push(<Card style={{ width: '100%' }} key={item.id}>

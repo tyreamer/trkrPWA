@@ -4,12 +4,17 @@ import { db } from '../../firebase';
 import * as FontAwesome from 'react-icons/lib/fa'
 import StaticGMap from '../StaticGMap'
 import { Container, Row, Col } from 'reactstrap'
+import * as routes from '../../constants/routes';
+import {
+  Link,
+  withRouter,
+} from 'react-router-dom';
 
 class TrekDetail extends Component {
 
     constructor(props) {
         super(props)
-        this.deletePost = this.deletePost.bind(this);
+        this.deletePost = this.deletePost.bind(this);        
     }
 
     componentWillMount() {  
@@ -58,7 +63,7 @@ class TrekDetail extends Component {
         }
 
         return ( 
-            <Col xs="12" sm={{ size: 4, offset: 4 }} onClick={() => this.goToPost()} style={{ width: 300 }}> 
+            <Col xs="12" sm={{ size: 6 }} lg={{size: 4}} onClick={() => this.goToPost()} style={{ width: 300 }}> 
                 <Row style={{ backgroundColor: '#6db5ff', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15  }}>
                     <Col xs="12">
                         <h3><b>{this.props.trekRecord.title}</b></h3>                            
@@ -101,7 +106,7 @@ class TrekDetail extends Component {
                             <Col xs="12">
                                 <p style={{ textAlign: 'right', lineHeight: .9 }}
                                     onClick={() => {
-                                    //  this.props.navigation.navigate('UserProfile', { user: this.props.trekRecord.user, navigation: this.props.navigation })
+                                        this.props.history.push({ pathname: routes.PROFILE, state: { user: this.props.trekRecord.displayName == null ? '' : this.props.trekRecord.displayName } })
                                 }}>
                                     <b>{this.props.trekRecord.displayName}</b>
                                     <br/>
@@ -127,4 +132,4 @@ const updateByPropertyName = (propertyName, value) => () => ({
 
 const authCondition = (authUser) => !!authUser;
 
-export default TrekDetail;
+export default withRouter(TrekDetail);
