@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import {    withRouter    } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import withAuthorization from '../Session/withAuthorization'
 import HeaderBar from './HeaderBar'
@@ -12,7 +11,6 @@ class ProfilePage extends Component {
         return (
             <Container>
                 <HeaderBar />  
-                <hr />
                 <MainProfile />                
             </Container>
         );

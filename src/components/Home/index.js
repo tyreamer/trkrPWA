@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MainFeed from '../MainFeed'
 import withAuthorization from '../Session/withAuthorization';
-import { Form, FormGroup, Input, InputGroup, Container, Row, Col } from 'reactstrap'
+import { Form, FormGroup, Input, InputGroup, Row, Col } from 'reactstrap'
 
 class HomePage extends Component {
 
@@ -17,7 +17,7 @@ class HomePage extends Component {
         return (       
             <div style={{ paddingTop: 10 }}>
                 <Row>
-                    <Col xs="12">
+                    <Col xs={{size: 10, offset: 1}}>
                         <Form>
                             <FormGroup>
                                 <InputGroup>

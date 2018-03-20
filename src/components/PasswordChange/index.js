@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
 
 import { auth } from '../../firebase';
 
@@ -45,25 +46,32 @@ class PasswordChangeForm extends Component {
       passwordOne === '';
 
     return (
-        <form onSubmit={this.onSubmit} style={{ marginTop: 100 }}>
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
-          type="password"
-          placeholder="New Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm New Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
-
-        { error && <p>{error.message}</p> }
-      </form>
+        <Form onSubmit={this.onSubmit} style={{ marginTop: 100 }}>
+            <FormGroup>
+                <Input
+                    value={passwordOne}
+                    onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
+                    type="password"
+                    placeholder="New Password"
+                />
+            </FormGroup>
+            <FormGroup>
+                <Input
+                  value={passwordTwo}
+                  onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
+                  type="password"
+                  placeholder="Confirm New Password"
+                />
+            </FormGroup>
+            <FormGroup>
+                <Button disabled={isInvalid} type="submit">
+                  Reset My Password
+                </Button>
+            </FormGroup>
+            <FormGroup>
+                {error && <p>{error.message}</p>}
+            </FormGroup>
+        </Form>
     );
   }
 }

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
 import withAuthorization from '../Session/withAuthorization';
-import { Container, Row } from 'reactstrap'
+import { Container, Col, Row } from 'reactstrap'
 import TrekDetail from '../TrekDetail'
+import TipDetail from '../TipDetail'
+import ResourceDetail from '../ResourceDetail'
 import { db } from '../../firebase';
+import * as FontAwesome from 'react-icons/lib/fa'
 
 class MainFeed extends Component {
 
@@ -65,25 +68,17 @@ class MainFeed extends Component {
     }
 
     createFeed() {
-        var list = []
-        this.state.feedList.map(item => {
+        var list=[]
+        this.state.feedList.forEach(item => {
             switch (item.type) {
                 case "treks": list.push(<div style={{ display: 'flex', justifyContent: 'center', marginBottom: 50 }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} handleDeletedTrek={this.removeItem} /></div>)
                     break;
 
-               /* case "resources": list.push(<Card style={{ width: '100%' }} key={item.id}>
-                    <CardItem button onPress={() => { Linking.openURL(item.details.link) }}>
-                        <View style={{ flexDirection: 'column', alignSelf: 'flex-start', width: '90%' }}>
-                            <Text style={{ fontWeight: "bold" }}>{item.details.resourceTitle}</Text>
-                            <Text note>{item.details.resourceSummary}</Text>
-                        </View>
-                        <EvilIcons style={{ color: 'gray', position: 'absolute', right: 5 }} size={25} name="external-link" />
-                    </CardItem>
-                </Card>)
+                case "resources": list.push(<ResourceDetail key={item.id} resource={item.details} handleDeletedResource={this.removeItem} />)
                     break;
 
-                case "tips": list.push(<TipDetail key={item.id} id={item.id} tip={item.details} navigation={this.props.navigation} handleDeletedTip={this.removeItem} />)
-                    break;*/
+                case "tips": list.push(<TipDetail key={item.id} id={item.id} tip={item.details} handleDeletedTip={this.removeItem} />)
+                    break;
 
                 default:
                     break;
@@ -94,17 +89,11 @@ class MainFeed extends Component {
     }
 
     render() {
-        return (       
-            <Container style={{ paddingTop: 10 }}>
-                {this.createFeed()}
-            </Container>
-        );
+        return (<Container style={{ paddingTop: 10 }}>
+                        {this.createFeed()}
+                    </Container>);
     }
 }
-
-const updateByPropertyName = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
 
 const authCondition = (authUser) => !!authUser;
 

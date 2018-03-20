@@ -5,10 +5,7 @@ import * as FontAwesome from 'react-icons/lib/fa'
 import StaticGMap from '../StaticGMap'
 import { Container, Row, Col } from 'reactstrap'
 import * as routes from '../../constants/routes';
-import {
-  Link,
-  withRouter,
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class TrekDetail extends Component {
 
@@ -125,11 +122,5 @@ class TrekDetail extends Component {
         );
     }
 }
-
-const updateByPropertyName = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
-
-const authCondition = (authUser) => !!authUser;
 
 export default withRouter(TrekDetail);

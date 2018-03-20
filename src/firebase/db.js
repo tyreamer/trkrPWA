@@ -29,6 +29,14 @@ export const isUsernameAvailable = (username) => {
     })
 }
 
+export const updateUserPhoto = (username, url) => {
+    return new Promise(function (resolve, reject) {        
+        db.ref(`users`).child(username).update({
+            photo: url
+        })
+    })
+}
+
 export const onceGetTreks = () => 
     db.ref('/treks').once("value");
 

@@ -26,12 +26,12 @@ Navigation.contextTypes = {
 const NavigationAuth = () =>  
     <Row>
         <Col xs="4" style={styles.NavigationStyle}>
-            <Link style={{ color: '#fff' }} to={routes.HOME}>
+            <Link style={{ color: 'lightgrey' }} to={routes.HOME}>
                 <FontAwesome.FaHome style={styles.IconStyle} />
             </Link>
         </Col>
         <Col xs="4" style={styles.NavigationStyle}>
-            <Link style={{ color: '#fff' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser === null ? '' : firebase.auth().currentUser.displayName } }}>
+            <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser === null ? '' : firebase.auth().currentUser.displayName } }}>
                 <FontAwesome.FaUser style={styles.IconStyle} />
             </Link>
         </Col>
@@ -46,8 +46,8 @@ const styles = {
         paddingTop: 10,           
         textAlign: 'center',
         height: '56px',    
-        backgroundColor: '#6db5ff',
-        color: '#fff'
+        backgroundColor: '#fff',
+        color: 'lightgrey'
     },
     IconStyle: {
         fontSize: '30px'

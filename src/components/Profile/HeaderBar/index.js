@@ -18,24 +18,36 @@ class HeaderBar extends Component {
     }
 
     signOut() {
-        console.log('here')
-        firebase.auth().signOut()
-            .then(() => {
-                this.props.history.push(routes.LANDING)
-            })
-            .catch((e) => { console.log('Sign-Out Exception: ' + e) })
+        if (window.confirm('Are you sure you want to sign out?')) {
+            firebase.auth().signOut()
+                .then(() => {
+                    this.props.history.push(routes.LANDING)
+                })
+                .catch((e) => { console.log('Sign-Out Exception: ' + e) })
+        }       
     }
 
     render() {        
         return (
-            <Row style={{ backgroundColor: '#fff' }}>
-                <Col xs="9">
-                    <h5 style={{ marginLeft: 5, marginTop: 10 }}><b> {this.props.location.state.user}</b></h5>
+            <Row style={{ backgroundColor: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 5px 2px -2px #f8f8f8' }}>
+                <Col xs="8">
+                    <h5 style={{ marginLeft: 5 }}><b> {this.props.location.state.user}</b></h5>
                 </Col>
-                <Col xs="3">
-                    <div onClick={() => { this.signOut() }} style={{ marginTop: 10, float: 'right' }}>
-                        <FontAwesome.FaSignOut size={30} />
-                    </div>
+                <Col xs="4" style={{paddingRight: 0 }}>                    
+                    {
+                        firebase.auth().currentUser.displayName === this.props.location.state.user
+                            ?
+                            <div>
+                                <div onClick={() => { this.signOut() }} style={{ float: 'right', display: 'inline' }}>
+                                    <FontAwesome.FaSignOut size={30} />
+                                </div>
+                                <div onClick={() => { this.props.history.push(routes.ACCOUNT) }} style={{ float: 'right', display: 'inline', paddingRight: 15 }}>
+                                    <FontAwesome.FaCog size={30} />
+                                </div>
+                            </div>
+                        :
+                        null
+                    }
                 </Col>
             </Row>
         );
