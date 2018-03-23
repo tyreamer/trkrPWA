@@ -36,6 +36,7 @@ class LandingPage extends Component {
             firebase.auth().onAuthStateChanged(function (authUser) {
                 if (authUser) {
                     self.setState(() => ({ authUser }))
+                    self.props.history.push(routes.HOME);
                     resolve(authUser);
                 } else {
                     self.setState(() => ({ authUser: null }))

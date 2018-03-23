@@ -18,7 +18,6 @@ class TipDetail extends Component {
     }
     
     deleteTip(key) {
-        var updates = {};
         var self = this;
 
         //remove from posts
@@ -54,7 +53,7 @@ class TipDetail extends Component {
     }
 
     renderEditable() {
-        if (this.props.tip.user == firebase.auth().currentUser.displayName) {
+        if (this.props.tip.user === firebase.auth().currentUser.displayName) {
             return <FontAwesome.FaMinusCircle size={20} name="ios-remove-circle-outline" style={{ color: 'lightgrey' }} onClick={() => { if (window.confirm('Do you want to delete this tip??')) { this.deleteTip(this.props.id) } }}/>               
         }
     }

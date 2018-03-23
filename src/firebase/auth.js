@@ -23,3 +23,7 @@ export const doPasswordUpdate = (password) =>
 //Current User
 export const currentUser = () =>
     auth.currentUser.displayName
+
+//Update Username
+export const doUsernameUpdate = (username) =>
+    auth.currentUser.updateProfile({ displayName: username });

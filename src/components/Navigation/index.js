@@ -23,24 +23,33 @@ Navigation.contextTypes = {
   authUser: PropTypes.object,
 };
 
-const NavigationAuth = () =>  
-    <Row>
-        <Col xs="4" style={styles.NavigationStyle}>
-            <Link style={{ color: 'lightgrey' }} to={routes.HOME}>
-                <FontAwesome.FaHome style={styles.IconStyle} />
-            </Link>
-        </Col>
-        <Col xs="4" style={styles.NavigationStyle}>
-            <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.CREATE }}>
-                <FontAwesome.FaPlusSquare style={styles.IconStyle} />
-            </Link>
-        </Col>
-        <Col xs="4" style={styles.NavigationStyle}>
-            <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser === null ? '' : firebase.auth().currentUser.displayName } }}>
-                <FontAwesome.FaUser style={styles.IconStyle} />
-            </Link>
-        </Col>
-    </Row>
+const NavigationAuth = () => {
+
+    return (
+        <Row>
+            <Col xs="4" style={styles.NavigationStyle}>
+                <Link style={{ color: 'lightgrey' }} to={routes.HOME}>
+                    <FontAwesome.FaHome style={styles.IconStyle} />
+                </Link>
+            </Col>
+            <Col xs="4" style={styles.NavigationStyle}>
+                <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.CREATE }}>
+                    <FontAwesome.FaPlusSquare style={styles.IconStyle} />
+                </Link>
+            </Col>
+            <Col xs="4" style={styles.NavigationStyle}>
+                {
+                    firebase.auth().currentUser !== null
+                    ?
+                        <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser.displayName }  }}>
+                        <FontAwesome.FaUser style={styles.IconStyle} />
+                    </Link>
+                    :
+                    null
+                }                
+            </Col>
+        </Row>)
+}
 
 const styles = {
     NavigationStyle: {

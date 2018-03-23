@@ -21,8 +21,9 @@ class CreateTipPage extends Component {
     }
 
     insertPost() {
-        
-        if (this.state.tipTitle == '' || this.state.tipText == '') {
+
+        //TODO better validation
+        if (this.state.tipTitle === '' || this.state.tipText === '') {
             alert('Make sure to provide a title and some text before saving')
             return;
         }
@@ -100,7 +101,7 @@ class CreateTipPage extends Component {
     }
 
     render() {
-        console.log(this.state.currentTag)
+
         return (
             <Container>
                 <Row style={{ backgroundColor: '#6db5ff' }}>
@@ -132,12 +133,15 @@ class CreateTipPage extends Component {
                                     style={[styles.HeaderInputStyle, { color: '#fff', textDecorationLine: 'none' }]}
                                 />                                 
                                 {
-                                    this.state.currentTag != ''
+                                    this.state.currentTag !== ''
                                     ? <FontAwesome.FaPlusSquare
-                                        onClick={() => {
-                                            var ct = this.state.tipTags;
-                                            ct.push(this.state.currentTag)
-                                            this.setState({ tipTags: ct, currentTag: '' })
+                                            onClick={() => {
+                                                if (this.state.tipTags.indexOf(this.state.currentTag) == -1) {
+                                                    var ct = this.state.tipTags;
+                                                    ct.push(this.state.currentTag)
+                                                    this.setState({ trekTags: ct })
+                                                }
+                                                this.setState({ currentTag: '' })
                                             }}>
                                         style={{ fontWeight: 'bold', color: 'grey' }}>
                                         </FontAwesome.FaPlusSquare>
@@ -145,7 +149,7 @@ class CreateTipPage extends Component {
                                 }        
                             </FormGroup>
                             <FormGroup>
-                                {this.state.tipTags != [] ? this.renderTagList() : null}
+                                {this.state.tipTags !== [] ? this.renderTagList() : null}
                             </FormGroup>
                             <FormGroup>                                    
                                 <Input

@@ -6,7 +6,7 @@ function cleanUsername(username) {
 
 // User API
 
-export const doCreateUser = (id, username, email) => {
+export const doCreateUser = (username, email) => {
     username = cleanUsername(username);
     db.ref(`users/${username}`).set({
         displayName: username,

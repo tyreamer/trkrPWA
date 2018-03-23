@@ -15,7 +15,9 @@
     border-radius: 800px;
 }
 
-.editImg:hover {
+.editImg:hover, 
+.nav-link > svg:hover, 
+#ProfileHeader svg:hover {
     cursor: pointer
 }
 

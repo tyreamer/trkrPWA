@@ -14,3 +14,8 @@ html, body {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+/* Fix for height issue */
+body > #root > div {
+    height: 100%;
+}

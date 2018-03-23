@@ -10,6 +10,8 @@ import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import CreatePage from '../Create';
 import CreateTipPage from '../Create/Tip';
+import CreateTripPage from '../Create/Trip';
+import CreateResourcePage from '../Create/Resource';
 import AccountPage from '../Account';
 import withAuthentication from '../Session/withAuthentication';
 import * as routes from '../../constants/routes';
@@ -29,6 +31,8 @@ const App = () =>
           <Route path={routes.PROFILE} component={() => <ProfilePage />} />
           <Route path={routes.CREATE} component={() => <CreatePage />} />
           <Route path={routes.CREATE_TIP} component={() => <CreateTipPage />} />
+          <Route path={routes.CREATE_TRIP} component={() => <CreateTripPage />} />
+          <Route path={routes.CREATE_RESOURCE} component={() => <CreateResourcePage />} />
           <Navigation />
         </Container>
     </div>

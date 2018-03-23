@@ -18,6 +18,7 @@ class MainProfile extends Component {
 
     constructor(props) {
         super(props);
+
         this.removeTrek = this.removeTrek.bind(this)
         this.toggle = this.toggle.bind(this);
     }
@@ -34,10 +35,14 @@ class MainProfile extends Component {
     
     componentWillMount() {
         var self = this
-         
 
+        if (this.state.user === undefined) {
+            this.setState({ user: firebase.auth().currentUser.displayName  })
+        }
+       
         var myTreks = []
-        if (this.state.user !== undefined) {
+        if (this.state.user !== undefined && this.state.user !== null) {
+            console.log(this.state.user)
             //retrieve posts
             firebase.database().ref('/user-posts').child(this.state.user).once('value')
                 .then(function (snapshot) {
@@ -120,7 +125,14 @@ class MainProfile extends Component {
             })
 
             if (list.length === 0) {
-                return (<p style={{ fontSize: 20, margin: '0 auto' }}>no plans yet!</p>)
+                return (<Container style={{ padding: 75, alignItems: 'center', justifyContent: 'center' }}>
+                    <Row>
+                        <h2 style={{ fontSize: 20, margin: '0 auto' }}><FontAwesome.FaLightbulbO /></h2>
+                    </Row>
+                    <Row>
+                        <p style={{ fontSize: 20, margin: '0 auto' }}>no plans yet!</p>
+                    </Row>
+                </Container>)
             }
             else {
                 return list;
@@ -139,7 +151,14 @@ class MainProfile extends Component {
             })
 
             if (list.length === 0) {
-                return (<p style={{ fontSize: 20, margin: '0 auto' }}>no resources yet!</p>)
+                return (<Container style={{ padding: 75, alignItems: 'center', justifyContent: 'center' }}>
+                    <Row>
+                        <h2 style={{ fontSize: 20, margin: '0 auto' }}><FontAwesome.FaLightbulbO /></h2>
+                    </Row>
+                    <Row>
+                        <p style={{ fontSize: 20, margin: '0 auto' }}>no resources yet!</p>
+                    </Row>
+                </Container>)
             }
             else {
                 return list;
@@ -271,7 +290,7 @@ class MainProfile extends Component {
                     </div>);
 
         return (<div>
-                    <Row style={{ paddingTop: 30 }}> 
+                    <Row style={{ paddingTop: 30 }} id="ProfileHeader"> 
                         <Col xs="3">
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <FontAwesome.FaPlane style={styles.headerIconStyle} />

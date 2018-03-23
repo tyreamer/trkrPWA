@@ -47,10 +47,12 @@ class SignUpForm extends Component {
         .then(function (res) {
             auth.doCreateUserWithEmailAndPassword(email, passwordOne)
                 .then(authUser => {
-                    db.doCreateUser(authUser.uid, username, email)
+                    authUser.updateProfile({ displayName: username })                        
+                    db.doCreateUser(username, email)
                         .then(() => {
                             self.setState(() => ({ ...INITIAL_STATE }));
                             this.props.history.push(routes.HOME);
+                            window.location.reload()
                         })
                         .catch(error => {
                             console.log(error)

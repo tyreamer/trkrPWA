@@ -2,20 +2,16 @@ import React, { Component } from 'react';
 
 import withAuthorization from '../Session/withAuthorization';
 import { Link } from 'react-router-dom'
-import { Container, Col, Row, Button } from 'reactstrap'
+import { Container, Row, Button } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import logo from '../../images/logo.png';
 import * as routes from '../../constants/routes';
 
 class CreatePage extends Component {
-
-    constructor(props) {
-        super(props)
-    }
-
+    
     render() {
         return (
-            <Container>
+            <Container style={{height: '100%'}}>
                 <Row>
                     <img src={logo} alt=""  style={{ height: 200, width: 200, margin: '0 auto' }}/>
                 </Row>

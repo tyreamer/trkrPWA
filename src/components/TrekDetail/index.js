@@ -6,6 +6,7 @@ import StaticGMap from '../StaticGMap'
 import { Container, Row, Col } from 'reactstrap'
 import * as routes from '../../constants/routes';
 import { withRouter } from 'react-router-dom';
+import TagList from '../TagList'
 
 class TrekDetail extends Component {
 
@@ -91,7 +92,7 @@ class TrekDetail extends Component {
                     <Container>
                         <Row>
                             <Col xs="12">
-                                {/* <TagList tags={this.props.trekRecord.trekTags} navigation={this.props.navigation} /> */}
+                                <TagList tags={this.props.trekRecord.trekTags} />
                             </Col>
                         </Row>
                         <Row>
