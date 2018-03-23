@@ -5,3 +5,7 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const PROFILE = '/profile';
+export const CREATE = '/create';
+export const CREATE_TIP = '/create-tip';
+export const CREATE_RESOURCE = '/create-resource';
+export const CREATE_TRIP = '/create-trip';

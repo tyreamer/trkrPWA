@@ -8,6 +8,8 @@ import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn'; 
 import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
+import CreatePage from '../Create';
+import CreateTipPage from '../Create/Tip';
 import AccountPage from '../Account';
 import withAuthentication from '../Session/withAuthentication';
 import * as routes from '../../constants/routes';
@@ -25,6 +27,8 @@ const App = () =>
           <Route exact path={routes.HOME} component={() => <HomePage />} />
           <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
           <Route path={routes.PROFILE} component={() => <ProfilePage />} />
+          <Route path={routes.CREATE} component={() => <CreatePage />} />
+          <Route path={routes.CREATE_TIP} component={() => <CreateTipPage />} />
           <Navigation />
         </Container>
     </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as routes from '../../constants/routes';
 import * as FontAwesome from 'react-icons/lib/fa'
-import { Container, Row, Col, Button } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import { withRouter } from 'react-router-dom';
 import TagList from '../TagList'
 import * as firebase from 'firebase'
@@ -10,7 +10,7 @@ class TipDetail extends Component {
 
     constructor(props) {
         super(props)
-        // this.deletePost=this.deletePost.bind(this);
+        this.deleteTip=this.deleteTip.bind(this);
     }
 
     componentWillMount() {

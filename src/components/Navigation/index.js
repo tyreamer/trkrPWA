@@ -31,12 +31,14 @@ const NavigationAuth = () =>
             </Link>
         </Col>
         <Col xs="4" style={styles.NavigationStyle}>
-            <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser === null ? '' : firebase.auth().currentUser.displayName } }}>
-                <FontAwesome.FaUser style={styles.IconStyle} />
+            <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.CREATE }}>
+                <FontAwesome.FaPlusSquare style={styles.IconStyle} />
             </Link>
         </Col>
         <Col xs="4" style={styles.NavigationStyle}>
-            <SignOutButton style={styles.IconStyle} />
+            <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser === null ? '' : firebase.auth().currentUser.displayName } }}>
+                <FontAwesome.FaUser style={styles.IconStyle} />
+            </Link>
         </Col>
     </Row>
 

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import withAuthorization from '../Session/withAuthorization';
-import { Container, Col, Row } from 'reactstrap'
+import { Container} from 'reactstrap'
 import TrekDetail from '../TrekDetail'
 import TipDetail from '../TipDetail'
 import ResourceDetail from '../ResourceDetail'
 import { db } from '../../firebase';
-import * as FontAwesome from 'react-icons/lib/fa'
 
 class MainFeed extends Component {
 
