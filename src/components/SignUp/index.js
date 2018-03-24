@@ -7,7 +7,7 @@ import {
 import { auth, db } from '../../firebase';
 import * as routes from '../../constants/routes';
 import logo from '../../images/logo.png';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Row, Col, Container } from 'reactstrap';
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -87,61 +87,66 @@ class SignUpForm extends Component {
 
     return (
 
-        <div className="row" style={{marginTop: 100}}>
+        <Container style={{ marginTop: 100 }}>
             <div className="center-block">
-                <div className="row">
-                    <div className="col-xs-6">
-                        <Link to={routes.LANDING}>
-                            <img id="login-img" src={logo} alt="" />
-                        </Link>
-                    </div>
-                    <div className="col-xs-6" id="login-right-panel">
-                        <h2>Sign Up</h2>
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup>
-                                <Input
-                                    value={username}
-                                    onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
-                                    type="text"
-                                    placeholder="Username"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                    value={email}
-                                    onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-                                    type="email"
-                                    placeholder="Email Address"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                    value={passwordOne}
-                                    onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                    value={passwordTwo}
-                                    onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Button disabled={isInvalid} type="submit" style={{ width: '100%' }}>Sign Up</Button>
-                            </FormGroup>
-                            <FormGroup>
-                                {error && <p style={{ color: 'red' }}> <small>{error.message}</small> </p>}
-                            </FormGroup>
-                        </Form>
-                        <Button color="link" onClick={() => { window.history.go(-1) }}>Go Back</Button>
-                    </div>
-                </div>
+                <Row>
+                    <Col xs="auto">
+                        <img id="login-img" src={logo} alt="" />
+                    </Col>
+                    <Col xs="6" id="login-right-panel">
+                        <Row>
+                            <h2>Sign Up</h2>
+                        </Row>
+                        <Row>
+                            <Form onSubmit={this.onSubmit}>
+                                <FormGroup>
+                                    <Input
+                                        value={username}
+                                        onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
+                                        type="text"
+                                        placeholder="Username"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input
+                                        value={email}
+                                        onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+                                        type="email"
+                                        placeholder="Email Address"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input
+                                        value={passwordOne}
+                                        onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
+                                        type="password"
+                                        placeholder="Password"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input
+                                        value={passwordTwo}
+                                        onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
+                                        type="password"
+                                        placeholder="Confirm Password"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button disabled={isInvalid} type="submit" style={{ width: '100%' }}>Sign Up</Button>
+                                </FormGroup>
+                                <FormGroup>
+                                    {error && <p style={{ color: 'red' }}> <small>{error.message}</small> </p>}
+                                </FormGroup>
+                            </Form>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Button color="link" onClick={() => { window.history.go(-1) }}>Go Back</Button>
+                        </Row>
+                    </Col>
+                </Row>
             </div>
-        </div>
+        </Container>                                
     );
   }
 }

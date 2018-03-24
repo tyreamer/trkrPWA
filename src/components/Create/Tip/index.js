@@ -104,10 +104,14 @@ class CreateTipPage extends Component {
 
         return (
             <Container>
-                <Row style={{ backgroundColor: '#6db5ff' }}>
+                <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
                     <Col xs="12">
                         <h3>
-                            <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => { this.props.history.goBack() }} />
+                            <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => {
+                                if (window.confirm('Are you sure you want to go back and cancel your post?')) {
+                                    this.props.history.goBack()
+                                }
+                            }} />
                         </h3>
                     </Col>
                 </Row>
@@ -132,19 +136,18 @@ class CreateTipPage extends Component {
                                     onChange={(currentTag) => { this.setState({ currentTag: currentTag.target.value.replace(' ', '') }) }}
                                     style={[styles.HeaderInputStyle, { color: '#fff', textDecorationLine: 'none' }]}
                                 />                                 
-                                {
+                                {                                   
                                     this.state.currentTag !== ''
-                                    ? <FontAwesome.FaPlusSquare
+                                    ? <FontAwesome.FaPlus
                                             onClick={() => {
-                                                if (this.state.tipTags.indexOf(this.state.currentTag) == -1) {
+                                                if (this.state.tipTags.indexOf(this.state.currentTag) === -1) {
                                                     var ct = this.state.tipTags;
                                                     ct.push(this.state.currentTag)
                                                     this.setState({ trekTags: ct })
                                                 }
                                                 this.setState({ currentTag: '' })
-                                            }}>
-                                        style={{ fontWeight: 'bold', color: 'grey' }}>
-                                        </FontAwesome.FaPlusSquare>
+                                            }}
+                                            style={{ fontWeight: 'bold', color: 'grey'}}/>
                                     : null
                                 }        
                             </FormGroup>
@@ -165,11 +168,11 @@ class CreateTipPage extends Component {
                 </Row>
                 <hr/>
                 <Row>
-                    <Col xs="12">
+                    <Col xs="12" style={{padding: 0}}>
                         <FormGroup>
                             <Button
                                 color="primary"
-                                style={{ float: 'right', width: '100%', textAlign: 'right' }}
+                                style={{ width: '100%', textAlign: 'right' }}
                                 title="Submit"
                                 onClick={() => { this.insertPost() }}>
                                 <h4>

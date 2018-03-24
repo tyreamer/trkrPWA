@@ -12,6 +12,8 @@ class MainFeed extends Component {
     constructor(props) {
         super(props);
 
+        this.removeItem = this.removeItem.bind(this)
+
         this.state = {
             feedList: []
         };

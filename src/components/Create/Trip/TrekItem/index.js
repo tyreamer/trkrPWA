@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap'
 
 const TrekItem = (props) => {
+
     var location = props.stop.description
     //var notes = props.stop.notes
 

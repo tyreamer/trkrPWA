@@ -3,12 +3,14 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\App",
+    "\\src\\components\\Create",
+    "\\src\\components\\Create\\Resource",
+    "\\src\\components\\Create\\Tip",
     "\\src\\components\\Landing",
+    "\\src\\components\\PasswordForget",
     "\\src\\components\\SignIn",
-    "\\src\\components\\SignOut",
-    "\\src\\components\\SignUp",
-    "\\src\\firebase"
+    "\\src\\components\\SignUp"
   ],
+  "SelectedNode": "\\src\\components\\PasswordForget\\index.js",
   "PreviewInSolutionExplorer": false
 }

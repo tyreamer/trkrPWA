@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../images/logo.png';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Container, Row } from 'reactstrap';
 
 const PasswordForgetPage = () =>
   <div>
@@ -49,39 +48,32 @@ class PasswordForgetForm extends Component {
     const isInvalid = email === '';
 
     return (
-        <div className="row" style={{marginTop: 100}}>
-            <div className="center-block">
-                <div className="row">
-                    <div className="col-xs-6">
-                        <Link to={routes.LANDING}>
-                            <img id="login-img" src={logo} alt="" />
-                        </Link>
-                    </div>
-                    <div className="col-xs-6" id="login-right-panel">
-                        <h2>Reset Password</h2>
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup>
-                                <Input
-                                value={this.state.email}
-                                onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-                                type="email"
-                                placeholder="Email Address"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Button disabled={isInvalid} type="submit" style={{ width: '100%' }}>
-                                    Reset My Password
-                                </Button>
-                            </FormGroup>
-                            <FormGroup>
-                                {   error && <p> {error.message} </p>   }
-                            </FormGroup> 
-                        </Form>
-                        <Button color="link" onClick={() => { window.history.go(-1) }}>Go Back</Button>
-                    </div>
+        <Container style={{marginTop: 100}}>
+            <Row>
+                <div style={{padding: 40, margin: '0 auto'}}>
+                    <h2>Reset Password</h2>
+                    <Form onSubmit={this.onSubmit}>
+                        <FormGroup>
+                            <Input
+                            value={this.state.email}
+                            onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+                            type="email"
+                            placeholder="Email Address"
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Button disabled={isInvalid} type="submit" style={{ width: '100%' }}>
+                                Reset My Password
+                            </Button>
+                        </FormGroup>
+                        <FormGroup>
+                            {   error && <p> {error.message} </p>   }
+                        </FormGroup> 
+                    </Form>
+                    <Button color="link" onClick={() => { window.history.go(-1) }}>Go Back</Button>
                 </div>
-            </div>
-        </div>      
+            </Row>
+        </Container>      
     );
   }
 }

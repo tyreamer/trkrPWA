@@ -5,7 +5,8 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import './index.css'
 
 const SignInPage = ({ history }) =>
   <div>
@@ -62,49 +63,54 @@ class SignInForm extends Component {
       password === '' ||
       email === '';
 
-    return (
-        <div className="row" style={{ marginTop: 100 }}>
+    return (           
+        <Row style={{ marginTop: 100 }}>
             <div className="center-block">
-                <div className="row">
-                    <div className="col-xs-6">
-                        <Link to={routes.LANDING}>
-                            <img id="login-img" src={logo} alt="" />
-                        </Link>
-                    </div>
-                    <div className="col-xs-6" id="login-right-panel">
-                        <h2>Sign In</h2>
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup>
-                                <Input
-                                value={email}
-                                onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-                                type="email"
-                                placeholder="Email Address"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                value={password}
-                                onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
-                                type="password"
-                                placeholder="Password"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Button color="primary" disabled={isInvalid} type="submit" style={{ width: '100%' }}>
-                                    Sign In
-                                </Button>
-                            </FormGroup>
-                            <FormGroup>                               
-                               {error && <p style={{ color: 'red' }}> <small>{error.message}</small> </p>}                               
-                            </FormGroup>
-                        </Form>
-                        <PasswordForgetLink />
-                        <SignUpLink />
-                    </div>
-                </div>
+                <Row>
+                    <Col xs="auto">
+                        <img id="login-img" src={logo} alt="" />
+                    </Col>
+                    <Col xs="6" id="login-right-panel">
+                        <Row>
+                            <h2>Sign In</h2>
+                        </Row>
+                        <Row>                            
+                            <Form onSubmit={this.onSubmit}>
+                                <FormGroup>
+                                    <Input
+                                        value={email}
+                                        onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
+                                        type="email"
+                                        placeholder="Email Address"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input
+                                        value={password}
+                                        onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
+                                        type="password"
+                                        placeholder="Password"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button color="primary" disabled={isInvalid} type="submit" style={{ width: '100%' }}>
+                                        Sign In
+                            </Button>
+                                </FormGroup>
+                                <FormGroup>
+                                    {error && <p style={{ color: 'red' }}> <small>{error.message}</small> </p>}
+                                </FormGroup>
+                            </Form>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <PasswordForgetLink />
+                            <SignUpLink />
+                        </Row>
+                    </Col>
+                </Row>
             </div>
-        </div>      
+        </Row>
     );
   }
 }

@@ -61,7 +61,7 @@ class CreateTripPage extends Component {
     }
 
     addStopToDay = (stopNum, stopInfo, dayNum) => {
-        var newStopsArr = this.state.days[dayNum - 1].stops.concat({ key: this.state.days[dayNum - 1].stops.length, "stopName": stopInfo });
+        var newStopsArr = this.state.days[dayNum - 1].stops.concat({ key: this.state.days[dayNum - 1].stops.length, "stopDetails": stopInfo });
 
         var newDaysArr = this.state.days
         newDaysArr[dayNum - 1]["stops"] = newStopsArr
@@ -150,25 +150,18 @@ class CreateTripPage extends Component {
     render() {
  
         return (
-            <div>                
-                <Row style={{ backgroundColor: '#6db5ff', padding: 5 }}>
-                    <Col xs="10">
-                        <FontAwesome.FaChevronLeft
-                            onClick={() => {
+            <Container>                
+                <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
+                    <Col xs="12">
+                        <h3>
+                            <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => {
                                 if (window.confirm('Are you sure you want to go back and cancel your post?')) {
                                     this.props.history.goBack()
                                 }
-                            }}
-                            style={{ color: '#fff', marginTop: '10' }} />
+                            }} />
+                        </h3>
                     </Col>
-                    <Col xs="2">
-                        <Button
-                            style={{ backgroundColor: '#ff5858', float: 'right' }}
-                            onClick={() => { this.insertTrek() }}>
-                            <p style={{ color: '#fff', margin: '0 auto' }}>Save</p>
-                        </Button>
-                    </Col>
-                </Row> 
+                </Row>
                 <br/>
                 <InputGroup>
                     <InputGroupAddon addonType="prepend">
@@ -263,7 +256,25 @@ class CreateTripPage extends Component {
                         </Button>
                     </Col>
                 </Row>
-            </div>
+                <br/>
+                <br />
+                <Row>
+                    <Col xs="12" style={{ padding: 0 }}>
+                        <FormGroup>
+                            <Button
+                                color="primary"
+                                style={{ float: 'right', width: '100%', textAlign: 'right' }}
+                                title="Submit"
+                                onClick={() => { this.insertTrek() }}>
+                                <h4>
+                                    submit post &nbsp;&nbsp;
+                                    <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
+                                </h4>
+                            </Button>
+                        </FormGroup>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }

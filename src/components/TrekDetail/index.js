@@ -3,24 +3,32 @@ import React, { Component } from 'react';
 import { db } from '../../firebase';
 import * as FontAwesome from 'react-icons/lib/fa'
 import StaticGMap from '../StaticGMap'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'reactstrap'
 import * as routes from '../../constants/routes';
 import { withRouter } from 'react-router-dom';
 import TagList from '../TagList'
+import Interactions from '../Interactions'
 
 class TrekDetail extends Component {
 
     constructor(props) {
         super(props)
-        this.deletePost = this.deletePost.bind(this);        
+        this.deletePost = this.deletePost.bind(this);       
+        this.toggle = this.toggle.bind(this);
     }
 
     componentWillMount() {  
-        this.setState({ open: false, record: this.props.id, trek: this.props.trekRecord });    
+        this.setState({ record: this.props.id, trek: this.props.trekRecord, dropdownOpen: false });    
     }
 
     goToPost() {
        // this.props.navigation.navigate('ViewTrek', { trekRecord: this.props.trekRecord, navigation: this.props.navigation })
+    }
+
+    toggle() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
     }
 
     formatNumber(num) {
@@ -36,9 +44,11 @@ class TrekDetail extends Component {
         return 0;
     }
     
-    deletePost(key) {        
-        db.doRemoveTrek(key)
-        this.props.handleDeletedTrek(key);
+    deletePost(key) {
+        if (window.confirm('Are you sure you want to delete this post?')) {
+            db.doRemoveTrek(key)
+            this.props.handleDeletedTrek(key);
+        }        
     }
 
     render() {
@@ -91,6 +101,11 @@ class TrekDetail extends Component {
                 <Row style={{ borderLeft: '1px solid #f8f8f8', borderRight: '1px solid #f8f8f8', borderBottom: '1px solid #f8f8f8' }}>
                     <Container>
                         <Row>
+                            <Col xs="12" style={{ paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
+                                <Interactions id={this.props.id} user={this.props.trekRecord.user} summary={this.props.trekRecord.summary} title={this.props.trekRecord.title} />
+                            </Col>
+                        </Row>
+                        <Row>
                             <Col xs="12">
                                 <TagList tags={this.props.trekRecord.trekTags} />
                             </Col>
@@ -99,9 +114,36 @@ class TrekDetail extends Component {
                             <Col>
                                 {this.props.trekRecord.summary ? <p style={{ paddingTop: 5 }}>{this.props.trekRecord.summary}</p> : null}
                             </Col>
-                        </Row>
+                        </Row>                        
                         <Row>
-                            <Col xs="12">
+                            <Col xs="6">
+                                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} direction="up">
+                                    <DropdownToggle style={{  backgroundColor: '#fff', border: 'none' }}>
+                                        <FontAwesome.FaEllipsisH style={{ color: 'grey' }} />                                        
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem>
+                                            <div onClick={() => this.deletePost(this.props.id)}>
+                                                <h6>                                               
+                                                    <FontAwesome.FaTrash style={{ marginBottom: 5 }}  />
+                                                    &nbsp;
+                                                    Delete Post
+                                                </h6>
+                                            </div>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <div onClick={() => { /*  Share  */ }} >
+                                                <h6>
+                                                    <FontAwesome.FaShareSquare style={{ marginBottom: 5 }}/>                                                
+                                                    &nbsp; 
+                                                    Share
+                                                </h6>
+                                            </div>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </ButtonDropdown>
+                            </Col>
+                            <Col xs="6">
                                 <p style={{ textAlign: 'right', lineHeight: .9 }}
                                     onClick={() => {
                                         this.props.history.push({ pathname: routes.PROFILE, state: { user: this.props.trekRecord.displayName == null ? '' : this.props.trekRecord.displayName } })
@@ -111,12 +153,7 @@ class TrekDetail extends Component {
                                     <small>{date}</small>
                                 </p> 
                             </Col>
-                        </Row>
-                        <Row>
-                            <Col xs="12" style={{ paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
-                                {/*<Interactions handleDelete={this.deletePost} id={this.props.id} user={this.props.trekRecord.user} summary={this.props.trekRecord.summary} title={this.props.trekRecord.title} />*/}
-                            </Col>
-                        </Row>
+                        </Row>                        
                     </Container>
                   </Row>
             </Col>

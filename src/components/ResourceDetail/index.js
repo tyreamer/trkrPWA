@@ -49,16 +49,18 @@ class ResourceDetail extends Component {
         
         var hasSummary = (item.resourceSummary !== undefined && item.resourceSummary.trim() !== "")
 
-        return ( <Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} style={{ width: '100%', marginBottom: 50, }} key={item.link + item.datePosted}>
-                    <Row style={{ backgroundColor: '#ff8142', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomLeftRadius: hasSummary ? null : 15, borderBottomRightRadius: hasSummary ? null : 15 }} onClick={() => { window.open(item.link) }}>
-                        <Col xs="10">
-                            <h5><b>{item.resourceTitle}</b></h5>
-                        </Col>
-                        <Col xs="2">
-                            <h5><FontAwesome.FaExternalLink /></h5>
-                        </Col>
-                    </Row>
-                    <Row>
+        return (<Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} style={{ width: '100%', marginBottom: 50, }} key={item.link + item.datePosted}>
+                    <a href={item.link} target="_blank">
+                        <Row style={{ backgroundColor: '#ff8142', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomLeftRadius: hasSummary ? null : 15, borderBottomRightRadius: hasSummary ? null : 15 }} >
+                            <Col xs="10">
+                                <h5><b>{item.resourceTitle}</b></h5>
+                            </Col>
+                            <Col xs="2">
+                                <h5><FontAwesome.FaExternalLink /></h5>
+                            </Col>
+                        </Row>
+                    </a>
+                    <Row style={{color: '#000'}}>
                         <Col xs="12">
                             <p><small>{hasSummary ? item.resourceSummary : null} </small></p>
                         </Col>

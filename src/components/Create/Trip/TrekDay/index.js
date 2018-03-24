@@ -4,10 +4,17 @@ import { withRouter } from 'react-router-dom';
 import { Container, Col, Row, Button, InputGroup, InputGroupAddon, Input } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import TrekItem from '../TrekItem'
+import PlacesAutocomplete, { geocodeByPlaceId } from 'react-places-autocomplete'
+import classnames from 'classnames'
+import './index.css'
+import * as firebase from 'firebase'
 
 class TrekDay extends Component {
     constructor(props) {
         super(props)
+
+        this.onChange = (text) => { this.setState({ stopTextValue: text }) }
+
         this.state = {
             stops: props.stops,
             day: props.dayNumber,
@@ -18,23 +25,24 @@ class TrekDay extends Component {
     constructStops() {
         if (this.state.stops === null) return;
         if (this.state.stops.length > 0) {
+            console.log(this.state.stops)
             return this.state.stops.map(stop => <TrekItem key={stop.key} stop={stop} />);
         }
     }
 
-    addStop(stopName) {
+    addStop(address) {
         if (this.state.stops === null) return;
-
-        if (stopName != '') {
+        console.log(address)
+        if (address != null) {
             var nextStop = this.state.stops.length > 0 ? this.state.stops[this.state.stops.length - 1]["day"] + 1 : 1;
             var newStopsArr = this.state.stops.concat({
                 "key": nextStop,
-                "description": stopName,
-                "day": this.state.day
+                "description": address,
+                "day": this.state.day,                
             });
 
             this.setState({ stops: newStopsArr, stopTextValue: '' })
-            this.props.handleNewStop(nextStop, stopName, this.state.day)
+            this.props.handleNewStop(nextStop, address, this.state.day)
         }
     }
 
@@ -52,6 +60,33 @@ class TrekDay extends Component {
 
     render() {
         var self = this;
+
+        /* Constants for Google AutoComplete */
+        const inputProps = {
+            value: this.state.stopTextValue,
+            onChange: this.onChange,
+            onSelect: this.onSelect,
+            placeholder: "Add a stop for Day " + `${this.state.day}`,
+            style: {backgroundColor: 'red', width: '100%'}
+        }
+
+        const cssClasses = {
+            root: 'form-group',
+            input: 'form-control autocomplete-input',
+            autocompleteContainer: 'autocomplete-container',
+            autocompleteItem: 'autocomplete-item',
+        }
+
+        const myStyles = {
+            root: { position: 'absolute'},
+            input: { width: '100%' },
+            autocompleteContainer: { backgroundColor: 'green' },
+            autocompleteItem: { color: 'purple'  },
+            autocompleteItemActive: { color: 'blue' }
+        }
+        
+        /* End Constants for Google AutoComplete */
+
         return (
             <Container style={{marginTop: 40}}>
                 <Row style={{ backgroundColor: '#ff8142' }}>
@@ -69,16 +104,20 @@ class TrekDay extends Component {
                 </Row>
                 <br/>
                 {this.constructStops()}
-                <InputGroup>                   
-                    <Input
-                        type="text"
-                        value={this.state.stopTextValue}
-                        placeholder={"Add a stop for Day " + `${this.state.day}`}
-                        onChange={(text) => { self.setState({ stopTextValue: text.target.value }) }}
-                    />
-                    <InputGroupAddon addonType="append" onClick={() => { this.addStop(this.state.stopTextValue); this.setState({ stopTextValue: '' }) }}>
-                        <Button color="link"><FontAwesome.FaPlusCircle style={{color: 'grey'}}/></Button>
-                    </InputGroupAddon>                   
+                <InputGroup>   
+                    <PlacesAutocomplete
+                        inputProps={inputProps}
+                        classNames={cssClasses}
+                        onSelect={(address, placeId) => {
+                            geocodeByPlaceId(placeId)
+                                .then((results) => {
+                                    console.log(results[0])
+                                    this.addStop(results[0].formatted_address);
+                                    this.setState({ stopTextValue: '' })
+                                })
+                                .catch(error => console.error(error))
+                            }}
+                    />            
                 </InputGroup>
             </Container>
         )
