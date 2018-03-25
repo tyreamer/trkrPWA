@@ -17,9 +17,9 @@ const INITIAL_STATE = {
 class UsernameChangeForm extends Component {
     
   constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this)
+        this.state = { ...INITIAL_STATE };
   }
 
   componentWillMount() {
@@ -37,8 +37,11 @@ class UsernameChangeForm extends Component {
             auth.doUsernameUpdate(username)
                 .then(() => {
                     db.updateUsername(currentUsername, username).then(() => {
-                        self.setState(() => ({ currentUsername: username }));
-                    })
+                        self.setState({ currentUsername: username });
+                        self.showToast()
+                    }).catch(error => {
+                        this.setState(updateByPropertyName('error', error));
+                    });
                 })
                 .catch(error => {
                     this.setState(updateByPropertyName('error', error));
@@ -52,6 +55,10 @@ class UsernameChangeForm extends Component {
     event.preventDefault();
   }
 
+  showToast() {
+      toast.success('Successfully updated', { position: toast.POSITION.BOTTOM_CENTER });
+  }
+    
   render() {
       const {
           currentUsername,
@@ -63,7 +70,7 @@ class UsernameChangeForm extends Component {
       
       return (
           <Col xs="12" md={{size: 4, offset: 4}}>
-            <Form onSubmit={this.onSubmit} style={{ marginTop: 100 }}>
+            <Form onSubmit={this.onSubmit}>
                 <hr />
                 <h4>Update Username</h4>
                 <InputGroup>
@@ -83,7 +90,7 @@ class UsernameChangeForm extends Component {
                     {error && <p>{error.message}</p>}
                   </InputGroup>
                 <hr/>
-            </Form>
+              </Form>              
             <ToastContainer autoClose={2000}/>
         </Col>
     );

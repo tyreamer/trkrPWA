@@ -47,22 +47,29 @@ export const updateUsername = (oldUsername, newUsername) => {
         return
     }
         
-
-    
+    var success = true;
+    var errors = []
     return new Promise(function (resolve, reject) {
-
+        
         //Users
         /* Copy the old user data into a new node and delete the old one */
         var usersRef = db.ref('users')
         var childRef = usersRef.child(oldUsername)
         
         childRef.once('value').then(function (snapshot) {            
-            var updates = {};
-            updates[oldUsername] = null;
-            updates[newUsername] = snapshot.val();
+                var updates = {};
+                updates[oldUsername] = null;
+                updates[newUsername] = snapshot.val();
             
-            usersRef.update(updates);
-        })
+                usersRef.update(updates);
+            })
+            .then(()=> {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            })
         
         //Resources
         /* Update the existing post with the new username */
@@ -75,6 +82,13 @@ export const updateUsername = (oldUsername, newUsername) => {
                     db.ref('resources').child(post.key).update({ user: newUsername })
                 })
             })
+            .then(() => {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            })
 
         //User Resources
         /* Copy the old user data into a new node and delete the old one */
@@ -85,7 +99,14 @@ export const updateUsername = (oldUsername, newUsername) => {
             updates[oldUsername] = null;
             updates[newUsername] = snapshot.val();
             userResourcesRef.update(updates);
-        })
+            })
+            .then(() => {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            })
 
         //User Resources Children
         /* Update the existing post with the new username */
@@ -98,6 +119,13 @@ export const updateUsername = (oldUsername, newUsername) => {
                     db.ref('user-resources').child(post.key).update({ user: newUsername })
                 })
             })
+            .then(() => {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            })
 
         //Treks
         /* Update the existing post with the new username */
@@ -109,7 +137,14 @@ export const updateUsername = (oldUsername, newUsername) => {
                 snapshot.forEach(function (post) {
                     db.ref('treks').child(post.key).update({ user: newUsername })
                 })
-            })  
+            })
+            .then(() => {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            })
 
         //User Posts
         /* Copy the old user data into a new node and delete the old one */
@@ -120,6 +155,13 @@ export const updateUsername = (oldUsername, newUsername) => {
             updates[oldUsername] = null;
             updates[newUsername] = snapshot.val();
             userPostsRef.update(updates);
+        })
+        .then(() => {
+            success = success && true
+        })
+        .catch((e) => {
+            success = success && false
+            errors.push(e)
         })
 
         //User Posts Children
@@ -132,7 +174,14 @@ export const updateUsername = (oldUsername, newUsername) => {
                 snapshot.forEach(function (post) {
                     db.ref('user-posts').child(post.key).update({ user: newUsername })
                 })
-            })  
+            })
+            .then(() => {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            }) 
 
         //Tips
         /* Update the existing post with the new username */
@@ -145,6 +194,13 @@ export const updateUsername = (oldUsername, newUsername) => {
                     db.ref('tips').child(post.key).update({ user: newUsername })
                 })
             })
+            .then(() => {
+                success = success && true
+            })
+            .catch((e) => {
+                success = success && false
+                errors.push(e)
+            })
 
         //User Tips
         /* Copy the old user data into a new node and delete the old one */
@@ -155,6 +211,13 @@ export const updateUsername = (oldUsername, newUsername) => {
             updates[oldUsername] = null;
             updates[newUsername] = snapshot.val();
             userTipsRef.update(updates);
+        })
+        .then(() => {
+            success = success && true
+        })
+        .catch((e) => {
+            success = success && false
+            errors.push(e)
         })
 
         //Likes
@@ -169,7 +232,16 @@ export const updateUsername = (oldUsername, newUsername) => {
                     userLikesRef.child(child.key).update(updates);
                 }
             })
-        });
+        })
+        .then(() => {
+            success = success && true
+        })
+        .catch((e) => {
+            success = success && false
+            errors.push(e)
+        })
+
+        return success ? resolve() : reject(errors)
     })
 }
 

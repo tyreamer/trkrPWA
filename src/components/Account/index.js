@@ -12,7 +12,7 @@ const AccountPage = (props, { authUser }) =>
             <Col xs="12">
                 <h3>
                     <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => {                        
-                            this.props.history.goBack()                        
+                        window.history.back();                 
                     }} />
                 </h3>
             </Col>
