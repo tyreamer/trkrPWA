@@ -13,6 +13,7 @@ import TipDetail from '../../TipDetail'
 import TrekDetail from '../../TrekDetail'
 import ResourceDetail from '../../ResourceDetail'
 import * as routes from '../../../constants/routes';
+import { ToastContainer, toast } from 'react-toastify';
 
 class MainProfile extends Component {
 
@@ -162,7 +163,7 @@ class MainProfile extends Component {
         var list = []
         if (this.state.resources !== undefined) {
             this.state.resources.forEach(function (resource) {
-                list.push(<ResourceDetail key={resource.key} resource={resource} />)
+                list.push(<ResourceDetail key={resource.datePosted + resource.user} resource={resource} />)
             })
 
             if (list.length === 0) {
@@ -186,7 +187,7 @@ class MainProfile extends Component {
 
         if (this.state.tips !== undefined) {
             for (var i = this.state.tips.length - 1; i >= 0; i--) {
-                list.push(<TipDetail tip={this.state.tips[i]} />)
+                list.push(<TipDetail key={this.state.tips[i].datePosted + this.state.tips[i].tipTitle} tip={this.state.tips[i]} />)
             }
 
 
@@ -245,7 +246,7 @@ class MainProfile extends Component {
     renderProfilePicture() {
         var result = '';
 
-        if (this.state.userPhoto !== undefined && this.state.userPhoto !== '') {
+        if (this.state.userPhoto !== undefined && this.state.userPhoto !== '') {            
             result = (<div style={{width: '100%'}}>                        
                         <div className="profileImg" style={{ backgroundImage: 'url(' + this.state.userPhoto + ')' }}>
                             {this.getPhotoEditElements()}
@@ -292,19 +293,34 @@ class MainProfile extends Component {
         this.setState({ progress: 100, loading: false });
         firebase.storage().ref('images').child(filename).getDownloadURL()
             .then(url => {
+
+                //add this to the users profile
                 db.updateUserPhoto(firebase.auth().currentUser.displayName, url);
+
+                //remove the old photo
+                try {
+                    var currentPhoto = this.state.userPhoto.match(new RegExp('/images%2F(.*)?alt=media'))[1].replace('?', '');
+                    firebase.storage().ref('images').child(currentPhoto).delete().catch((e) => { })
+                }
+                catch (err) {
+                    //we must not have a photo
+                }
+               
+                //update our state
                 this.setState({ userPhoto: url })
+                toast.success('photo updated!', { position: toast.POSITION.BOTTOM_CENTER });
             })
     };
 
     render() {
+        
         if (this.state.user === undefined) return null
 
         if (this.state.loading)
             return (<div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Spinner />
                     </div>);
-
+        
         return (<div>
                     <Row style={{ backgroundColor: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 5px 2px -2px #f8f8f8' }}>
                         <Col xs="8">
@@ -371,6 +387,7 @@ class MainProfile extends Component {
                     <Row>
                         {this.generateContent()}
                     </Row>
+                    <ToastContainer autoClose={2000}/>
                 </div>
         );
     }
