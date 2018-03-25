@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Form, InputGroup, InputGroupAddon, Input, Col } from 'reactstrap';
 import { auth, db } from '../../../firebase';
 import { ToastContainer, toast } from 'react-toastify';
-import * as firebase from 'firebase'
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,

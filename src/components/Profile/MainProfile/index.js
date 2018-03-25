@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { db } from '../../../firebase';
 import classnames from 'classnames';
-import {    withRouter  } from 'react-router-dom';
+import { withRouter  } from 'react-router-dom';
 import * as FontAwesome from 'react-icons/lib/fa'
 import FileUploader from 'react-firebase-file-uploader';
 import { Container, Row, Col, TabPane, NavLink, TabContent } from 'reactstrap'
@@ -12,6 +12,7 @@ import Spinner from '../../Misc/Spinner'
 import TipDetail from '../../TipDetail'
 import TrekDetail from '../../TrekDetail'
 import ResourceDetail from '../../ResourceDetail'
+import * as routes from '../../../constants/routes';
 
 class MainProfile extends Component {
 
@@ -20,6 +21,7 @@ class MainProfile extends Component {
 
         this.removeTrek = this.removeTrek.bind(this)
         this.toggle = this.toggle.bind(this);
+        this.signOut = this.signOut.bind(this)
     }
 
     state = {
@@ -28,17 +30,17 @@ class MainProfile extends Component {
         tips: [],
         currentView: '',
         loading: true,
-        user: this.props.location.state.user,
+        user: null,
         activeTab: '1'
     }
     
-    componentWillMount() {
+    componentWillMount() {        
+        this.getUser() 
+    }
+
+    componentDidMount() {
         var self = this
 
-        if (this.state.user === undefined) {
-            this.setState({ user: firebase.auth().currentUser.displayName  })
-        }
-       
         var myTreks = []
         if (this.state.user !== undefined && this.state.user !== null) {
             //retrieve posts
@@ -61,13 +63,6 @@ class MainProfile extends Component {
                 .catch((e) => console.log('Fetch Error (treks): ' + e))
         }   
 
-        
-
-    }
-
-    componentDidMount() {
-        var self = this
-
         var myResources = [];
         firebase.database().ref('/user-resources').child(this.state.user).once('value')
             .then(function (snapshot) {
@@ -87,6 +82,31 @@ class MainProfile extends Component {
             })
             .then(() => self.setState({ tips: myTips }))
             .catch((e) => console.log('Fetch Error (tips): ' + e))
+    }
+
+    getUser() {
+        if (this.props !== undefined) {
+            if (this.props.location !== undefined) {
+                if (this.props.location.state !== undefined) {
+                    if (this.props.location.state.user !== undefined) {
+                        this.setState({ user: this.props.location.state.user })
+                        return;
+                    }
+                }
+            }
+        }
+
+        this.setState({ user: firebase.auth().currentUser.displayName })   
+    }
+
+    signOut() {
+        if (window.confirm('Are you sure you want to sign out?')) {
+            firebase.auth().signOut()
+                .then(() => {
+                    this.props.history.push(routes.LANDING)
+                })
+                .catch((e) => { console.log('Sign-Out Exception: ' + e) })
+        }
     }
 
     removeTrek(key) {
@@ -142,7 +162,7 @@ class MainProfile extends Component {
         var list = []
         if (this.state.resources !== undefined) {
             this.state.resources.forEach(function (resource) {
-                list.push(<ResourceDetail resource={resource} />)
+                list.push(<ResourceDetail key={resource.key} resource={resource} />)
             })
 
             if (list.length === 0) {
@@ -286,6 +306,27 @@ class MainProfile extends Component {
                     </div>);
 
         return (<div>
+                    <Row style={{ backgroundColor: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 5px 2px -2px #f8f8f8' }}>
+                        <Col xs="8">
+                            <h5 style={{ marginLeft: 5 }}><b> {this.state.user}</b></h5>
+                        </Col>
+                        <Col xs="4" style={{ paddingRight: 0 }}>
+                            {
+                                firebase.auth().currentUser.displayName === this.state.user
+                                    ?
+                                    <div>
+                                        <div onClick={() => { this.signOut() }} style={{ float: 'right', display: 'inline' }}>
+                                            <FontAwesome.FaSignOut size={30} />
+                                        </div>
+                                        <div onClick={() => { this.props.history.push(routes.ACCOUNT) }} style={{ float: 'right', display: 'inline', paddingRight: 15 }}>
+                                            <FontAwesome.FaCog size={30} />
+                                        </div>
+                                    </div>
+                                    :
+                                    null
+                            }
+                        </Col>
+                    </Row>
                     <Row style={{ paddingTop: 30 }} id="ProfileHeader"> 
                         <Col xs="3">
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
