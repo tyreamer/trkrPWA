@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'reactstrap'
 import * as firebase from 'firebase'
 import * as FontAwesome from 'react-icons/lib/fa'
 
-import SignOutButton from '../SignOut';
 import * as routes from '../../constants/routes';
 
 const Navigation = (props, { authUser }) => 
@@ -24,7 +23,7 @@ Navigation.contextTypes = {
 };
 
 const NavigationAuth = () => {
-
+    
     return (
         <Row>
             <Col xs="4" style={styles.NavigationStyle}>
@@ -38,7 +37,7 @@ const NavigationAuth = () => {
                 </Link>
             </Col>
             <Col xs="4" style={styles.NavigationStyle}>
-                {
+                {                   
                     firebase.auth().currentUser !== null
                     ?
                         <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser.displayName }  }}>

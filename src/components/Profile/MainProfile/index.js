@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { db } from '../../../firebase';
 import classnames from 'classnames';
-import * as routes from '../../../constants/routes';
 import {    withRouter  } from 'react-router-dom';
 import * as FontAwesome from 'react-icons/lib/fa'
 import FileUploader from 'react-firebase-file-uploader';
-import { Container, Row, Col, Button, TabPane, NavLink, NavItem, Nav, TabContent } from 'reactstrap'
+import { Container, Row, Col, TabPane, NavLink, TabContent } from 'reactstrap'
 import './index.css'
 import Spinner from '../../Misc/Spinner'
 import TipDetail from '../../TipDetail'
@@ -42,7 +41,6 @@ class MainProfile extends Component {
        
         var myTreks = []
         if (this.state.user !== undefined && this.state.user !== null) {
-            console.log(this.state.user)
             //retrieve posts
             firebase.database().ref('/user-posts').child(this.state.user).once('value')
                 .then(function (snapshot) {
@@ -144,9 +142,6 @@ class MainProfile extends Component {
         var list = []
         if (this.state.resources !== undefined) {
             this.state.resources.forEach(function (resource) {
-                var date = new Date(resource.datePosted);
-                date = (date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
-
                 list.push(<ResourceDetail resource={resource} />)
             })
 
@@ -195,7 +190,7 @@ class MainProfile extends Component {
 
         return (
             <div style={{ width: '100%' }}>
-                <Row style={{ textAlign: 'center', fontWeight: 'bold', color: 'grey', boxShadow: '0 10px 2px -2px #f8f8f8', height: 50 }}>
+                <Row style={{ textAlign: 'center', fontWeight: 'bold', color: 'grey', boxShadow: '0 10px 2px -2px #f8f8f8', backgroundColor: '#f8f8f8', height: 50 }}>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '1' })}>
                         <NavLink onClick={() => { this.toggle('1'); }}>
                             <FontAwesome.FaPlane style={{fontSize: 25 }}/>
@@ -230,7 +225,7 @@ class MainProfile extends Component {
     renderProfilePicture() {
         var result = '';
 
-        if (this.state.userPhoto != null && this.state.userPhoto != '') {
+        if (this.state.userPhoto !== undefined && this.state.userPhoto !== '') {
             result = (<div style={{width: '100%'}}>                        
                         <div className="profileImg" style={{ backgroundImage: 'url(' + this.state.userPhoto + ')' }}>
                             {this.getPhotoEditElements()}
@@ -238,9 +233,10 @@ class MainProfile extends Component {
                     </div>)
         }
         else {
-            result = (<div>                            
-                        {this.getPhotoEditElements()}
-                        <img alt="default avatar" style={styles.ThumbnailStyle} src="https://firebasestorage.googleapis.com/v0/b/trekker-2018.appspot.com/o/images%2FDefaultImages%2Fdc82d4d9-7877-4b63-a7ff-56a8de1f7846.png?alt=media&token=7ad8239b-c7d7-4631-a78b-4c31337dc181"/>                        
+            result = (<div style={{width: '100%' }}>                                      
+                        <div className="profileImg" style={{backgroundImage: 'url("https://png.pngtree.com/element_origin_min_pic/17/08/08/56a1a62660704f2041da8de7bdc7aefc.jpg")' }}>
+                            {this.getPhotoEditElements()}
+                        </div>
                       </div>);
         }
 

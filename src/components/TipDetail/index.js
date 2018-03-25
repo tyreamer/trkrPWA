@@ -82,7 +82,7 @@ class TipDetail extends Component {
                         <Col xs="10">
                             <p style={{ textAlign: 'right', lineHeight: .9  }}
                                 onClick={() => { this.props.history.push(routes.PROFILE) }}>
-                                <b> {this.props.tip.displayName ? this.props.tip.displayName : ""} </b>                            
+                                <b> {this.props.tip.user ? this.props.tip.user : ""} </b>                            
                                 <br/>
                                 <small>{date}</small>
                             </p>

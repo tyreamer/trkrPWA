@@ -1,4 +1,5 @@
-import { db, auth } from './firebase';
+import { db } from './firebase';
+import { auth } from './'
 
 function cleanUsername(username) {
     return username.toLowerCase().replace(/\./g, ',');
@@ -37,6 +38,141 @@ export const updateUserPhoto = (username, url) => {
     })
 }
 
+export const updateUsername = (oldUsername, newUsername) => {
+    if (oldUsername === "" ||
+        oldUsername === null ||
+        newUsername === "" ||
+        newUsername === null) {
+        console.log('missing old or new username')
+        return
+    }
+        
+
+    
+    return new Promise(function (resolve, reject) {
+
+        //Users
+        /* Copy the old user data into a new node and delete the old one */
+        var usersRef = db.ref('users')
+        var childRef = usersRef.child(oldUsername)
+        
+        childRef.once('value').then(function (snapshot) {            
+            var updates = {};
+            updates[oldUsername] = null;
+            updates[newUsername] = snapshot.val();
+            
+            usersRef.update(updates);
+        })
+        
+        //Resources
+        /* Update the existing post with the new username */
+        db.ref('resources')
+            .orderByChild("user")
+            .equalTo(oldUsername)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach(function (post) {
+                    db.ref('resources').child(post.key).update({ user: newUsername })
+                })
+            })
+
+        //User Resources
+        /* Copy the old user data into a new node and delete the old one */
+        var userResourcesRef = db.ref('user-resources')
+        var userResourcesChildRef = userResourcesRef.child(oldUsername)
+        userResourcesChildRef.once('value').then(function (snapshot) {
+            var updates = {};
+            updates[oldUsername] = null;
+            updates[newUsername] = snapshot.val();
+            userResourcesRef.update(updates);
+        })
+
+        //User Resources Children
+        /* Update the existing post with the new username */
+        db.ref('user-resources')
+            .orderByChild("user")
+            .equalTo(oldUsername)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach(function (post) {
+                    db.ref('user-resources').child(post.key).update({ user: newUsername })
+                })
+            })
+
+        //Treks
+        /* Update the existing post with the new username */
+        db.ref('treks')
+            .orderByChild("user")
+            .equalTo(oldUsername)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach(function (post) {
+                    db.ref('treks').child(post.key).update({ user: newUsername })
+                })
+            })  
+
+        //User Posts
+        /* Copy the old user data into a new node and delete the old one */
+        var userPostsRef = db.ref('user-posts')
+        var userPostsChildRef = userPostsRef.child(oldUsername)
+        userPostsChildRef.once('value').then(function (snapshot) {
+            var updates = {};
+            updates[oldUsername] = null;
+            updates[newUsername] = snapshot.val();
+            userPostsRef.update(updates);
+        })
+
+        //User Posts Children
+        /* Update the existing post with the new username */
+        db.ref('user-posts')
+            .orderByChild("user")
+            .equalTo(oldUsername)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach(function (post) {
+                    db.ref('user-posts').child(post.key).update({ user: newUsername })
+                })
+            })  
+
+        //Tips
+        /* Update the existing post with the new username */
+        db.ref('tips')
+            .orderByChild("user")
+            .equalTo(oldUsername)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach(function (post) {
+                    db.ref('tips').child(post.key).update({ user: newUsername })
+                })
+            })
+
+        //User Tips
+        /* Copy the old user data into a new node and delete the old one */
+        var userTipsRef = db.ref('user-tips')
+        var userTipsChildRef = userTipsRef.child(oldUsername)
+        userTipsChildRef.once('value').then(function (snapshot) {
+            var updates = {};
+            updates[oldUsername] = null;
+            updates[newUsername] = snapshot.val();
+            userTipsRef.update(updates);
+        })
+
+        //Likes
+        /* Get all the posts that are liked by this user then replace the child key with the new key */
+        var userLikesRef = db.ref('likes')
+        userLikesRef.once('value').then(function (snapshot) {
+            snapshot.forEach((child) => {
+                if (child.hasChild(oldUsername)) {
+                    var updates = {};
+                    updates[oldUsername] = null;
+                    updates[newUsername] = child.val()[oldUsername];
+                    userLikesRef.child(child.key).update(updates);
+                }
+            })
+        });
+    })
+}
+
 export const onceGetTreks = () => 
     db.ref('/treks').once("value");
 
@@ -65,7 +201,7 @@ export const doRemoveTrek = (key) => {
     });
 
     //remove from user treks
-    var userPostRef = db.ref().child('user-posts').child(auth.currentUser.email.toLowerCase().replace(/\./g, ','));
+    var userPostRef = db.ref().child('user-posts').child(auth.currentUser());
     userPostRef.once('value', function (snapshot) {
         if (snapshot.hasChild(key)) {
             if (snapshot.child(key).hasChild('trekTags')) {

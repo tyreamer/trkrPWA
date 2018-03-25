@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as routes from '../../constants/routes';
 import * as FontAwesome from 'react-icons/lib/fa'
 import { Row, Col, Button } from 'reactstrap'
 import * as firebase from 'firebase'
@@ -32,7 +31,7 @@ class Interactions extends Component {
                         //Check if user already likes or dislikes post
                         if (snapshot.hasChild(user)) {
                             //Set state based on if user likes or dislikes post
-                            self.setState({ userLikesPost: snapshot.child(user).val() == true })
+                            self.setState({ userLikesPost: snapshot.child(user).val() === true })
                         }
                     }
                 })
@@ -57,7 +56,7 @@ class Interactions extends Component {
                     if (snapshot2.hasChild(user)) {
 
                         //Check if it is a like or dislike
-                        if (snapshot2.child(user).val() == true) {
+                        if (snapshot2.child(user).val() === true) {
                             if (upvote) {
                                 //They currently like it (1) so we need to remove the record
                                 likeRef.child(self.props.id).child(user).remove();
@@ -92,9 +91,11 @@ class Interactions extends Component {
                         }
                     }
                     else {
+                        var like;
+
                         //No record of this user liking or disliking the post
                         if (upvote) {
-                            var like = {
+                            like = {
                                 "total": currTotal + 1,
                                 [user]: true
                             };
@@ -103,7 +104,7 @@ class Interactions extends Component {
                             self.setState({ userLikesPost: true, totalLikes: self.state.totalLikes + 1 })
                         }
                         else {
-                            var like = {
+                            like = {
                                 "total": currTotal - 1,
                                 [user]: false
                             };
@@ -175,7 +176,7 @@ class Interactions extends Component {
             <Row style={{ backgroundColor: '#fff' }}>
                 <Col xs="4" style={{ alignItems: 'center' }}>
                     <Button color="link" style={styles.InteractionButtonStyle} onClick={() => { this.likePost(false) }}>
-                        {this.state.userLikesPost == false ? <FontAwesome.FaThumbsDown style={{ color: '#ff5858' }} /> : <FontAwesome.FaThumbsODown style={{ transform: 'rotate: (90deg)' }} />}
+                        {this.state.userLikesPost === false ? <FontAwesome.FaThumbsDown style={{ color: '#ff5858' }} /> : <FontAwesome.FaThumbsODown style={{ transform: 'rotate: (90deg)' }} />}
                     </Button>
                 </Col>                       
                 <Col xs="4">
@@ -183,7 +184,7 @@ class Interactions extends Component {
                 </Col>
                 <Col xs="4">
                     <Button color="link" style={styles.InteractionButtonStyle} onClick={() => { this.likePost(true) }}>
-                        {this.state.userLikesPost == true ? <FontAwesome.FaThumbsUp style={{ color: '#b5ff6d' }} /> : <FontAwesome.FaThumbsOUp />}
+                        {this.state.userLikesPost === true ? <FontAwesome.FaThumbsUp style={{ color: '#b5ff6d' }} /> : <FontAwesome.FaThumbsOUp />}
                     </Button>
                 </Col>                   
             </Row>

@@ -38,7 +38,6 @@ class CreateTipPage extends Component {
                     tipText: self.state.tipText,
                     tipTags: self.state.tipTags,
                     user: user,
-                    displayName: user,
                     datePosted: Date.now()
                 };
 

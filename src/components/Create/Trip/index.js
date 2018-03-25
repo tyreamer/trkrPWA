@@ -88,7 +88,6 @@ class CreateTripPage extends Component {
                 var postData = {
                     title: self.state.trekName,
                     user: user,
-                    displayName: user,
                     days: self.state.days,
                     datePosted: Date.now(),
                     trekTags: tags,
@@ -209,7 +208,7 @@ class CreateTripPage extends Component {
                             <Button
                                 color="link"
                                 onClick={() => {
-                                    if (this.state.trekTags.indexOf(this.state.currentTag) == -1) {
+                                    if (this.state.trekTags.indexOf(this.state.currentTag) === -1) {
                                         var ct = this.state.trekTags;
                                         ct.push(this.state.currentTag)
                                         this.setState({ trekTags: ct })

@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import JSONP from 'jsonp';
 import Autocomplete from 'react-autocomplete'
-import { Container, Col, Row, Button, Form, FormGroup, Input, InputGroup, InputGroupAddon } from 'reactstrap'
+import { Container, Col, Row, Button, Form, FormGroup, Input, InputGroup } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import * as routes from '../../../constants/routes';
-import TagList from '../../TagList'
 import * as firebase from 'firebase'
 import './index.css'
 
@@ -27,7 +26,7 @@ class CreateResourcePage extends Component {
     insertResource() {
         var user = firebase.auth().currentUser.displayName
         var self = this
-        if (this.state.resourceTitle == '' || this.state.resourceLink == '') {
+        if (this.state.resourceTitle === '' || this.state.resourceLink === '') {
             alert('Make sure to provide a title and link before saving')
             return;
         }
@@ -98,7 +97,7 @@ class CreateResourcePage extends Component {
                                             resourceLinkTextValue: text
                                         })
                                         var self = this
-                                        if (text && text.trim() != '') {
+                                        if (text && text.trim() !== '') {
                                             var fetchURL = googleURL + `${'http://' + text}`;
                                             JSONP(fetchURL, function (error, data) {
                                                 self.setState({ possibleLinks: data[1] })

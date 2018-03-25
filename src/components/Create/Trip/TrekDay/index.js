@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
 import { withRouter } from 'react-router-dom';
-import { Container, Col, Row, Button, InputGroup, InputGroupAddon, Input } from 'reactstrap'
+import { Container, Col, Row, Button, InputGroup } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import TrekItem from '../TrekItem'
 import PlacesAutocomplete, { geocodeByPlaceId } from 'react-places-autocomplete'
-import classnames from 'classnames'
 import './index.css'
-import * as firebase from 'firebase'
 
 class TrekDay extends Component {
     constructor(props) {
@@ -33,7 +31,7 @@ class TrekDay extends Component {
     addStop(address) {
         if (this.state.stops === null) return;
         console.log(address)
-        if (address != null) {
+        if (address !== null) {
             var nextStop = this.state.stops.length > 0 ? this.state.stops[this.state.stops.length - 1]["day"] + 1 : 1;
             var newStopsArr = this.state.stops.concat({
                 "key": nextStop,
@@ -48,7 +46,7 @@ class TrekDay extends Component {
 
     removeDay() {
         if (window.confirm(`Are you sure you want to remove this day and all of it's stops?`)) {
-            if (this.state.day != 1) {
+            if (this.state.day !== 1) {
                 this.props.handleRemoveDay(this.state.day)
             }
             else {
@@ -59,14 +57,13 @@ class TrekDay extends Component {
 
 
     render() {
-        var self = this;
 
         /* Constants for Google AutoComplete */
         const inputProps = {
             value: this.state.stopTextValue,
             onChange: this.onChange,
             onSelect: this.onSelect,
-            placeholder: "Add a stop for Day " + `${this.state.day}`,
+            placeholder: "Add a stop for Day " + this.state.day,
             style: {backgroundColor: 'red', width: '100%'}
         }
 
@@ -77,13 +74,13 @@ class TrekDay extends Component {
             autocompleteItem: 'autocomplete-item',
         }
 
-        const myStyles = {
-            root: { position: 'absolute'},
-            input: { width: '100%' },
-            autocompleteContainer: { backgroundColor: 'green' },
-            autocompleteItem: { color: 'purple'  },
-            autocompleteItemActive: { color: 'blue' }
-        }
+        //const myStyles = {
+        //    root: { position: 'absolute'},
+        //    input: { width: '100%' },
+        //    autocompleteContainer: { backgroundColor: 'green' },
+        //    autocompleteItem: { color: 'purple'  },
+        //    autocompleteItemActive: { color: 'blue' }
+        //}
         
         /* End Constants for Google AutoComplete */
 

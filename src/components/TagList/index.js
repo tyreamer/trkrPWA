@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 class TagList extends Component {
-
-    constructor(props) {
-        super(props)
-    }
-
+    
     renderList() {
         
         if (this.props.tags === undefined || this.props.tags === null) return null

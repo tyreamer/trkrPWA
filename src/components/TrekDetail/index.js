@@ -146,9 +146,9 @@ class TrekDetail extends Component {
                             <Col xs="6">
                                 <p style={{ textAlign: 'right', lineHeight: .9 }}
                                     onClick={() => {
-                                        this.props.history.push({ pathname: routes.PROFILE, state: { user: this.props.trekRecord.displayName == null ? '' : this.props.trekRecord.displayName } })
+                                        this.props.history.push({ pathname: routes.PROFILE, state: { user: this.props.trekRecord.user == null ? '' : this.props.trekRecord.user } })
                                 }}>
-                                    <b>{this.props.trekRecord.displayName}</b>
+                                    <b>{this.props.trekRecord.user}</b>
                                     <br/>
                                     <small>{date}</small>
                                 </p> 

@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 
 import * as firebase from 'firebase';
 import * as FontAwesome from 'react-icons/lib/fa'
-import { Container, Row, Col, Button } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import * as routes from '../../../constants/routes';
 
-import {
-  Link,
-  withRouter,
-} from 'react-router-dom';
+import {  withRouter  } from 'react-router-dom';
 
 class HeaderBar extends Component {
 

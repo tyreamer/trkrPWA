@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as FontAwesome from 'react-icons/lib/fa'
-import { Container, Row, Col, Button } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import { withRouter } from 'react-router-dom';
 import * as firebase from 'firebase'
 
@@ -8,7 +8,7 @@ class ResourceDetail extends Component {
 
     constructor(props) {
         super(props)
-        // this.deleteResource=this.deleteResource.bind(this);
+        this.deleteResource=this.deleteResource.bind(this);
     }
 
     componentWillMount() {
@@ -16,8 +16,6 @@ class ResourceDetail extends Component {
     }
     
     deleteResource(key) {
-        var updates = {};
-        var self = this;
 
         //remove from posts
         var trekRef = firebase.database().ref().child('resources');
@@ -39,7 +37,7 @@ class ResourceDetail extends Component {
     }
 
     renderEditable() {
-        if (this.props.resource.user == firebase.auth().currentUser.displayName) {
+        if (this.props.resource.user === firebase.auth().currentUser.displayName) {
             return <FontAwesome.FaMinusCircle size={20} name="ios-remove-circle-outline" style={{ color: 'lightgrey' }} onClick={() => { if (window.confirm('Do you want to delete this resource??')) { this.deleteTip(this.props.id) } }}/>               
         }
     }
