@@ -13,6 +13,7 @@ import CreateTipPage from '../Create/Tip';
 import CreateTripPage from '../Create/Trip';
 import CreateResourcePage from '../Create/Resource';
 import AccountPage from '../Account';
+import SearchPage from '../Search';
 import withAuthentication from '../Session/withAuthentication';
 import * as routes from '../../constants/routes';
 
@@ -33,6 +34,7 @@ const App = () =>
           <Route path={routes.CREATE_TIP} component={() => <CreateTipPage />} />
           <Route path={routes.CREATE_TRIP} component={() => <CreateTripPage />} />
           <Route path={routes.CREATE_RESOURCE} component={() => <CreateResourcePage />} />
+          <Route path={routes.SEARCH} component={() => <SearchPage />} />
           <Navigation />
         </Container>
     </div>

@@ -9,3 +9,4 @@ export const CREATE = '/create';
 export const CREATE_TIP = '/create-tip';
 export const CREATE_RESOURCE = '/create-resource';
 export const CREATE_TRIP = '/create-trip';
+export const SEARCH = '/search';
