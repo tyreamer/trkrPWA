@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 import { Button, Form, FormGroup, Input, Container, Row } from 'reactstrap';
 
 const PasswordForgetPage = () =>
@@ -80,7 +80,7 @@ class PasswordForgetForm extends Component {
 
 const PasswordForgetLink = () =>
   <p>
-    <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>
+        <Link to={constants.routes.PASSWORD_FORGET}>Forgot Password?</Link>
   </p>
 
 export default PasswordForgetPage;

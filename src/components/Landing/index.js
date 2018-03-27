@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import './index.css';
 import logo from '../../images/logo.png';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 import * as firebase from 'firebase';
 import Spinner from '../Misc/Spinner'
 
@@ -36,7 +36,7 @@ class LandingPage extends Component {
             firebase.auth().onAuthStateChanged(function (authUser) {
                 if (authUser) {
                     self.setState(() => ({ authUser }))
-                    self.props.history.push(routes.HOME);
+                    self.props.history.push(constants.routes.HOME);
                     resolve(authUser);
                 } else {
                     self.setState(() => ({ authUser: null }))
@@ -53,7 +53,7 @@ class LandingPage extends Component {
 
         //If we're logged in, go to home page
         if (this.state.authUser != null) {
-            this.props.history.push(routes.HOME);
+            this.props.history.push(constants.routes.HOME);
         }
 
         return (
@@ -69,13 +69,13 @@ class LandingPage extends Component {
                                 <p className="lead">Sign up to start discovering new places and sharing trips of your own.</p>
                             </Row>
                             <Row>
-                                <Link to={routes.SIGN_IN} style={{ color: '#fff', width: '100%' }}>
+                                <Link to={constants.routes.SIGN_IN} style={{ color: '#fff', width: '100%' }}>
                                     <Button color="primary" style={{ width: '100%' }}>Login</Button>
                                 </Link>
                             </Row>
                             <hr />
                             <Row>
-                                <p>Don't have an account? <Link to={routes.SIGN_UP}>Sign up</Link></p>
+                                <p>Don't have an account? <Link to={constants.routes.SIGN_UP}>Sign up</Link></p>
                             </Row>
                         </Col>
                     </Row>

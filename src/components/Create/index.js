@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Container, Row, Button } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import logo from '../../images/logo.png';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 
 class CreatePage extends Component {
     
@@ -13,10 +13,7 @@ class CreatePage extends Component {
         return (
             <Container style={{height: '100%'}}>
                 <Row>
-                    <img src={logo} alt=""  style={{ height: 200, width: 200, margin: '0 auto' }}/>
-                </Row>
-                <Row>
-                    <Link to={routes.CREATE_TRIP} style={{ color: '#fff', width: '100%' }}>
+                    <Link to={constants.routes.CREATE_TRIP} style={{ color: '#fff', width: '100%' }}>
                         <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton1 }}>
                             <FontAwesome.FaPlane style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }}/>
                             <p style={{ color: '#fff' }}>Plan a new trip</p>
@@ -24,7 +21,7 @@ class CreatePage extends Component {
                     </Link>
                 </Row>
                 <Row>
-                    <Link to={routes.CREATE_RESOURCE} style={{ color: '#fff', width: '100%' }}>
+                    <Link to={constants.routes.CREATE_RESOURCE} style={{ color: '#fff', width: '100%' }}>
                         <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton2 }}>
                             <FontAwesome.FaExternalLink style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
                             <p style={{ color: '#fff' }}>Share a resource</p>
@@ -32,7 +29,7 @@ class CreatePage extends Component {
                     </Link>
                 </Row>
                 <Row>
-                    <Link to={routes.CREATE_TIP} style={{ color: '#fff', width: '100%' }}>
+                    <Link to={constants.routes.CREATE_TIP} style={{ color: '#fff', width: '100%' }}>
                         <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton3 }}>
                             <FontAwesome.FaLightbulbO style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
                             <p style={{ color: '#fff' }}>Share a tip</p>

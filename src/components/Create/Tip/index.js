@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Container, Col, Row, Button, Form, FormGroup, Input } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
-import * as routes from '../../../constants/routes';
+import * as constants from '../../../constants';
 import TagList from '../../TagList'
 import * as firebase from 'firebase'
 
@@ -31,7 +31,7 @@ class CreateTipPage extends Component {
         var user = firebase.auth().currentUser.displayName
         var self = this
 
-        firebase.database().ref('/users/' + user).once('value')
+        firebase.database().ref('/' + constants.databaseSchema.USERS.root + '/' + user).once('value')
             .then(function (snapshot) {
                 var tipData = {
                     tipTitle: self.state.tipTitle,
@@ -42,27 +42,27 @@ class CreateTipPage extends Component {
                 };
 
                 // Get a key for a new Post.
-                var newTipKey = firebase.database().ref().child('tips').push().key;
+                var newTipKey = firebase.database().ref().child(constants.databaseSchema.TIPS.root).push().key;
 
                 // Write the new post's data simultaneously in the resources list and the user's resource list.
                 var updates = {};
-                updates['/tips/' + newTipKey] = tipData;
-                updates['/user-tips/' + user + '/' + newTipKey] = tipData;
+                updates['/' + constants.databaseSchema.TIPS.root +'/' + newTipKey] = tipData;
+                updates['/' + constants.databaseSchema.TIPS.root +'/' + user + '/' + newTipKey] = tipData;
 
-                var tagRef = firebase.database().ref().child('tags')
+                var tagRef = firebase.database().ref().child(constants.databaseSchema.TAGS.root)
 
                 tagRef.once('value', function (snapshot) {
                     for (var i = 0; i < self.state.tipTags.length; i++) {
                         var tag = self.state.tipTags[i].toLowerCase().trim().replace(/\s+/, "")
                         if (snapshot.hasChild(tag)) {
                             var updatedTag = {};
-                            updatedTag[newTipKey] = 'tip';
+                            updatedTag[newTipKey] = constants.databaseSchema.TIPS.root;
                             tagRef.update(updatedTag);
                         }
                         else {
                             var newTag = tagRef.child(tag)
                             newTag.set({
-                                [newTipKey]: 'tip'
+                                [newTipKey]: constants.databaseSchema.TIPS.root
                             })
                         }
                     }
@@ -72,7 +72,7 @@ class CreateTipPage extends Component {
                 firebase.database().ref().update(updates)
                     .then(() => {
                         console.log('saved tip')
-                        self.props.history.push(routes.HOME)
+                        self.props.history.push(constants.routes.HOME)
                     })
                     .catch(() => {
                         alert('Something went wrong, please try again.')

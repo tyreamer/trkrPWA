@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import MainFeed from '../MainFeed'
 import withAuthorization from '../Session/withAuthorization';
-import { Form, FormGroup, Input, InputGroup, Row, Col } from 'reactstrap'
+import { Form, FormGroup, Input, InputGroup,Container, Row, Col } from 'reactstrap'
 import { Link } from 'react-router-dom';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 
 class HomePage extends Component {
 
@@ -17,10 +17,10 @@ class HomePage extends Component {
 
   render() {
         return (       
-            <div style={{ paddingTop: 10 }}>
+            <Container>
                 <Row>
-                    <Col xs={{ size: 10, offset: 1 }}>
-                        <Link to={routes.SEARCH} style={{ color: '#fff', width: '100%' }}>
+                    <Col xs="12">
+                        <Link to={constants.routes.SEARCH} style={{ color: '#fff', width: '100%' }}>
                             <Form>
                                 <FormGroup>
                                     <InputGroup>
@@ -36,7 +36,7 @@ class HomePage extends Component {
                     </Col>
                 </Row>
                 <MainFeed />
-            </div>
+            </Container>
         );
   }
 }

@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 
 import { auth, db } from '../../firebase';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 import logo from '../../images/logo.png';
 import { Button, Form, FormGroup, Input, Row, Col, Container } from 'reactstrap';
 
@@ -51,7 +51,7 @@ class SignUpForm extends Component {
                     db.doCreateUser(username, email)
                         .then(() => {
                             self.setState(() => ({ ...INITIAL_STATE }));
-                            this.props.history.push(routes.HOME);
+                            this.props.history.push(constants.routes.HOME);
                             window.location.reload()
                         })
                         .catch(error => {
@@ -152,7 +152,7 @@ class SignUpForm extends Component {
 }
 
 const SignUpLink = () =>
-  <p>Don't have an account? <Link to={routes.SIGN_UP}>Sign up</Link></p>
+    <p>Don't have an account? <Link to={constants.routes.SIGN_UP}>Sign up</Link></p>
 
 export default withRouter(SignUpPage);
 

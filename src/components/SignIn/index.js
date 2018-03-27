@@ -4,7 +4,7 @@ import logo from '../../images/logo.png';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { auth } from '../../firebase';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 import { Button, Form, FormGroup, Input, Row, Col } from 'reactstrap';
 import './index.css'
 
@@ -43,7 +43,7 @@ class SignInForm extends Component {
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.HOME);
+        history.push(constants.routes.HOME);
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error));

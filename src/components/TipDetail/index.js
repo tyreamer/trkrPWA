@@ -1,60 +1,65 @@
 import React, { Component } from 'react';
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 import * as FontAwesome from 'react-icons/lib/fa'
-import { Row, Col } from 'reactstrap'
+import { Row, Col, } from 'reactstrap'
 import { withRouter } from 'react-router-dom';
 import TagList from '../TagList'
 import * as firebase from 'firebase'
+import PostActionsButton from '../Misc/PostActionsButton'
 
 class TipDetail extends Component {
 
     constructor(props) {
         super(props)
-        this.deleteTip=this.deleteTip.bind(this);
+        this.deleteTip = this.deleteTip.bind(this);
     }
 
     componentWillMount() {
         this.setState({ record: this.props.id, tip: this.props.tip });
     }
-    
+        
     deleteTip(key) {
-        var self = this;
 
-        //remove from posts
-        var trekRef = firebase.database().ref().child('tips');
-        trekRef.once('value', function (snapshot) {
-            if (snapshot.hasChild(key)) {
-                trekRef.child(key).remove();
-            }
-        });
+        if (window.confirm('Do you want to delete this tip?'))
+        {     
+            var self = this;
 
-        //remove from user tips
-        var userPostRef = firebase.database().ref().child('user-tips').child(firebase.auth().currentUser.displayName);
-        userPostRef.once('value', function (snapshot) {
-            if (snapshot.hasChild(key)) {
-                userPostRef.child(key).remove();
-            }
-        });
+            //remove from posts
+            var trekRef = firebase.database().ref().child('tips');
+            trekRef.once('value', function (snapshot) {
+                if (snapshot.hasChild(key)) {
+                    trekRef.child(key).remove();
+                }
+            });
 
-        //remove post from tags
-        var tagRef = firebase.database().ref().child('tags')
-        tagRef.once('value', function (snapshot) {
-            if (self.props.tip.tipTags !== null && self.props.tip.tipTags !== undefined) {
-                for (var i = 0; i < self.props.tip.tipTags.length; i++) {
-                    var tag = self.props.tip.tipTags[i].toLowerCase().trim()
-                    if (snapshot.hasChild(tag)) {
-                        tagRef.child(tag).child(key).remove();
+            //remove from user tips
+            var userPostRef = firebase.database().ref().child('user-tips').child(firebase.auth().currentUser.displayName);
+            userPostRef.once('value', function (snapshot) {
+                if (snapshot.hasChild(key)) {
+                    userPostRef.child(key).remove();
+                }
+            });
+
+            //remove post from tags
+            var tagRef = firebase.database().ref().child('tags')
+            tagRef.once('value', function (snapshot) {
+                if (self.props.tip.tipTags !== null && self.props.tip.tipTags !== undefined) {
+                    for (var i = 0; i < self.props.tip.tipTags.length; i++) {
+                        var tag = self.props.tip.tipTags[i].toLowerCase().trim()
+                        if (snapshot.hasChild(tag)) {
+                            tagRef.child(tag).child(key).remove();
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        this.props.handleDeletedTip(key);
+            this.props.handleDeletedTip(key);
+        }
     }
 
     renderEditable() {
         if (this.props.tip.user === firebase.auth().currentUser.displayName) {
-            return <FontAwesome.FaMinusCircle size={20} name="ios-remove-circle-outline" style={{ color: 'lightgrey' }} onClick={() => { if (window.confirm('Do you want to delete this tip??')) { this.deleteTip(this.props.id) } }}/>               
+            return (<PostActionsButton handleDelete={()=> this.deleteTip(this.props.id)} />);        
         }
     }
 
@@ -81,7 +86,7 @@ class TipDetail extends Component {
                         </Col>
                         <Col xs="10">
                             <p style={{ textAlign: 'right', lineHeight: .9  }}
-                                onClick={() => { this.props.history.push(routes.PROFILE) }}>
+                                onClick={() => { this.props.history.push(constants.routes.PROFILE) }}>
                                 <b> {this.props.tip.user ? this.props.tip.user : ""} </b>                            
                                 <br/>
                                 <small>{date}</small>

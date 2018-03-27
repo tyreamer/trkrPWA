@@ -5,7 +5,7 @@ import JSONP from 'jsonp';
 import Autocomplete from 'react-autocomplete'
 import { Container, Col, Row, Button, Form, FormGroup, Input, InputGroup } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
-import * as routes from '../../../constants/routes';
+import * as constants from '../../../constants';
 import * as firebase from 'firebase'
 import './index.css'
 
@@ -30,7 +30,7 @@ class CreateResourcePage extends Component {
             alert('Make sure to provide a title and link before saving')
             return;
         }
-        firebase.database().ref('/users/' + user).once('value')
+        firebase.database().ref('/' + constants.databaseSchema.USERS.root + '/' + user).once('value')
             .then(function (snapshot) {
                 var resourceData = {
                     resourceTitle: self.state.resourceTitle,
@@ -41,16 +41,16 @@ class CreateResourcePage extends Component {
                 };
 
                 // Get a key for a new Post.
-                var newResourceKey = firebase.database().ref().child('resources').push().key;
+                var newResourceKey = firebase.database().ref().child(constants.databaseSchema.RESOURCES.root).push().key;
 
                 // Write the new post's data simultaneously in the resources list and the user's resource list.
                 var updates = {};
-                updates['/resources/' + newResourceKey] = resourceData;
-                updates['/user-resources/' + user + '/' + newResourceKey] = resourceData;
+                updates['/' + constants.databaseSchema.RESOURCES.root + '/' + newResourceKey] = resourceData;
+                updates['/' + constants.databaseSchema.USER_RESOURCES.root + '/' + user + '/' + newResourceKey] = resourceData;
 
                 firebase.database().ref().update(updates)
                     .then(() => {
-                        self.props.history.push(routes.HOME)
+                        self.props.history.push(constants.routes.HOME)
                     })
                     .catch((e) => {
                         console.log(e)

@@ -3,6 +3,8 @@ import * as FontAwesome from 'react-icons/lib/fa'
 import { Row, Col } from 'reactstrap'
 import { withRouter } from 'react-router-dom';
 import * as firebase from 'firebase'
+import PostActionsButton from '../Misc/PostActionsButton'
+import * as constants from '../../constants'
 
 class ResourceDetail extends Component {
 
@@ -26,7 +28,7 @@ class ResourceDetail extends Component {
         });
 
         //remove from user tips
-        var userPostRef = firebase.database().ref().child('user-resources').child(firebase.auth().currentUser.displayName);
+        var userPostRef = firebase.database().ref().child(constants.databaseSchema.USER_RESOURCES.root).child(firebase.auth().currentUser.displayName);
         userPostRef.once('value', function (snapshot) {
             if (snapshot.hasChild(key)) {
                 userPostRef.child(key).remove();
@@ -38,7 +40,7 @@ class ResourceDetail extends Component {
 
     renderEditable() {
         if (this.props.resource.user === firebase.auth().currentUser.displayName) {
-            return <FontAwesome.FaMinusCircle size={20} name="ios-remove-circle-outline" style={{ color: 'lightgrey' }} onClick={() => { if (window.confirm('Do you want to delete this resource??')) { this.deleteTip(this.props.id) } }}/>               
+            return <PostActionsButton handleDelete={() => { if (window.confirm('Do you want to delete this resource??')) { this.deleteTip(this.props.id) } }}/>               
         }
     }
 
@@ -61,8 +63,16 @@ class ResourceDetail extends Component {
                     <Row style={{color: '#000'}}>
                         <Col xs="12">
                             <p><small>{hasSummary ? item.resourceSummary : null} </small></p>
-                        </Col>
+                        </Col>                        
                     </Row>
+                    <Row style={{ color: '#000' }}>
+                        <Col xs="6">
+                            {this.renderEditable()}
+                        </Col>
+                        <Col xs="6" style={{ textAlign: 'right' }}>
+                            <p><small>{item.user} </small></p>
+                        </Col>
+                    </Row>                    
                     {hasSummary ? <hr /> : null}                    
                 </Col>            
         );

@@ -12,7 +12,7 @@ import Spinner from '../../Misc/Spinner'
 import TipDetail from '../../TipDetail'
 import TrekDetail from '../../TrekDetail'
 import ResourceDetail from '../../ResourceDetail'
-import * as routes from '../../../constants/routes';
+import * as constants from '../../../constants';
 import { ToastContainer, toast } from 'react-toastify';
 
 class MainProfile extends Component {
@@ -65,24 +65,24 @@ class MainProfile extends Component {
         }   
 
         var myResources = [];
-        firebase.database().ref('/user-resources').child(this.state.user).once('value')
+        firebase.database().ref('/' + constants.databaseSchema.USER_RESOURCES.root ).child(this.state.user).once('value')
             .then(function (snapshot) {
                 snapshot.forEach(function (child) {
                     myResources.unshift(child.val())
                 })
             })
             .then(() => self.setState({ resources: myResources }))
-            .catch((e) => console.log('Fetch Error (resources): ' + e))
+            .catch((e) => console.log('Fetch Error (' + constants.databaseSchema.USER_RESOURCES.root +'): ' + e))
 
         var myTips = [];
-        firebase.database().ref('/user-tips').child(this.state.user).once('value')
+        firebase.database().ref('/' + constants.databaseSchema.USER_TIPS.root ).child(this.state.user).once('value')
             .then(function (snapshot) {
                 snapshot.forEach(function (child) {
                     myTips.unshift(child.val())
                 })
             })
             .then(() => self.setState({ tips: myTips }))
-            .catch((e) => console.log('Fetch Error (tips): ' + e))
+            .catch((e) => console.log('Fetch Error (' + constants.databaseSchema.USER_TIPS.root +'): ' + e))
     }
 
     getUser() {
@@ -104,7 +104,7 @@ class MainProfile extends Component {
         if (window.confirm('Are you sure you want to sign out?')) {
             firebase.auth().signOut()
                 .then(() => {
-                    this.props.history.push(routes.LANDING)
+                    this.props.history.push(constants.routes.LANDING)
                 })
                 .catch((e) => { console.log('Sign-Out Exception: ' + e) })
         }
@@ -210,7 +210,7 @@ class MainProfile extends Component {
     generateContent() {
 
         return (
-            <div style={{ width: '100%' }}>
+            <Container>
                 <Row style={{ textAlign: 'center', fontWeight: 'bold', color: 'grey', boxShadow: '0 10px 2px -2px #f8f8f8', backgroundColor: '#f8f8f8', height: 50 }}>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '1' })}>
                         <NavLink onClick={() => { this.toggle('1'); }}>
@@ -240,21 +240,21 @@ class MainProfile extends Component {
                         {this.createTipsList()}
                     </TabPane>
                 </TabContent>
-            </div>);
+            </Container>);
     }
 
     renderProfilePicture() {
         var result = '';
 
         if (this.state.userPhoto !== undefined && this.state.userPhoto !== '') {            
-            result = (<div style={{width: '100%'}}>                        
+            result = (<div style={{width: '100%', padding: 20}}>                        
                         <div className="profileImg" style={{ backgroundImage: 'url(' + this.state.userPhoto + ')' }}>
                             {this.getPhotoEditElements()}
                         </div>
                     </div>)
         }
         else {
-            result = (<div style={{width: '100%' }}>                                      
+            result = (<div style={{width: '100%', padding: 20 }}>                                      
                         <div className="profileImg" style={{backgroundImage: 'url("https://png.pngtree.com/element_origin_min_pic/17/08/08/56a1a62660704f2041da8de7bdc7aefc.jpg")' }}>
                             {this.getPhotoEditElements()}
                         </div>
@@ -334,7 +334,7 @@ class MainProfile extends Component {
                                         <div onClick={() => { this.signOut() }} style={{ float: 'right', display: 'inline' }}>
                                             <FontAwesome.FaSignOut size={30} />
                                         </div>
-                                        <div onClick={() => { this.props.history.push(routes.ACCOUNT) }} style={{ float: 'right', display: 'inline', paddingRight: 15 }}>
+                                        <div onClick={() => { this.props.history.push(constants.routes.ACCOUNT) }} style={{ float: 'right', display: 'inline', paddingRight: 15 }}>
                                             <FontAwesome.FaCog size={30} />
                                         </div>
                                     </div>
@@ -343,7 +343,7 @@ class MainProfile extends Component {
                             }
                         </Col>
                     </Row>
-                    <Row style={{ paddingTop: 30 }} id="ProfileHeader"> 
+                    <Row style={{ paddingTop: 30, marginBottom: -10 }} id="ProfileHeader"> 
                         <Col xs="3">
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <FontAwesome.FaPlane style={styles.headerIconStyle} />
@@ -378,10 +378,8 @@ class MainProfile extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs="12">
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: -25, marginBottom: 25  }}>                     
-                                {this.renderProfilePicture()}                                
-                            </div>
+                        <Col xs="12">                 
+                            {this.renderProfilePicture()}    
                         </Col>
                     </Row>
                     <Row>

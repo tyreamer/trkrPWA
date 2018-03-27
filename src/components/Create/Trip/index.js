@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Container, Col, Row, Button, FormGroup, Input, InputGroupAddon, InputGroup} from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
-import * as routes from '../../../constants/routes';
+import * as constants from '../../../constants';
 import TagList from '../../TagList'
 import * as firebase from 'firebase'
 import TrekDay from './TrekDay'
@@ -83,7 +83,7 @@ class CreateTripPage extends Component {
         var self = this
         var tags = this.state.trekTags
 
-        firebase.database().ref('/users/' + user).once('value')
+        firebase.database().ref('/' + constants.databaseSchema.USERS.root + '/' + user).once('value')
             .then(function (snapshot) {
                 var postData = {
                     title: self.state.trekName,
@@ -96,26 +96,26 @@ class CreateTripPage extends Component {
                 };
 
                 // Get a key for a new Post.
-                var newPostKey = firebase.database().ref().child('treks').push().key;
+                var newPostKey = firebase.database().ref().child(constants.databaseSchema.TREKS.root).push().key;
 
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
-                updates['/treks/' + newPostKey] = postData;
-                updates['/user-posts/' + user + '/' + newPostKey] = postData;
+                updates['/' + constants.databaseSchema.TREKS.root + '/' + newPostKey] = postData;
+                updates['/' + constants.databaseSchema.USER_TREKS.root + '/' + user + ' / ' + newPostKey] = postData;
 
-                var tagRef = firebase.database().ref().child('tags')
+                var tagRef = firebase.database().ref().child(constants.databaseSchema.TAGS.root)
                 tagRef.once('value', function (snapshot) {
                     for (var i = 0; i < tags.length; i++) {
                         var tag = tags[i].toLowerCase().trim()
                         if (snapshot.hasChild(tag)) {
                             var updatedTag = {};
-                            updatedTag[newPostKey] = 'trek';
+                            updatedTag[newPostKey] = constants.databaseSchema.TREKS.root;
                             tagRef.child(tag).update(updatedTag);
                         }
                         else {
                             var newTag = tagRef.child(tag)
                             newTag.set({
-                                [newPostKey]: 'trek'
+                                [newPostKey]: constants.databaseSchema.TREKS.root
                             })
                         }
                     }
@@ -123,7 +123,7 @@ class CreateTripPage extends Component {
                 );
 
                 firebase.database().ref().update(updates).then(() => {
-                    self.props.history.push(routes.HOME)
+                    self.props.history.push(constants.routes.HOME)
                 });
             })
     }
@@ -161,7 +161,7 @@ class CreateTripPage extends Component {
                         </h3>
                     </Col>
                 </Row>
-                <br/>
+                <br />
                 <InputGroup>
                     <InputGroupAddon addonType="prepend">
                         <Button color="link">

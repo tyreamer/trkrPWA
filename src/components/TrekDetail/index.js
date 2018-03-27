@@ -3,34 +3,28 @@ import React, { Component } from 'react';
 import { db } from '../../firebase';
 import * as FontAwesome from 'react-icons/lib/fa'
 import StaticGMap from '../StaticGMap'
-import { Container, Row, Col, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'reactstrap'
-import * as routes from '../../constants/routes';
+import { Container, Row, Col } from 'reactstrap'
+import * as constants from '../../constants';
 import { withRouter } from 'react-router-dom';
 import TagList from '../TagList'
 import Interactions from '../Interactions'
+import PostActionsButton from '../Misc/PostActionsButton'
 
 class TrekDetail extends Component {
 
     constructor(props) {
         super(props)
-        this.deletePost = this.deletePost.bind(this);       
-        this.toggle = this.toggle.bind(this);
+        this.deletePost = this.deletePost.bind(this);   
     }
 
     componentWillMount() {  
-        this.setState({ record: this.props.id, trek: this.props.trekRecord, dropdownOpen: false });    
+        this.setState({ record: this.props.id, trek: this.props.trekRecord});    
     }
 
     goToPost() {
        // this.props.navigation.navigate('ViewTrek', { trekRecord: this.props.trekRecord, navigation: this.props.navigation })
     }
-
-    toggle() {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    }
-
+    
     formatNumber(num) {
         if (num >= 1000000000) {
             return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
@@ -117,36 +111,12 @@ class TrekDetail extends Component {
                         </Row>                        
                         <Row>
                             <Col xs="6">
-                                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} direction="up">
-                                    <DropdownToggle style={{  backgroundColor: '#fff', border: 'none' }}>
-                                        <FontAwesome.FaEllipsisH style={{ color: 'grey' }} />                                        
-                                    </DropdownToggle>
-                                    <DropdownMenu>
-                                        <DropdownItem>
-                                            <div onClick={() => this.deletePost(this.props.id)}>
-                                                <h6>                                               
-                                                    <FontAwesome.FaTrash style={{ marginBottom: 5 }}  />
-                                                    &nbsp;
-                                                    Delete Post
-                                                </h6>
-                                            </div>
-                                        </DropdownItem>
-                                        <DropdownItem>
-                                            <div onClick={() => { /*  Share  */ }} >
-                                                <h6>
-                                                    <FontAwesome.FaShareSquare style={{ marginBottom: 5 }}/>                                                
-                                                    &nbsp; 
-                                                    Share
-                                                </h6>
-                                            </div>
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </ButtonDropdown>
+                                <PostActionsButton handleDelete={() => this.deletePost(this.props.id)} />                                
                             </Col>
                             <Col xs="6">
-                                <p style={{ textAlign: 'right', lineHeight: .9 }}
+                                <p style={{ textAlign: 'right', lineHeight: .9, overflowX: 'auto', overflowY: 'hidden' }}
                                     onClick={() => {
-                                        this.props.history.push({ pathname: routes.PROFILE, state: { user: this.props.trekRecord.user === null ? '' : this.props.trekRecord.user } })
+                                        this.props.history.push({ pathname: constants.routes.PROFILE, state: { user: this.props.trekRecord.user === null ? '' : this.props.trekRecord.user } })
                                     }}>
                                     <b>{this.props.trekRecord.user}</b>
                                     <br/>

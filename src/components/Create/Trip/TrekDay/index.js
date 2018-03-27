@@ -30,7 +30,6 @@ class TrekDay extends Component {
 
     addStop(address) {
         if (this.state.stops === null) return;
-        console.log(address)
         if (address !== null) {
             var nextStop = this.state.stops.length > 0 ? this.state.stops[this.state.stops.length - 1]["day"] + 1 : 1;
             var newStopsArr = this.state.stops.concat({
@@ -75,7 +74,7 @@ class TrekDay extends Component {
         }
 
         //const myStyles = {
-        //    root: { position: 'absolute'},
+        //    root: { position: 'absolute', width: '100%'},
         //    input: { width: '100%' },
         //    autocompleteContainer: { backgroundColor: 'green' },
         //    autocompleteItem: { color: 'purple'  },
@@ -105,6 +104,7 @@ class TrekDay extends Component {
                     <PlacesAutocomplete
                         inputProps={inputProps}
                         classNames={cssClasses}
+                        //styles={myStyles}
                         onSelect={(address, placeId) => {
                             geocodeByPlaceId(placeId)
                                 .then((results) => {

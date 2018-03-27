@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap'
 import * as firebase from 'firebase'
 import * as FontAwesome from 'react-icons/lib/fa'
 
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 
 const Navigation = (props, { authUser }) => 
 
@@ -27,12 +27,12 @@ const NavigationAuth = () => {
     return (
         <Row>
             <Col xs="4" style={styles.NavigationStyle}>
-                <Link style={{ color: 'lightgrey' }} to={routes.HOME}>
+                <Link to={constants.routes.HOME}>
                     <FontAwesome.FaHome style={styles.IconStyle} />
                 </Link>
             </Col>
             <Col xs="4" style={styles.NavigationStyle}>
-                <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.CREATE }}>
+                <Link to={{ pathname: constants.routes.CREATE }}>
                     <FontAwesome.FaPlusSquare style={styles.IconStyle} />
                 </Link>
             </Col>
@@ -40,9 +40,9 @@ const NavigationAuth = () => {
                 {                   
                     firebase.auth().currentUser !== null
                     ?
-                        <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: firebase.auth().currentUser.displayName }  }}>
-                        <FontAwesome.FaUser style={styles.IconStyle} />
-                    </Link>
+                        <Link to={{ pathname: constants.routes.PROFILE, state: { user: firebase.auth().currentUser.displayName }  }}>
+                            <FontAwesome.FaUser style={styles.IconStyle} />
+                        </Link>
                     :
                     null
                 }                
@@ -56,11 +56,11 @@ const styles = {
         paddingTop: 10,           
         textAlign: 'center',
         height: '56px',    
-        backgroundColor: '#fff',
-        color: 'lightgrey'
+        backgroundColor: '#6db5ff'
     },
     IconStyle: {
-        fontSize: '30px'
+        fontSize: '30px',
+        color: '#fff'
     }
 }
 

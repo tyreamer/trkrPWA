@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as FontAwesome from 'react-icons/lib/fa'
 import { Row, Col, Button } from 'reactstrap'
+import * as constants from '../../constants'
+
 import * as firebase from 'firebase'
 
 class Interactions extends Component {
@@ -15,7 +17,7 @@ class Interactions extends Component {
     }
 
     componentWillMount() {
-        var likeRef = firebase.database().ref().child('likes')
+        var likeRef = firebase.database().ref().child(constants.databaseSchema.LIKES.root)
         var self = this
         var user = firebase.auth().currentUser.displayName
 
@@ -42,7 +44,7 @@ class Interactions extends Component {
     likePost(upvote) {
         var user = firebase.auth().currentUser.displayName
         var self = this
-        var likeRef = firebase.database().ref().child('likes')
+        var likeRef = firebase.database().ref().child(constants.databaseSchema.LIKES.root)
 
         likeRef.once('value', function (snapshot) {
 
@@ -143,7 +145,7 @@ class Interactions extends Component {
         var self = this
 
         //Update treks and user posts
-        firebase.database().ref().child('/treks/' + self.props.id).once('value', function (snapshot) {
+        firebase.database().ref().child('/'+constants.databaseSchema.TREKS.root +'/' + self.props.id).once('value', function (snapshot) {
             //Update the post
             if (snapshot.hasChild('likes')) {
                 snapshot.ref.update({ 'likes': likeCount })
@@ -154,20 +156,20 @@ class Interactions extends Component {
                 snapshot.ref.update(likeRec)
             }
         })
-            .then(() => {
-                //Update user posts
-                firebase.database().ref().child('user-posts').child(self.props.user).child(self.props.id).once('value', function (snapshot) {
-                    //Update the post
-                    if (snapshot.hasChild('likes')) {
-                        snapshot.ref.update({ 'likes': likeCount })
-                    }
-                    else {
-                        var likeRec = {};
-                        likeRec['likes'] = 1;
-                        snapshot.ref.update(likeRec)
-                    }
-                })
-            });
+        .then(() => {
+            //Update user posts
+            firebase.database().ref().child(constants.databaseSchema.USER_TREKS.root).child(self.props.user).child(self.props.id).once('value', function (snapshot) {
+                //Update the post
+                if (snapshot.hasChild('likes')) {
+                    snapshot.ref.update({ 'likes': likeCount })
+                }
+                else {
+                    var likeRec = {};
+                    likeRec['likes'] = 1;
+                    snapshot.ref.update(likeRec)
+                }
+            })
+        });
     }
 
     renderInteractions() {

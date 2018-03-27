@@ -74,7 +74,6 @@ export default class SearchFeed extends Component {
     filterForResources(data, text) {
         //first check titles
         if (data.resourceTitle.toLowerCase().indexOf(text) !== -1) {
-            console.log(data.resourceTitle.toLowerCase().indexOf(text))
             return true
         }
 
@@ -112,25 +111,32 @@ export default class SearchFeed extends Component {
     }
 
     retrievePostsWithHashtag(tag) {
+      
         this.setState({ showSpinner: true })
         var filteredList = [];
         var self = this;
 
         Promise.resolve(firebase.database().ref('/tags').child(tag).once('value')
-            .then(function (snapshot) {
-                snapshot.forEach(function (child) {
-                    firebase.database().ref().child(child.val() + 's').once('value')
+            //see if we have this tag in our tags list
+            .then(function (snapshot) {               
+                snapshot.forEach(function (child) {                    
+                    firebase.database().ref().child(child.val()).once('value')
+                        //find the post in the corresponding table
                         .then(function (snapshot2) {
                             if (snapshot2.hasChild(child.key)) {
-                                filteredList.push({ type: child.val() + 's', id: snapshot2.child(child.key).key, details: snapshot2.child(child.key).val() })
+                                filteredList.push({ type: child.val(), id: snapshot2.child(child.key).key, details: snapshot2.child(child.key).val() })
                             }
                         })
                 })
             }))
             .then(() => {
-                filteredList.sort(this.sortFunction)
+                filteredList.sort(this.sortFunction);
                 //TODO figure out why this isn't being set at the correct time
-                setTimeout(function () { self.setState({ filteredList: filteredList, showSpinner: false }) }, 1);
+                setTimeout(function () { self.setState({ filteredList: filteredList, showSpinner: false }) }, 100);                             
+            })
+            .catch((e) => {
+                console.log(e)
+                self.setState({ showSpinner: false })
             })
     }
 

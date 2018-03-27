@@ -5,7 +5,7 @@ import PasswordChangeForm from './PasswordChange';
 import UsernameChangeForm from './UsernameChange';
 import withAuthorization from '../Session/withAuthorization';
 import * as FontAwesome from 'react-icons/lib/fa'
-import * as routes from '../../constants/routes';
+import * as constants from '../../constants';
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase'
 
@@ -13,7 +13,7 @@ const AccountPage = (props, { authUser }) =>
     <Container>
         <Row style={{ top: 0, backgroundColor: '#6db5ff' }}>
             <Col xs="12">
-                <Link style={{ color: 'lightgrey' }} to={{ pathname: routes.PROFILE, state: { user: auth.currentUser() } }}>
+                <Link style={{ color: 'lightgrey' }} to={{ pathname: constants.routes.PROFILE, state: { user: auth.currentUser() } }}>
                     <h3>
                         <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} />
                     </h3>
