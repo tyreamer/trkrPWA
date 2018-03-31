@@ -149,7 +149,7 @@ class CreateTripPage extends Component {
     render() {
  
         return (
-            <Container>                
+            <Container style={{backgroundColor: '#fff'}}>                
                 <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
                     <Col xs="12">
                         <h3>

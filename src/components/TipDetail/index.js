@@ -65,7 +65,7 @@ class TipDetail extends Component {
     render() {
         var date = new Date(this.props.tip.datePosted);
         date = (date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
-        return (<Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }}  style={{ borderLeft: '1px solid #f8f8f8', borderRight: '1px solid #f8f8f8', borderBottom: '1px solid #f8f8f8', marginBottom: '50px' }}>
+        return (<Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }}  style={styles.ContainerStyle}>
                     <Row>
                         <Col xs="12">
                             <h4 style={{ fontWeight: 'bold' }}>{this.props.tip.tipTitle}</h4>
@@ -93,6 +93,19 @@ class TipDetail extends Component {
                         </Col>
                     </Row>
         </Col>);
+    }
+}
+
+const styles = {
+    ContainerStyle: {
+        backgroundColor: '#fff',
+        borderLeft: '1px solid #f8f8f8',
+        borderRight: '1px solid #f8f8f8',
+        borderBottom: '1px solid #f8f8f8',
+        marginBottom: '50px',
+        padding: 10,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
     }
 }
 

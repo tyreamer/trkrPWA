@@ -102,11 +102,11 @@ class CreateTipPage extends Component {
     render() {
 
         return (
-            <Container>
+            <Container style={{ backgroundColor: '#fff' }}> 
                 <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
                     <Col xs="12">
                         <h3>
-                            <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => {
+                            <FontAwesome.FaChevronLeft style={{ color: '#fff' }} onClick={() => {
                                 if (window.confirm('Are you sure you want to go back and cancel your post?')) {
                                     this.props.history.goBack()
                                 }

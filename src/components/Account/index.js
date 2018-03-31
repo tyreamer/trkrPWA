@@ -11,28 +11,39 @@ import { auth } from '../../firebase'
 
 const AccountPage = (props, { authUser }) => 
     <Container>
-        <Row style={{ top: 0, backgroundColor: '#6db5ff' }}>
-            <Col xs="12">
-                <Link style={{ color: 'lightgrey' }} to={{ pathname: constants.routes.PROFILE, state: { user: auth.currentUser() } }}>
-                    <h3>
-                        <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} />
+        <Row style={{ top: 0, }}>
+            <Col xs="4">
+                <Link style={{ margin: '0 auto' }} to={{ pathname: constants.routes.PROFILE, state: { user: auth.currentUser() } }}>
+                    <h3 >
+                        <FontAwesome.FaChevronLeft style={{ color: '#fff' }} />
                     </h3>
                 </Link>
             </Col>
-        </Row>
-        <Row>
-            <Col xs="12" style={{ padding: 20, textAlign: 'center' }}>
+            <Col xs="4" style={{ paddingBottom: 20, textAlign: 'center', color: '#fff' }}>
                 <h3>Account</h3>
             </Col>
         </Row>
-        <hr/>
-        <Row>          
-            <Col style={{ textAlign: 'center', paddingTop: 50 }}>                
-                <UsernameChangeForm />
-                <h6>{authUser.email}</h6>
+        <Row style={{ color: '#fff' }}>   
+            <Col>
+                <h6><center>{authUser.email}</center></h6>
             </Col>
         </Row>
-        <Row>
+        <Row style={{ color: '#fff', boxShadow: '0 2px 2px -2px #f8f8f8', paddingBottom: 15, marginBottom: 20 }}>
+            <Col>
+                <center>
+                {auth.userIsVerified()
+                    ?
+                    <h6>account verified <FontAwesome.FaCheck style={{ color: '#5cb85c', paddingBottom: 5 }} /></h6>
+                    :
+                    <h4 style={{ backgroundColor: '#fff', color: '#d9534f' }}> not yet verified <FontAwesome.FaTimesCircle style={{ backgroundcolor: '#fff', paddingBottom: 5 }} /></h4>
+                }
+                </center>
+            </Col>
+        </Row>
+        <Row style={{color: '#fff'}}>  
+            <UsernameChangeForm />
+        </Row>
+        <Row style={{ color: '#fff' }}>
             <PasswordChangeForm />
         </Row>
     </Container>

@@ -47,8 +47,7 @@ class PasswordChangeForm extends Component {
 
       return (
           <Col xs="12" md={{size: 4, offset: 4}}>
-            <Form onSubmit={this.onSubmit} style={{ marginTop: 100 }}>
-                <hr />
+            <Form onSubmit={this.onSubmit} style={{ marginTop: 50 }}>
                 <h4>Update Password</h4>
                 <FormGroup>
                     <Input
@@ -67,14 +66,13 @@ class PasswordChangeForm extends Component {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Button style={{width: '100%'}} disabled={isInvalid} type="submit">
+                    <Button color="primary" style={{width: '100%'}} disabled={isInvalid} type="submit">
                       Reset My Password
                     </Button>
                 </FormGroup>
                 <FormGroup>
                     {error && <p>{error.message}</p>}
                 </FormGroup>
-                <hr/>
             </Form>
         </Col>
     );

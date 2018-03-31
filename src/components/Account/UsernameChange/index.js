@@ -70,7 +70,6 @@ class UsernameChangeForm extends Component {
       return (
           <Col xs="12" md={{size: 4, offset: 4}}>
             <Form onSubmit={this.onSubmit}>
-                <hr />
                 <h4>Update Username</h4>
                 <InputGroup>
                       <Input
@@ -80,7 +79,7 @@ class UsernameChangeForm extends Component {
                         placeholder={currentUsername}
                     />
                     <InputGroupAddon addonType="append">                          
-                        <Button style={{ width: '100%' }} disabled={isInvalid} type="submit">
+                        <Button color="primary" style={{ width: '100%' }} disabled={isInvalid} type="submit">
                              >
                         </Button>
                     </InputGroupAddon>
@@ -88,7 +87,6 @@ class UsernameChangeForm extends Component {
                 <InputGroup>
                     {error && <p>{error.message}</p>}
                   </InputGroup>
-                <hr/>
               </Form>              
             <ToastContainer autoClose={2000}/>
         </Col>

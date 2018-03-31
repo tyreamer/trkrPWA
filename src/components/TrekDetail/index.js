@@ -71,16 +71,16 @@ class TrekDetail extends Component {
                         <h3><b>{this.props.trekRecord.title}</b></h3>                            
                     </Col>
                 </Row>
-                <Row style={{ color: '#fff', backgroundColor: 'rgba(109,181,255, .8)', paddingBottom: 5 }}>
-                    <Col className="col-xs-3">                                             
+                <Row style={{ color: '#fff', backgroundColor: '#98cbff', paddingBottom: 5 }}>
+                    <Col className="col-xs-3" style={{ textAlign: 'center' }}>                                             
                         <h5 style={{ display: 'inline' }}><FontAwesome.FaCalendarO /></h5>
                         <h6 style={{ display: 'inline' }}> {this.props.trekRecord.days.length}</h6>                       
                     </Col>
-                    <Col className="col-xs-6">                        
+                    <Col className="col-xs-6" style={{ textAlign: 'center' }}>                         
                         <h5 style={{ display: 'inline' }}><FontAwesome.FaDollar /></h5>
                         <h6 style={{ display: 'inline' }}> {budget}</h6>
                     </Col>
-                    <Col className="col-xs-3">                       
+                    <Col className="col-xs-3" style={{ textAlign: 'center' }}>                        
                         <h5 style={{ display: 'inline' }}><FontAwesome.FaMapPin /></h5>
                         <h6 style={{ display: 'inline' }}>  {totalStops}</h6> 
                     </Col>
@@ -92,13 +92,9 @@ class TrekDetail extends Component {
                         : <img src={this.props.trekRecord.featuredImage} alt="trekFeatured" style={{ height: 300, width: '100%', margin: '0 auto' }} />
                     }  
                 </Row>
-                <Row style={{ borderLeft: '1px solid #f8f8f8', borderRight: '1px solid #f8f8f8', borderBottom: '1px solid #f8f8f8' }}>
+                <Row style={{backgroundColor: '#fff', borderLeft: '1px solid #f8f8f8', borderRight: '1px solid #f8f8f8', borderBottom: '1px solid #f8f8f8' }}>
                     <Container>
-                        <Row>
-                            <Col xs="12" style={{ paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
-                                <Interactions id={this.props.id} user={this.props.trekRecord.user} summary={this.props.trekRecord.summary} title={this.props.trekRecord.title} />
-                            </Col>
-                        </Row>
+                        <Interactions id={this.props.id} user={this.props.trekRecord.user} summary={this.props.trekRecord.summary} title={this.props.trekRecord.title} />                                
                         <Row>
                             <Col xs="12">
                                 <TagList tags={this.props.trekRecord.trekTags} />

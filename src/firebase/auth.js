@@ -24,6 +24,10 @@ export const doPasswordUpdate = (password) =>
 export const currentUser = () => {
     return auth.currentUser != null ? auth.currentUser.displayName : ''
 }
+
+//Is Verified
+export const userIsVerified = () =>
+    auth.currentUser.emailVerified
     
 
 //Update Username

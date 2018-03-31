@@ -211,32 +211,32 @@ class MainProfile extends Component {
 
         return (
             <Container>
-                <Row style={{ textAlign: 'center', fontWeight: 'bold', color: 'grey', boxShadow: '0 10px 2px -2px #f8f8f8', backgroundColor: '#f8f8f8', height: 50 }}>
+                <Row style={{ textAlign: 'center', fontWeight: 'bold', color: '#fff', boxShadow: '0 2px 2px -2px #f8f8f8', height: 50 }}>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '1' })}>
                         <NavLink onClick={() => { this.toggle('1'); }}>
-                            <FontAwesome.FaPlane style={{fontSize: 25 }}/>
+                            <h3><FontAwesome.FaPlane style={{fontSize: 25 }}/></h3>
                         </NavLink>
                     </Col>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '2' })}>
                         <NavLink onClick={() => { this.toggle('2'); }}>
-                            <FontAwesome.FaExternalLink style={{ fontSize: 25 }} />
+                            <h3><FontAwesome.FaExternalLink style={{ fontSize: 25 }} /></h3>
                         </NavLink>
                     </Col>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '3' })}>
                         <NavLink onClick={() => { this.toggle('3'); }}>
-                            <FontAwesome.FaLightbulbO style={{ fontSize: 25}} />
+                            <h3><FontAwesome.FaLightbulbO style={{ fontSize: 25 }} /></h3>
                         </NavLink>
                     </Col>
                 </Row>
                 <br/>
                 <TabContent activeTab={this.state.activeTab} >
-                    <TabPane tabId="1" style={{ backgroundColor: '#fff', color: '#000' }}>
+                    <TabPane tabId="1">
                         {this.createTrekList()}
                     </TabPane>
-                    <TabPane tabId="2" style={{ backgroundColor: '#fff', color: '#000' }}>
+                    <TabPane tabId="2">
                         {this.createResourceList()}
                     </TabPane>
-                    <TabPane tabId="3" style={{ backgroundColor: '#fff', color: '#000' }}>
+                    <TabPane tabId="3">
                         {this.createTipsList()}
                     </TabPane>
                 </TabContent>
@@ -266,8 +266,8 @@ class MainProfile extends Component {
 
     getPhotoEditElements() {
         return (
-                  <label className="editImg">                
-                    <FontAwesome.FaPlus size={25} />
+            <label className="editImg">
+                <FontAwesome.FaPlus size={25} />
                     <FileUploader
                         hidden
                         accept="image/*"
@@ -322,7 +322,7 @@ class MainProfile extends Component {
                     </div>);
         
         return (<div>
-                    <Row style={{ backgroundColor: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 5px 2px -2px #f8f8f8' }}>
+                    <Row style={{color: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 1px 2px -2px #f8f8f8' }}>
                         <Col xs="8">
                             <h5 style={{ marginLeft: 5 }}><b> {this.state.user}</b></h5>
                         </Col>
@@ -405,13 +405,13 @@ const styles = {
     headerTextStyle:
     {
         fontSize: 14,
-        color: '#000',
+        color: '#fff',
         fontWeight: 'bold',
         alignSelf: 'center'
     },
     headerIconStyle:
     {
-        color: 'rgba(0,0,0,.6)',
+        color: '#fff',
         fontSize: 20,
         alignSelf: 'center'
     },

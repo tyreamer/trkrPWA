@@ -49,9 +49,9 @@ class ResourceDetail extends Component {
         
         var hasSummary = (item.resourceSummary !== undefined && item.resourceSummary.trim() !== "")
 
-        return (<Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} style={{ width: '100%', marginBottom: 50, }} key={item.link + item.datePosted}>
+        return (<Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} style={{ width: '100%', marginBottom: 50, backgroundColor: '#fff', borderTopLeftRadius: 15, borderTopRightRadius: 15,}} key={item.link + item.datePosted}>
                     <a href={item.link} target="_blank">
-                        <Row style={{ backgroundColor: '#ff8142', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomLeftRadius: hasSummary ? null : 15, borderBottomRightRadius: hasSummary ? null : 15 }} >
+                <Row style={{ backgroundColor: '#ff8142', color: '#fff', paddingTop: 5, borderBottomLeftRadius: hasSummary ? null : 15, borderTopLeftRadius: 15, borderTopRightRadius: 15, borderBottomRightRadius: hasSummary ? null : 15 }} >
                             <Col xs="10">
                                 <h5><b>{item.resourceTitle}</b></h5>
                             </Col>

@@ -10,10 +10,10 @@ class CreatePage extends Component {
     
     render() {
         return (
-            <Container style={{height: '100%'}}>
+            <div style={{ marginTop: '10%'}}>
                 <Row>
                     <Link to={constants.routes.CREATE_TRIP} style={{ color: '#fff', width: '100%' }}>
-                        <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton1 }}>
+                        <Button color="link" style={{ ...styles.CreateButtonStyle, ...styles.CreateButton1 }}>
                             <FontAwesome.FaPlane style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }}/>
                             <p style={{ color: '#fff' }}>Plan a new trip</p>
                         </Button>
@@ -21,7 +21,7 @@ class CreatePage extends Component {
                 </Row>
                 <Row>
                     <Link to={constants.routes.CREATE_RESOURCE} style={{ color: '#fff', width: '100%' }}>
-                        <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton2 }}>
+                        <Button color="link" style={{ ...styles.CreateButtonStyle, ...styles.CreateButton2 }}>
                             <FontAwesome.FaExternalLink style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
                             <p style={{ color: '#fff' }}>Share a link</p>
                         </Button>
@@ -29,13 +29,13 @@ class CreatePage extends Component {
                 </Row>
                 <Row>
                     <Link to={constants.routes.CREATE_TIP} style={{ color: '#fff', width: '100%' }}>
-                        <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton3 }}>
+                        <Button color="link" style={{ ...styles.CreateButtonStyle, ...styles.CreateButton3 }}>
                             <FontAwesome.FaLightbulbO style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
                             <p style={{ color: '#fff' }}>Share a tip</p>
                         </Button>
                     </Link>
                 </Row>
-            </Container>
+            </div>
         );
     }
 }
@@ -45,7 +45,7 @@ const styles = {
         height: 100,
         width: '100%',
         alignContent: 'center',
-        borderColor: '#fff'
+        marginBottom: 15
     },
     CreateButton1: {
         backgroundColor: '#5b4fff' 

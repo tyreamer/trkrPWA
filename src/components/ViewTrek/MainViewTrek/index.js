@@ -35,7 +35,7 @@ class MainViewTrek extends Component {
             for (var i = 0; i < this.state.trek.days.length; i++) {
                 days.push(
                     <Container style={{ marginTop: 0, marginBottom: 0, paddingLeft: 0, paddingRight: 0 }} key={"Day" + i + 1}>
-                        <Row style={{ backgroundColor: '#f8f8f8' }}>
+                        <Row style={{ backgroundColor: '#f8f8f8', color: '#787878' }}>
                             <Col xs="12">
                                 <h4>day {i + 1}</h4>
                             </Col>
@@ -134,6 +134,11 @@ class MainViewTrek extends Component {
                 </Row>
                 <Row>
                     <Container>
+                        <Row style={{ backgroundColor: '#6db5ff' }}>
+                            <Col xs="12">
+                                <center> <p style={{ fontWeight: 'bold', fontSize: 20, color: '#fff' }}>{trek.title}</p> </center>
+                            </Col>
+                        </Row>
                         <Row style={{ color: '#fff', backgroundColor: 'rgba(109,181,255, .8)', paddingBottom: 5 }}>
                             <Col xs="3" style={styles.HeaderColStyle}>
                                 <h5 style={{ display: 'inline' }}><FontAwesome.FaCalendarO /></h5>
@@ -150,11 +155,6 @@ class MainViewTrek extends Component {
                         </Row>
                         <Row style={{padding: 0}}>
                             <StaticGMap trekDays={trek.days} size="5000x300" />
-                        </Row>
-                        <Row style={{ backgroundColor: '#6db5ff' }}>
-                            <Col xs="12">
-                               <center> <p style={{ fontWeight: 'bold', fontSize: 20, color: '#fff' }}>{trek.title}</p> </center>
-                            </Col>
                         </Row>
                         <Row style={{ paddingTop: 5 }}>
                             <Col xs="2">
