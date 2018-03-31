@@ -3,14 +3,15 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Create",
-    "\\src\\components\\Create\\Resource",
-    "\\src\\components\\Create\\Tip",
-    "\\src\\components\\Landing",
-    "\\src\\components\\PasswordForget",
-    "\\src\\components\\SignIn",
-    "\\src\\components\\SignUp"
+    "\\src\\components\\Misc",
+    "\\src\\components\\Misc\\PostActionsButton",
+    "\\src\\components\\Misc\\Spinner",
+    "\\src\\components\\ResourceDetail",
+    "\\src\\components\\Search",
+    "\\src\\components\\Search\\SearchFeed",
+    "\\src\\components\\TipDetail",
+    "\\src\\constants"
   ],
-  "SelectedNode": "\\src\\components\\PasswordForget\\index.js",
+  "SelectedNode": "\\src\\components\\Create\\Resource\\index.js",
   "PreviewInSolutionExplorer": false
 }

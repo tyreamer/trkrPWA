@@ -11,6 +11,7 @@ export const routes = {
     CREATE_RESOURCE : '/create-resource',
     CREATE_TRIP : '/create-trip',
     SEARCH : '/search',
+    VIEW_TREK: '/view_trek',
 }
 
 export const databaseSchema = {

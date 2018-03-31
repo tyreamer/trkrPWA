@@ -171,7 +171,7 @@ class CreateTipPage extends Component {
                         <FormGroup>
                             <Button
                                 color="primary"
-                                style={{ width: '100%', textAlign: 'right' }}
+                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
                                 title="Submit"
                                 onClick={() => { this.insertPost() }}>
                                 <h4>
@@ -182,7 +182,6 @@ class CreateTipPage extends Component {
                         </FormGroup>
                     </Col>
                 </Row>
-                <hr />
             </Container>
         );
     }

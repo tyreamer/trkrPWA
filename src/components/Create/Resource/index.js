@@ -80,8 +80,7 @@ class CreateResourcePage extends Component {
                             <hr />  
                             <InputGroup style={{ height: 30 }} className="autocompleteBox">
                                 <Autocomplete
-                                    placeholder="resource url"
-                                    inputProps={{ placeholder: 'resource URL', className: 'form-control' }}
+                                    inputProps={{ placeholder: 'link URL', className: 'form-control' }}
                                     renderInput={(props) => <input {...props} /> }
                                     wrapperStyle={{ zIndex: 400, width: '100%' }}
                                     getItemValue={(item) => item}
@@ -136,7 +135,7 @@ class CreateResourcePage extends Component {
                         <FormGroup>
                             <Button
                                 color="primary"
-                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10 }}
+                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
                                 title="Submit"
                                 onClick={() => { this.insertResource() }}>
                                 <h4>
@@ -147,7 +146,6 @@ class CreateResourcePage extends Component {
                         </FormGroup>
                     </Col>
                 </Row>
-                <hr />
             </Container>
         );
     }

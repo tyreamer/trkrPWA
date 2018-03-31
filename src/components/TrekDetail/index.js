@@ -22,7 +22,7 @@ class TrekDetail extends Component {
     }
 
     goToPost() {
-       // this.props.navigation.navigate('ViewTrek', { trekRecord: this.props.trekRecord, navigation: this.props.navigation })
+        this.props.history.push({ pathname: constants.routes.VIEW_TREK, state: { trek: this.props.trekRecord } })
     }
     
     formatNumber(num) {
@@ -88,7 +88,7 @@ class TrekDetail extends Component {
                 <Row>
                     {
                         (this.props.trekRecord.featuredImage === '' || this.props.trekRecord.featuredImage) === undefined
-                        ? <StaticGMap trekDays={this.props.trekRecord.days} />
+                        ? <StaticGMap trekDays={this.props.trekRecord.days} size="350x300" />
                         : <img src={this.props.trekRecord.featuredImage} alt="trekFeatured" style={{ height: 300, width: '100%', margin: '0 auto' }} />
                     }  
                 </Row>

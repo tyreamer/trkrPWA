@@ -60,9 +60,10 @@ class ResourceDetail extends Component {
                             </Col>
                         </Row>
                     </a>
+                    <br/>
                     <Row style={{color: '#000'}}>
                         <Col xs="12">
-                            <p><small>{hasSummary ? item.resourceSummary : null} </small></p>
+                            <center>  <p>{hasSummary ? item.resourceSummary : null} </p> </center>
                         </Col>                        
                     </Row>
                     <Row style={{ color: '#000' }}>

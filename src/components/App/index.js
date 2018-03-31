@@ -14,6 +14,7 @@ import CreateTripPage from '../Create/Trip';
 import CreateResourcePage from '../Create/Resource';
 import AccountPage from '../Account';
 import SearchPage from '../Search';
+import ViewTrekPage from '../ViewTrek';
 import withAuthentication from '../Session/withAuthentication';
 import * as constants from '../../constants';
 import logo from '../../images/logo.png';
@@ -39,6 +40,7 @@ const App = () =>
                 <Route path={constants.routes.CREATE_TRIP} component={() => <CreateTripPage />} />
                 <Route path={constants.routes.CREATE_RESOURCE} component={() => <CreateResourcePage />} />
                 <Route path={constants.routes.SEARCH} component={() => <SearchPage />} />
+                <Route path={constants.routes.VIEW_TREK} component={() => <ViewTrekPage />} />
                 <Navigation />
             </Container>
         </div>

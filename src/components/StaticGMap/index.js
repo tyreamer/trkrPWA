@@ -1,4 +1,5 @@
 import React from 'react';
+import * as helpers from '../../helpers'
 
 const StaticGMap = (props) => {
 
@@ -7,6 +8,7 @@ const StaticGMap = (props) => {
   var staticMapURL = 'https://maps.googleapis.com/maps/api/staticmap?'
   var markers = generateMarkers();
   var zoomLevel = totalStops === 1 ? "&zoom=9" : null;
+  var size = props.size
 
   function generateMarkers() {
     //Marker logic
@@ -19,7 +21,7 @@ const StaticGMap = (props) => {
           for (var j=0; j<days[i].stops.length; j++) {
             totalStops++;
             stopNum++;
-            var randomColor = getRandomColor()
+            var randomColor = helpers.getColorFromString(days[i].stops[j].stopName)
             markers += "&markers=color:"+ randomColor +"%7Clabel:" + stopNum;
             markers +=  "%7C" + days[i].stops[j].stopName
           }
@@ -29,20 +31,12 @@ const StaticGMap = (props) => {
 
     return markers
   }
+            
+  var mapImage = `${staticMapURL}?center=` + days[0].stops[0].stopName + zoomLevel + `&size=` + size + markers + `&key=AIzaSyAOMW7lrMuV3zSfeRroBstSu5tEbbtxdTQ`
 
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '0x';
-
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 15)];
-    }
-
-    return color;
-  }
-
-  var mapImage =  `${staticMapURL}?center=` + days[0].stops[0].stopName + zoomLevel + `&size=400x300` + markers + `&key=AIzaSyAOMW7lrMuV3zSfeRroBstSu5tEbbtxdTQ`
-  return <img src={mapImage} alt="google-map" style={{ width: '100%', height: 300, margin: '0 auto' }} />
+  return (<div style={{ display: 'block', backgroundImage: `url(${mapImage})`, width: '100%', margin: '0 auto', backgroundPosition: '50% 50%', lineHeight: 0 }}>
+            <img src={mapImage} alt="google-map" style={{ maxWidth: '100%', opacity: 1, width: '100%' }} />
+          </div>);
 }
 
 export default StaticGMap;

@@ -262,7 +262,7 @@ class CreateTripPage extends Component {
                         <FormGroup>
                             <Button
                                 color="primary"
-                                style={{ float: 'right', width: '100%', textAlign: 'right' }}
+                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
                                 title="Submit"
                                 onClick={() => { this.insertTrek() }}>
                                 <h4>

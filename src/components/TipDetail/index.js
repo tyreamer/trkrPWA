@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as constants from '../../constants';
-import * as FontAwesome from 'react-icons/lib/fa'
 import { Row, Col, } from 'reactstrap'
 import { withRouter } from 'react-router-dom';
 import TagList from '../TagList'

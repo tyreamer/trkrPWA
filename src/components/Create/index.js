@@ -4,7 +4,6 @@ import withAuthorization from '../Session/withAuthorization';
 import { Link } from 'react-router-dom'
 import { Container, Row, Button } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
-import logo from '../../images/logo.png';
 import * as constants from '../../constants';
 
 class CreatePage extends Component {
@@ -24,7 +23,7 @@ class CreatePage extends Component {
                     <Link to={constants.routes.CREATE_RESOURCE} style={{ color: '#fff', width: '100%' }}>
                         <Button style={{ ...styles.CreateButtonStyle, ...styles.CreateButton2 }}>
                             <FontAwesome.FaExternalLink style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
-                            <p style={{ color: '#fff' }}>Share a resource</p>
+                            <p style={{ color: '#fff' }}>Share a link</p>
                         </Button>
                     </Link>
                 </Row>
