@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import withAuthorization from '../Session/withAuthorization';
 import { Link } from 'react-router-dom'
-import { Container, Row, Button } from 'reactstrap'
+import { Row, Button } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import * as constants from '../../constants';
 

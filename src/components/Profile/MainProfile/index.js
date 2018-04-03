@@ -68,7 +68,7 @@ class MainProfile extends Component {
         firebase.database().ref('/' + constants.databaseSchema.USER_RESOURCES.root ).child(this.state.user).once('value')
             .then(function (snapshot) {
                 snapshot.forEach(function (child) {
-                    myResources.unshift(child.val())
+                    myResources.unshift({ id: child.key, details: child.val() })
                 })
             })
             .then(() => self.setState({ resources: myResources }))
@@ -78,7 +78,7 @@ class MainProfile extends Component {
         firebase.database().ref('/' + constants.databaseSchema.USER_TIPS.root ).child(this.state.user).once('value')
             .then(function (snapshot) {
                 snapshot.forEach(function (child) {
-                    myTips.unshift(child.val())
+                    myTips.unshift({ id: child.key, details: child.val() })
                 })
             })
             .then(() => self.setState({ tips: myTips }))
@@ -124,6 +124,36 @@ class MainProfile extends Component {
         this.setState({ treks: newTrekList })
     }
 
+    removeTip(key) {
+        var idx;
+
+        for (var i = 0; i < this.state.tips.length; i++) {
+            if (this.state.feedList[i].id === key) {
+                idx = i;
+                break;
+            }
+        }
+
+        var newFeedList = this.state.feedList;
+        newFeedList.splice(idx, 1);
+        this.setState({ feedList: newFeedList })
+    }
+
+    removeResource(key) {
+        var idx;
+
+        for (var i = 0; i < this.state.resources.length; i++) {
+            if (this.state.feedList[i].id === key) {
+                idx = i;
+                break;
+            }
+        }
+
+        var newFeedList = this.state.feedList;
+        newFeedList.splice(idx, 1);
+        this.setState({ feedList: newFeedList })
+    }
+
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -138,13 +168,14 @@ class MainProfile extends Component {
 
         if (this.state.treks !== undefined) {
             this.state.treks.forEach(function (trek) {
-                  list.push(<div style={{ display: 'flex', justifyContent: 'center', marginBottom: 50 }} key={trek.id}>
-                                <TrekDetail id={trek.id} trekRecord={trek.details} handleDeletedTrek={self.removeTrek} />
+                  list.push(<div style={{ display: 'flex', justifyContent: 'center'}} key={trek.id}>
+                                <TrekDetail key={trek.id} id={trek.id} trekRecord={trek.details} handleDeletedTrek={self.removeItem} />
                             </div>)
             })
 
             if (list.length === 0) {
-                return (<Container style={{ padding: 75, alignItems: 'center', justifyContent: 'center' }}>
+                return (
+                <Container style={{ padding: 75, alignItems: 'center', justifyContent: 'center' }}>
                     <Row>
                         <h2 style={{ fontSize: 20, margin: '0 auto' }}><FontAwesome.FaLightbulbO /></h2>
                     </Row>
@@ -160,10 +191,11 @@ class MainProfile extends Component {
     }
 
     createResourceList() {
+        
         var list = []
-        if (this.state.resources !== undefined) {
+        if (this.state.resources !== undefined) {            
             this.state.resources.forEach(function (resource) {
-                list.push(<ResourceDetail key={resource.datePosted + resource.user} resource={resource} />)
+                list.push(<ResourceDetail key={resource.id} id={resource.id} resource={resource.details} handleDeletedResource={this.removeResource} />)
             })
 
             if (list.length === 0) {
@@ -187,9 +219,8 @@ class MainProfile extends Component {
 
         if (this.state.tips !== undefined) {
             for (var i = this.state.tips.length - 1; i >= 0; i--) {
-                list.push(<TipDetail key={this.state.tips[i].datePosted + this.state.tips[i].tipTitle} tip={this.state.tips[i]} />)
+                list.push(<TipDetail key={this.state.tips[i].id} id={this.state.tips[i].id} tip={this.state.tips[i].details} handleDeletedTip={this.removeTip} />)
             }
-
 
             if (list.length === 0) {
                 return <Container style={{padding: 75, alignItems: 'center', justifyContent: 'center' }}>

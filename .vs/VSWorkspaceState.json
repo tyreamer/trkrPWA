@@ -3,15 +3,18 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Misc",
-    "\\src\\components\\Misc\\PostActionsButton",
-    "\\src\\components\\Misc\\Spinner",
-    "\\src\\components\\ResourceDetail",
-    "\\src\\components\\Search",
-    "\\src\\components\\Search\\SearchFeed",
+    "\\src\\components\\Account",
+    "\\src\\components\\Account\\PasswordChange",
+    "\\src\\components\\Account\\UsernameChange",
+    "\\src\\components\\Create",
+    "\\src\\components\\Create\\Resource",
+    "\\src\\components\\Create\\Tip",
+    "\\src\\components\\Interactions",
+    "\\src\\components\\Profile",
+    "\\src\\components\\Profile\\MainProfile",
     "\\src\\components\\TipDetail",
-    "\\src\\constants"
+    "\\src\\firebase"
   ],
-  "SelectedNode": "\\src\\components\\Create\\Resource\\index.js",
+  "SelectedNode": "\\src\\components\\Account\\UsernameChange\\index.js",
   "PreviewInSolutionExplorer": false
 }

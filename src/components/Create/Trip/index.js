@@ -149,132 +149,146 @@ class CreateTripPage extends Component {
     render() {
  
         return (
-            <Container style={{backgroundColor: '#fff'}}>                
-                <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
-                    <Col xs="12">
-                        <h3>
-                            <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => {
-                                if (window.confirm('Are you sure you want to go back and cancel your post?')) {
-                                    this.props.history.goBack()
-                                }
-                            }} />
-                        </h3>
-                    </Col>
-                </Row>
-                <br />
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                        <Button color="link">
-                            <FontAwesome.FaInfoCircle style={{ color: 'grey' }}/>
-                        </Button>
-                    </InputGroupAddon>
-                    <Input
-                        placeholder='title'
-                        type="text"
-                        value={this.state.trekName}
-                        onChange={trekName => this.setState({ trekName: trekName.target.value })}                       
-                    />
-                </InputGroup>
-                <br/>
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                        <Button color="link">
-                            <FontAwesome.FaDollar style={{ color: 'grey' }} />
-                        </Button>
-                    </InputGroupAddon>
-                    <Input
-                        type="number"
-                        placeholder='0'
-                        value={this.state.budget === '0' ? '' : this.state.budget}
-                        onChange={budget => this.setState({ budget: budget.target.value })}                                
-                    />
-                </InputGroup>
-                <br />
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                        <Button color="link">
-                            <FontAwesome.FaHashtag style={{ color: 'grey' }} />
-                        </Button>
-                    </InputGroupAddon>
-                    <Input
-                        placeholder='add tags'
-                        type="text"
-                        value={this.state.currentTag}
-                        onChange={currentTag => this.setState({ currentTag: currentTag.target.value.replace(' ', '') })}
-                    />
-                    {this.state.currentTag !== ''
-                        ?
-                        (<InputGroupAddon addonType="append">
-                            <Button
-                                color="link"
-                                onClick={() => {
-                                    if (this.state.trekTags.indexOf(this.state.currentTag) === -1) {
-                                        var ct = this.state.trekTags;
-                                        ct.push(this.state.currentTag)
-                                        this.setState({ trekTags: ct })
+            <Row>
+                <Col xs="12" sm={{ size: 8, offset: 2 }}>
+                <Container style={{ color: '#fff', paddingTop: 10}}>      
+                    <Row style={{ top: 0, }}>
+                        <Col xs="4" style={{ paddingLeft: 0 }}>                        
+                            <h3>
+                                <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .9)' }} onClick={() => {
+                                    if (window.confirm('Are you sure you want to go back and cancel your post?')) {
+                                        this.props.history.goBack()
                                     }
-                                    this.setState({ currentTag: ''})
-                                }}>
-                                <FontAwesome.FaPlusSquare style={{ color: 'grey' }} />
-                            </Button>
-                        </InputGroupAddon>)
-                        :
-                        null
-                    }
-                </InputGroup>
-                {this.state.trekTags !== [] ? this.renderTagList() : null}
-                <br />
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                        <Button color="link">
-                            <FontAwesome.FaPencil style={{ color: 'grey' }} />
-                        </Button>
-                    </InputGroupAddon>
-                    <Input
-                        placeholder=''
-                        type="textarea"
-                        value={this.state.summary}
-                        onChange={summary => this.setState({ summary: summary.target.value })}
-                    />
-                </InputGroup>
-                <hr/>
-                <Row>
-                    {this.constructItinerary()}
-                </Row>
-                <hr/>
-                <Row>
-                    <Col xs="12">
-                        <Button                
-                            style={{width: '100%', backgroundColor: '#5b4fff'}}
-                            onClick={() => { this.addDay() }}>
+                                }} />
+                            </h3>
+                        </Col>
+                        <Col xs="4">
+                            <center><h2>New Trip</h2></center>
+                        </Col>
+                    </Row>
+                    <br />
+                    <div style={{ boxShadow: '0 2px 2px -2px #f8f8f8', paddingBottom: 30 }}>
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <Button color="link">
+                                    <FontAwesome.FaInfoCircle style={styles.IconStyle}/>
+                                </Button>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder='title'
+                                type="text"
+                                value={this.state.trekName}
+                                onChange={trekName => this.setState({ trekName: trekName.target.value })}                       
+                            />
+                        </InputGroup>
+                        <br/>
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <Button color="link">
+                                    <FontAwesome.FaDollar style={styles.IconStyle} />
+                                </Button>
+                            </InputGroupAddon>
+                            <Input
+                                type="number"
+                                placeholder='0'
+                                value={this.state.budget === '0' ? '' : this.state.budget}
+                                onChange={budget => this.setState({ budget: budget.target.value })}                                
+                            />
+                        </InputGroup>
+                        <br />
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <Button color="link">
+                                    <FontAwesome.FaHashtag style={styles.IconStyle} />
+                                </Button>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder='add tags'
+                                type="text"
+                                value={this.state.currentTag}
+                                onChange={currentTag => this.setState({ currentTag: currentTag.target.value.replace(' ', '') })}
+                            />
+                            {this.state.currentTag !== ''
+                                ?
+                                (<InputGroupAddon addonType="append">
+                                    <Button
+                                        color="link"
+                                        onClick={() => {
+                                            if (this.state.trekTags.indexOf(this.state.currentTag) === -1) {
+                                                var ct = this.state.trekTags;
+                                                ct.push(this.state.currentTag)
+                                                this.setState({ trekTags: ct })
+                                            }
+                                            this.setState({ currentTag: ''})
+                                        }}>
+                                        <FontAwesome.FaPlusSquare style={styles.IconStyle} />
+                                    </Button>
+                                </InputGroupAddon>)
+                                :
+                                null
+                            }
+                        </InputGroup>
+                        {this.state.trekTags !== [] ? this.renderTagList() : null}
+                        <br />
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <Button color="link">
+                                    <FontAwesome.FaPencil style={styles.IconStyle} />
+                                </Button>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder=''
+                                type="textarea"
+                                value={this.state.summary}
+                                onChange={summary => this.setState({ summary: summary.target.value })}
+                            />
+                        </InputGroup>
+                    </div>
+                    <Row>
+                        {this.constructItinerary()}
+                    </Row>
+                    <br/>
+                    <Row style={{ backgroundColor: 'rgba(255,255,255,.2)' }}>
+                        <Col xs="12">
+                            <Button 
+                                color="link"
+                                style={{width: '100%',}}
+                                onClick={() => { this.addDay() }}>
                             
-                            <h6 style={{ color: 'white' }}>
-                                <FontAwesome.FaPlusSquare />
-                                &nbsp; Add a day
-                            </h6>
-                        </Button>
-                    </Col>
-                </Row>
-                <br/>
-                <br />
-                <Row>
-                    <Col xs="12" style={{ padding: 0 }}>
-                        <FormGroup>
-                            <Button
-                                color="primary"
-                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
-                                title="Submit"
-                                onClick={() => { this.insertTrek() }}>
-                                <h4>
-                                    submit post &nbsp;&nbsp;
-                                    <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
+                                <h4 style={{ color: 'white' }}>
+                                    <FontAwesome.FaPlusSquare />
+                                    &nbsp; Add a day
                                 </h4>
                             </Button>
-                        </FormGroup>
-                    </Col>
-                </Row>
-            </Container>
+                        </Col>
+                    </Row>
+                    <br/>
+                    <br />
+                    <Row>
+                        <Col xs="12" style={{ padding: 0 }}>
+                            <FormGroup>
+                                <Button
+                                    style={{ backgroundColor: 'rgba(66,139,202)', float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderRadius: 0 }}
+                                    title="Submit"
+                                    onClick={() => { this.insertTrek() }}>
+                                    <h4>
+                                        submit post &nbsp;&nbsp;
+                                        <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
+                                    </h4>
+                                </Button>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                </Container>
+            </Col>
+        </Row>
         );
+    }
+}
+
+const styles = {
+    IconStyle: {
+        color: '#fff'
     }
 }
 

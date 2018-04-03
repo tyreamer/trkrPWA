@@ -15,7 +15,7 @@ class TagList extends Component {
                         onClick={() => {
                             //this.props.history.push(constants.routes.SEARCH, '#' + tag )
                         }}>
-                        <p style={{ paddingRight: 10, paddingBottom: 10, color: '#A6C3D7', display: 'inline' }}><small>#{tag}</small></p>
+                        <p style={{ paddingRight: 10, paddingBottom: 10, color: '#fff', display: 'inline' }}><small>#{tag}</small></p>
             </a>)
             i++;
         })

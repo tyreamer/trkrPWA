@@ -55,8 +55,7 @@ const styles = {
         padding: 0, 
         paddingTop: 10,           
         textAlign: 'center',
-        height: '56px',    
-        backgroundColor: '#6db5ff'
+        //backgroundColor: '#6db5ff'
     },
     IconStyle: {
         fontSize: '30px',

@@ -61,91 +61,99 @@ class CreateResourcePage extends Component {
 
     render() {
         return (
-            <Container style={{ backgroundColor: '#fff' }}> 
-                <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
-                    <Col xs="12">
-                        <h3>
-                            <FontAwesome.FaChevronLeft style={{ color: '#fff' }} onClick={() => {
-                                if (window.confirm('Are you sure you want to go back and cancel your post?')) {
-                                    this.props.history.goBack()
-                                }
-                            }} />
-                        </h3>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12">
-                        <Form>
-                            <hr />  
-                            <InputGroup style={{ height: 30 }} className="autocompleteBox">
-                                <Autocomplete
-                                    inputProps={{ placeholder: 'link URL', className: 'form-control' }}
-                                    renderInput={(props) => <input {...props} /> }
-                                    wrapperStyle={{ zIndex: 400, width: '100%' }}
-                                    getItemValue={(item) => item}
-                                    items={this.state.possibleLinks}
-                                    renderItem={(item, isHighlighted) =>
-                                        <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`} key={item}>
-                                            {item}
-                                        </div>
-                                    }
-                                    value={this.state.resourceLinkTextValue}
-                                    onChange={(event, text) => {
-                                        this.setState({
-                                            resourceLinkTextValue: text
-                                        })
-                                        var self = this
-                                        if (text && text.trim() !== '') {
-                                            var fetchURL = googleURL + `${'http://' + text}`;
-                                            JSONP(fetchURL, function (error, data) {
-                                                self.setState({ possibleLinks: data[1] })
-                                            });
-                                        } else {
-                                            self.setState({ possibleLinks: [] })
+            <Row>
+                <Col xs="12" sm={{ size: 8, offset: 2 }}>
+                    <Container style={{ color: '#fff', paddingTop: 10}}> 
+                        <Row style={{ top: 0, }}>
+                            <Col xs="4" style={{ paddingLeft: 0 }}>
+                                <h3>
+                                    <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .9)' }} onClick={() => {
+                                        if (window.confirm('Are you sure you want to go back and cancel your post?')) {
+                                            this.props.history.goBack()
                                         }
-                                    }}
-                                    onSelect={(val) => { this.setState({ resourceLink: val, resourceLinkTextValue: val }) }}
-                                />
-                            </InputGroup>
-                            <br/>
-                            <InputGroup style={{ height: 30 }}>                                
-                                <Input
-                                    placeholder="title"
-                                    type="text"
-                                    value={this.state.resourceTitle}
-                                    onChange={resourceTitle => this.setState({ resourceTitle: resourceTitle.target.value })}                                    
-                                />
-                            </InputGroup>
-                            <br/>  
-                            <InputGroup>                                
-                                <Input
-                                    placeholder="description"
-                                    type="textarea"
-                                    value={this.state.resourceSummary}
-                                    onChange={resourceSummary => this.setState({ resourceSummary: resourceSummary.target.value })}
-                                />
-                            </InputGroup>
-                        </Form>
-                    </Col>
-                </Row>
-                <hr />
-                <Row>
-                    <Col xs="12" style={{ padding: 0 }}>
-                        <FormGroup>
-                            <Button
-                                color="primary"
-                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
-                                title="Submit"
-                                onClick={() => { this.insertResource() }}>
-                                <h4>
-                                    submit post &nbsp;&nbsp;
-                                    <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
-                                </h4>
-                            </Button>
-                        </FormGroup>
-                    </Col>
-                </Row>
-            </Container>
+                                    }} />
+                                </h3>
+                            </Col>
+                            <Col xs="4" style={{color: '#fff'}}>
+                                <center><h2>New Resource</h2></center>
+                            </Col>
+                        </Row>
+                        <br/>
+                        <br />
+                        <Row>
+                            <Col xs="12">
+                                <Form> 
+                                    <InputGroup style={{ height: 30 }} className="autocompleteBox">
+                                        <Autocomplete
+                                            inputProps={{ placeholder: 'link URL', className: 'form-control' }}
+                                            renderInput={(props) => <input {...props} /> }
+                                            wrapperStyle={{ zIndex: 400, width: '100%' }}
+                                            getItemValue={(item) => item}
+                                            items={this.state.possibleLinks}
+                                            renderItem={(item, isHighlighted) =>
+                                                <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`} key={item}>
+                                                    {item}
+                                                </div>
+                                            }
+                                            value={this.state.resourceLinkTextValue}
+                                            onChange={(event, text) => {
+                                                this.setState({
+                                                    resourceLinkTextValue: text
+                                                })
+                                                var self = this
+                                                if (text && text.trim() !== '') {
+                                                    var fetchURL = googleURL + `${'http://' + text}`;
+                                                    JSONP(fetchURL, function (error, data) {
+                                                        self.setState({ possibleLinks: data[1] })
+                                                    });
+                                                } else {
+                                                    self.setState({ possibleLinks: [] })
+                                                }
+                                            }}
+                                            onSelect={(val) => { this.setState({ resourceLink: val, resourceLinkTextValue: val }) }}
+                                        />
+                                    </InputGroup>
+                                    <br/>
+                                    <InputGroup style={{ height: 30 }}>                                
+                                        <Input
+                                            placeholder="title"
+                                            type="text"
+                                            value={this.state.resourceTitle}
+                                            onChange={resourceTitle => this.setState({ resourceTitle: resourceTitle.target.value })}                                    
+                                        />
+                                    </InputGroup>
+                                    <br/>  
+                                    <InputGroup>                                
+                                        <Input
+                                            placeholder="description"
+                                            type="textarea"
+                                            value={this.state.resourceSummary}
+                                            onChange={resourceSummary => this.setState({ resourceSummary: resourceSummary.target.value })}
+                                        />
+                                    </InputGroup>
+                                </Form>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col xs="12" style={{ padding: 0 }}>
+                                <FormGroup>
+                                    <Button
+                                        color="primary"
+                                        style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderRadius: 0 }}
+                                        title="Submit"
+                                        onClick={() => { this.insertResource() }}>
+                                        <h4>
+                                            submit post &nbsp;&nbsp;
+                                            <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
+                                        </h4>
+                                    </Button>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Col>
+            </Row>
         );
     }
 }

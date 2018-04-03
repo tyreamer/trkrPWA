@@ -72,10 +72,10 @@ class MainFeed extends Component {
         var list=[]
         this.state.feedList.forEach(item => {
             switch (item.type) {
-                case "treks": list.push(<div style={{ display: 'flex', justifyContent: 'center', marginBottom: 50 }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} handleDeletedTrek={this.removeItem} /></div>)
+                case "treks": list.push(<div style={{ display: 'flex', justifyContent: 'center' }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} handleDeletedTrek={this.removeItem} /></div>)
                     break;
 
-                case "resources": list.push(<ResourceDetail key={item.id} resource={item.details} handleDeletedResource={this.removeItem} />)
+                case "resources": list.push(<ResourceDetail key={item.id} id={item.id} resource={item.details} handleDeletedResource={this.removeItem} />)
                     break;
 
                 case "tips": list.push(<TipDetail key={item.id} id={item.id} tip={item.details} handleDeletedTip={this.removeItem} />)

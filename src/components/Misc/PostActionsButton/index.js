@@ -21,8 +21,8 @@ class PostActionsButton extends Component {
 
     render() {
         return (<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} direction="up" >
-                    <DropdownToggle style={{ backgroundColor: '#fff', border: 'none' }}>
-                        <FontAwesome.FaEllipsisH style={{ color: 'grey' }} />
+            <DropdownToggle style={{ border: 'none', backgroundColor: 'rgba(255, 255, 255, 0.0)' }}>
+                        <FontAwesome.FaEllipsisH style={{ color: '#fff' }} />
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>

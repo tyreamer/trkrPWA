@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as FontAwesome from 'react-icons/lib/fa'
 import { Row, Col, Button } from 'reactstrap'
 import * as constants from '../../constants'
+import * as helpers from '../../helpers'
 
 import * as firebase from 'firebase'
 
@@ -173,20 +174,20 @@ class Interactions extends Component {
     }
 
     renderInteractions() {
-        var likes = this.state.totalLikes
+        var likes = helpers.formatNumber(this.state.totalLikes);
         return (
-            <Row style={{ backgroundColor: '#fff' }}>
+            <Row>
                 <Col xs="4" style={{ alignItems: 'center' }}>
                     <Button color="link" style={styles.InteractionButtonStyle} onClick={() => { this.likePost(false) }}>
-                        {this.state.userLikesPost === false ? <FontAwesome.FaThumbsDown style={{ color: '#ff5858' }} /> : <FontAwesome.FaThumbsODown style={{ transform: 'rotate: (90deg)' }} />}
+                        {this.state.userLikesPost === false ? <FontAwesome.FaThumbsDown size={30} style={{color: '#ff5858' }} /> : <FontAwesome.FaThumbsODown style={{ color: '#fff' }} />}
                     </Button>
                 </Col>                       
                 <Col xs="4">
-                    <Button color="link" style={styles.InteractionButtonStyle}>{likes}</Button>
+                    <Button color="link" style={styles.InteractionButtonStyle}><h3>{likes}</h3></Button>
                 </Col>
                 <Col xs="4">
                     <Button color="link" style={styles.InteractionButtonStyle} onClick={() => { this.likePost(true) }}>
-                        {this.state.userLikesPost === true ? <FontAwesome.FaThumbsUp style={{ color: '#b5ff6d' }} /> : <FontAwesome.FaThumbsOUp />}
+                        {this.state.userLikesPost === true ? <FontAwesome.FaThumbsUp size={30} style={{ color: '#58ff58' }} /> : <FontAwesome.FaThumbsOUp style={{ color: '#fff' }}/>}
                     </Button>
                 </Col>                   
             </Row>
@@ -199,7 +200,7 @@ class Interactions extends Component {
 
 const styles = {
     InteractionButtonStyle: {
-        color: '#000',
+        color: '#fff',
         fontWeight: 'bold',
         width: '100%',
         textAlign: 'center'

@@ -23,15 +23,15 @@ class TrekDay extends Component {
     constructStops() {
         if (this.state.stops === null) return;
         if (this.state.stops.length > 0) {
-            console.log(this.state.stops)
-            return this.state.stops.map(stop => <TrekItem key={stop.key} stop={stop} />);
+            return this.state.stops.map(stop => <TrekItem key={stop.key} stop={stop} totalStops={this.state.stops.length} />);
         }
     }
 
     addStop(address) {
         if (this.state.stops === null) return;
         if (address !== null) {
-            var nextStop = this.state.stops.length > 0 ? this.state.stops[this.state.stops.length - 1]["day"] + 1 : 1;
+            var nextStop = this.state.stops.length + 1;
+            
             var newStopsArr = this.state.stops.concat({
                 "key": nextStop,
                 "description": address,
@@ -63,7 +63,7 @@ class TrekDay extends Component {
             onChange: this.onChange,
             onSelect: this.onSelect,
             placeholder: "Add a stop for Day " + this.state.day,
-            style: {backgroundColor: 'red', width: '100%'}
+            style: { backgroundColor: 'red', width: '100%' }
         }
 
         const cssClasses = {
@@ -80,43 +80,45 @@ class TrekDay extends Component {
         //    autocompleteItem: { color: 'purple'  },
         //    autocompleteItemActive: { color: 'blue' }
         //}
-        
+
         /* End Constants for Google AutoComplete */
 
         return (
-            <Container style={{marginTop: 40}}>
-                <Row style={{ backgroundColor: '#ff8142' }}>
-                    <Col xs="8">
-                        <h5 style={{ color: '#fff' }}>Day {this.state.day}</h5>
-                    </Col>
-                    <Col xs="4">
-                        <Button
-                            color="link"
-                            style={{ float: 'right' }}
-                            onClick={() => { this.removeDay() }}>
-                            <FontAwesome.FaMinusCircle style={{ fontSize: 25, color: '#fff' }} />
-                        </Button>
-                    </Col>
-                </Row>
-                <br/>
-                {this.constructStops()}
-                <InputGroup>   
-                    <PlacesAutocomplete
-                        inputProps={inputProps}
-                        classNames={cssClasses}
-                        //styles={myStyles}
-                        onSelect={(address, placeId) => {
-                            geocodeByPlaceId(placeId)
-                                .then((results) => {
-                                    console.log(results[0])
-                                    this.addStop(results[0].formatted_address);
-                                    this.setState({ stopTextValue: '' })
-                                })
-                                .catch(error => console.error(error))
-                            }}
-                    />            
-                </InputGroup>
-            </Container>
+            <Col xs="12" style={{ marginTop: 40 }}>
+                <Container>
+                    <Row>
+                        <Col xs="8">
+                            <h3 style={{ color: '#fff' }}>Day {this.state.day}</h3>
+                        </Col>
+                        <Col xs="4">
+                            <Button
+                                color="link"
+                                style={{ float: 'right' }}
+                                onClick={() => { this.removeDay() }}>
+                                <FontAwesome.FaMinusCircle style={{ fontSize: 25, color: '#fff' }} />
+                            </Button>
+                        </Col>
+                    </Row>
+                    <br/>
+                    {this.constructStops()}
+                    <InputGroup>   
+                        <PlacesAutocomplete
+                            inputProps={inputProps}
+                            classNames={cssClasses}
+                            //styles={myStyles}
+                            onSelect={(address, placeId) => {
+                                geocodeByPlaceId(placeId)
+                                    .then((results) => {
+                                        console.log(results[0])
+                                        this.addStop(results[0].formatted_address);
+                                        this.setState({ stopTextValue: '' })
+                                    })
+                                    .catch(error => console.error(error))
+                                }}
+                        />            
+                    </InputGroup>
+                </Container>
+            </Col>
         )
     }
 }
