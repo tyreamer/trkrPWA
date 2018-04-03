@@ -71,7 +71,7 @@ class TrekDetail extends Component {
 
 
         return (
-            <Col xs="12" sm={{ size: 6 }} lg={{ size: 4 }} style={{ width: 300, marginBottom: 50 }}> 
+            <Col className="trek-highlight" xs="12" sm={{ size: 6 }} lg={{ size: 4 }} style={{ width: 300, marginBottom: 50 }}> 
                 <Row className="trek-link trek-header" onClick={() => this.goToPost()} style={{ backgroundColor: 'rgba(255,255,255,.2)', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15  }}>
                     <Col xs="12">
                         <h3><b>{this.props.trekRecord.title}</b></h3>                            

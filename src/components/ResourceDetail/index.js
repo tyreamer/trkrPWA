@@ -49,9 +49,9 @@ class ResourceDetail extends Component {
         var item = this.props.resource;
         var hasSummary = (item.resourceSummary !== undefined && item.resourceSummary.trim() !== "")
 
-        return (<Row style={{ marginBottom: 50}}>
+        return (<Row style={{ marginBottom: 50 }}>
                     <Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} key={item.link + item.datePosted}>
-                        <Container style={{ backgroundColor: 'rgba(255,255,255,.2)', color: '#fff', width: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }}>
+                        <Container className="resource-highlight" style={{ backgroundColor: 'rgba(255,255,255,.2)', color: '#fff', width: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }}>
                             <a href={item.link} target="_blank">
                                 <Row className="resource-header" style={{ color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15 }} >
                                     <Col xs="10">

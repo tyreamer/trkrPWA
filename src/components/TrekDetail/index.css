@@ -10,3 +10,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+.trek-highlight:active {
+    box-shadow: 0 0px 20px 0px #f8f8f8;
+}
