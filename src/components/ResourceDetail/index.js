@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import * as FontAwesome from 'react-icons/lib/fa'
 import { Row, Col, Container } from 'reactstrap'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import * as firebase from 'firebase'
 import PostActionsButton from '../Misc/PostActionsButton'
 import * as constants from '../../constants'
+import './index.css'
 
 class ResourceDetail extends Component {
 
@@ -52,7 +53,7 @@ class ResourceDetail extends Component {
                     <Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} key={item.link + item.datePosted}>
                         <Container style={{ backgroundColor: 'rgba(255,255,255,.2)', color: '#fff', width: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }}>
                             <a href={item.link} target="_blank">
-                                <Row style={{ backgroundColor: 'rgba(91,79,255,.8)', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15 }} >
+                                <Row className="resource-header" style={{ color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15 }} >
                                     <Col xs="10">
                                         <h5><b>{item.resourceTitle}</b></h5>
                                     </Col>
@@ -76,7 +77,9 @@ class ResourceDetail extends Component {
                                     {this.renderEditable()}
                                 </Col>
                                 <Col xs="6" style={{ textAlign: 'right' }}>
-                                    <p><small>{item.user} </small></p>
+                                    <Link style={{ color: '#fff' }} to={{ pathname: constants.routes.PROFILE, state: { user: item.user } }}>
+                                        <p><small>{item.user} </small></p>
+                                    </Link>
                                 </Col>
                             </Row>                    
                         </Container>

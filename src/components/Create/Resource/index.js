@@ -75,7 +75,6 @@ class CreateResourcePage extends Component {
                                 </h3>
                             </Col>
                             <Col xs="4" style={{color: '#fff'}}>
-                                <center><h2>New Resource</h2></center>
                             </Col>
                         </Row>
                         <br/>

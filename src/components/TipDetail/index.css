@@ -1,0 +1,7 @@
+.tip-header {
+    background: #6db5ff; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6db5ff, #6dfeff); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6db5ff, #6dfeff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

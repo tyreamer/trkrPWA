@@ -116,7 +116,6 @@ class CreateTipPage extends Component {
                                 </h3>
                             </Col>
                             <Col xs="4" style={{color: '#fff'}}>
-                                <center><h2>New Tip</h2></center>
                             </Col>
                         </Row>
                         <br />

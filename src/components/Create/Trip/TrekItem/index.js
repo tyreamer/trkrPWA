@@ -38,8 +38,8 @@ const TrekItem = (props) => {
                     <h4 style={{ position: 'absolute', zIndex: 15 }}>
                         {
                             props.totalStops !== props.stop.key ? renderSVG() : null
-                        } 
-                        <FontAwesome.FaCircle style={{ color: '#' + helpers.getColorFromString(location).substring(2) }} />
+                        }
+                        <FontAwesome.FaDotCircleO style={{ color: '#' + helpers.getColorFromString(location).substring(2) }} />
                     </h4>
                 </Col>
                 <Col xs="10">

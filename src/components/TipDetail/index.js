@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import * as constants from '../../constants';
 import { Row, Col, Container } from 'reactstrap'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import TagList from '../TagList'
 import * as firebase from 'firebase'
 import PostActionsButton from '../Misc/PostActionsButton'
+import './index.css'
 
 class TipDetail extends Component {
 
@@ -68,7 +69,7 @@ class TipDetail extends Component {
         return (<Row style={{ marginBottom: 50}}>
                     <Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }}>
                         <Container>
-                            <Row style={styles.HeaderStyle}>
+                            <Row className="tip-header" style={styles.HeaderStyle}>
                                 <Col xs="12">
                                     <h4 style={{ fontWeight: 'bold' }}>{this.props.tip.tipTitle}</h4>
                                 </Col>
@@ -83,16 +84,17 @@ class TipDetail extends Component {
                                 </Col>
                             </Row>
                             <Row style={styles.BodyStyle}>
-                                <Col xs="2">
+                                <Col xs="2" style={{ paddingLeft: 0 }}>
                                     {this.renderEditable()}
                                 </Col>
-                                <Col xs="10">
-                                    <p style={{ textAlign: 'right', lineHeight: .9  }}
-                                        onClick={() => { this.props.history.push(constants.routes.PROFILE) }}>
-                                        <b> {this.props.tip.user ? this.props.tip.user : ""} </b>                            
-                                        <br/>
-                                        <small>{date}</small>
-                                    </p>
+                                <Col xs="10" style={{ textAlign: 'right' }}>
+                                    <Link style={{ color: '#fff' }} to={{ pathname: constants.routes.PROFILE, state: { user: this.props.tip.user ? this.props.tip.user : "" } }}>                                     
+                                        <p style={{ textAlign: 'right', lineHeight: .9 }}>
+                                            <b> {this.props.tip.user ? this.props.tip.user : ""} </b>
+                                            <br />
+                                            <small>{date}</small>
+                                        </p>
+                                    </Link>
                                 </Col>
                             </Row>
                     </Container>
@@ -102,8 +104,7 @@ class TipDetail extends Component {
 }
 
 const styles = {
-    HeaderStyle: {
-        backgroundColor: 'rgba(109,181,255,.9)',
+    HeaderStyle: {       
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         color: '#fff',

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { Row, Button } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import * as constants from '../../constants';
+import './index.css'
 
 class CreatePage extends Component {
     
@@ -13,25 +14,31 @@ class CreatePage extends Component {
             <div style={{ marginTop: '10%'}}>
                 <Row>
                     <Link to={constants.routes.CREATE_TRIP} style={{ color: '#fff', width: '100%' }}>
-                        <Button color="link" style={{ ...styles.CreateButtonStyle, ...styles.CreateButton1 }}>
-                            <FontAwesome.FaPlane style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }}/>
-                            <p style={{ color: '#fff' }}>Plan a new trip</p>
+                        <Button id="create-trip-button" color="link" style={{ ...styles.CreateButtonStyle }}>
+                            <h4 style={{ color: '#fff' }}> 
+                                Plan a new trip &nbsp;
+                                <FontAwesome.FaPlane size={35} style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
+                            </h4>
                         </Button>
                     </Link>
                 </Row>
                 <Row>
                     <Link to={constants.routes.CREATE_RESOURCE} style={{ color: '#fff', width: '100%' }}>
-                        <Button color="link" style={{ ...styles.CreateButtonStyle, ...styles.CreateButton2 }}>
-                            <FontAwesome.FaExternalLink style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
-                            <p style={{ color: '#fff' }}>Share a link</p>
+                        <Button id="create-resource-button" color="link" style={{ ...styles.CreateButtonStyle }}>
+                            <h4 style={{ color: '#fff' }}>                                
+                                Share a link &nbsp;
+                                <FontAwesome.FaExternalLink size={35} style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
+                            </h4>
                         </Button>
                     </Link>
                 </Row>
                 <Row>
                     <Link to={constants.routes.CREATE_TIP} style={{ color: '#fff', width: '100%' }}>
-                        <Button color="link" style={{ ...styles.CreateButtonStyle, ...styles.CreateButton3 }}>
-                            <FontAwesome.FaLightbulbO style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
-                            <p style={{ color: '#fff' }}>Share a tip</p>
+                        <Button id="create-tip-button" color="link" style={{ ...styles.CreateButtonStyle }}>
+                            <h4 style={{ color: '#fff' }}> 
+                                Share a tip &nbsp;
+                                <FontAwesome.FaLightbulbO size={35} style={{ paddingLeft: 10, fontSize: 30, color: '#fff' }} />
+                            </h4>
                         </Button>
                     </Link>
                 </Row>
@@ -46,15 +53,6 @@ const styles = {
         width: '100%',
         alignContent: 'center',
         marginBottom: 15
-    },
-    CreateButton1: {
-        backgroundColor: '#5b4fff' 
-    },
-    CreateButton2: {
-        backgroundColor: '#ff8142'
-    },
-    CreateButton3: {
-        backgroundColor: '#ff5858'
     }
 }
 

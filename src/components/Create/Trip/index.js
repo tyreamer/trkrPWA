@@ -163,7 +163,7 @@ class CreateTripPage extends Component {
                             </h3>
                         </Col>
                         <Col xs="4">
-                            <center><h2>New Trip</h2></center>
+                           
                         </Col>
                     </Row>
                     <br />
