@@ -10,6 +10,7 @@ import TagList from '../TagList';
 import Interactions from '../Interactions';
 import PostActionsButton from '../Misc/PostActionsButton';
 import './index.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 class TrekDetail extends Component {
 
@@ -42,6 +43,7 @@ class TrekDetail extends Component {
     deletePost(key) {
         if (window.confirm('Are you sure you want to delete this post?')) {
             db.doRemoveTrek(key)
+            toast.success('Successfully deleted', { position: toast.POSITION.BOTTOM_CENTER });
             this.props.handleDeletedTrek(key);
         }        
     }
@@ -129,7 +131,8 @@ class TrekDetail extends Component {
                             </Col>
                         </Row>                        
                     </Container>
-                  </Row>
+                </Row>
+                <ToastContainer autoClose={2000} />
             </Col>
         );
     }

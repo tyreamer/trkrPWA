@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 import PostActionsButton from '../Misc/PostActionsButton'
 import * as constants from '../../constants'
 import './index.css'
+import { ToastContainer, toast } from 'react-toastify';
 
 class ResourceDetail extends Component {
 
@@ -36,6 +37,7 @@ class ResourceDetail extends Component {
             }
         });
 
+        toast.success('Successfully deleted', { position: toast.POSITION.BOTTOM_CENTER });
         this.props.handleDeletedResource(key);
     }
 
@@ -84,6 +86,7 @@ class ResourceDetail extends Component {
                             </Row>                    
                         </Container>
                     </Col>   
+                    <ToastContainer autoClose={2000} />
                 </Row>
         );
     }

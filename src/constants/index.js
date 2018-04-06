@@ -22,7 +22,7 @@ export const databaseSchema = {
         }
     },
     USER_TREKS: {
-        root: 'user-posts',
+        root: 'user-treks',
         children: {
 
         }

@@ -61,7 +61,7 @@ class CreateTripPage extends Component {
     }
 
     addStopToDay = (stopNum, stopInfo, dayNum) => {
-        var newStopsArr = this.state.days[dayNum - 1].stops.concat({ key: this.state.days[dayNum - 1].stops.length, "stopDetails": stopInfo });
+        var newStopsArr = this.state.days[dayNum - 1].stops.concat({ key: this.state.days[dayNum - 1].stops.length, "stopName": stopInfo });
 
         var newDaysArr = this.state.days
         newDaysArr[dayNum - 1]["stops"] = newStopsArr

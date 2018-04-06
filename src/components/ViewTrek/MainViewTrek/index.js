@@ -56,6 +56,13 @@ class MainViewTrek extends Component {
         
         if (day.stops !== undefined) {
             for (var i = 0; i < day.stops.length; i++) {
+
+                var markerColor = "fff"
+                var color = helpers.getColorFromString(day.stops[i].stopName)
+                if (color != null) {
+                    markerColor = color.substring(2)
+                }
+
                 stops.push(
                     <div key={day.stops[i].stopName + i} style={{ paddingTop: 10 }} className="clearfix">
                         {
@@ -72,7 +79,7 @@ class MainViewTrek extends Component {
                         <Row>
                             <Col xs="2">
                                 <h4 style={{ position: 'absolute', zIndex: 15 }}>
-                                    <FontAwesome.FaDotCircleO style={{ color: '#' + helpers.getColorFromString(day.stops[i].stopName).substring(2) }} />
+                                    <FontAwesome.FaDotCircleO style={{ color: '#' + markerColor }} />
                                 </h4>                                
                             </Col>
                             <Col xs="10">

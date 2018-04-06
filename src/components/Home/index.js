@@ -23,12 +23,12 @@ class HomePage extends Component {
                         <Link to={constants.routes.SEARCH} style={{ color: '#fff', width: '100%' }}>
                             <Form>
                                 <FormGroup>
-                                    <InputGroup>
+                                    <InputGroup style={{color: '#fff'}}>
                                         <Input
                                             onChange={event => this.setState(updateByPropertyName('searchText', event.target.value))}
                                             value={this.state.searchText}
                                             type="text"
-                                            placeholder="search" />
+                                            placeholder="search"/>
                                     </InputGroup>                                
                                 </FormGroup>
                             </Form>
