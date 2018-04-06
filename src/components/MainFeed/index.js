@@ -6,6 +6,7 @@ import TrekDetail from '../TrekDetail'
 import TipDetail from '../TipDetail'
 import ResourceDetail from '../ResourceDetail'
 import { db } from '../../firebase';
+import * as constants from '../../constants'
 
 class MainFeed extends Component {
 
@@ -70,9 +71,9 @@ class MainFeed extends Component {
 
     createFeed() {
         var list=[]
-        this.state.feedList.forEach(item => {
+        this.state.feedList.forEach(item => {           
             switch (item.type) {
-                case "treks": list.push(<div style={{ display: 'flex', justifyContent: 'center' }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} handleDeletedTrek={this.removeItem} /></div>)
+                case constants.databaseSchema.TREKS.root: list.push(<div style={{ display: 'flex', justifyContent: 'center' }} key={item.id}><TrekDetail id={item.id} trekRecord={item.details} handleDeletedTrek={this.removeItem} /></div>)
                     break;
 
                 case "resources": list.push(<ResourceDetail key={item.id} id={item.id} resource={item.details} handleDeletedResource={this.removeItem} />)

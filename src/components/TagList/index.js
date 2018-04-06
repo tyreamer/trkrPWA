@@ -18,7 +18,7 @@ class TagList extends Component {
                     state={'#' + tag}
                     style={{ height: 20, paddingLeft: 0, marginBottom: 5, paddingBottom: 18, borderBottomWidth: 0, marginLeft: 0 }}
                     to={{ pathname: constants.routes.SEARCH, state: { searchText: '#' + tag } }}>
-                    <p style={{ paddingRight: 10, paddingBottom: 10, color: '#fff', display: 'inline' }}><small>#{tag}</small></p>
+                    <h5 style={{ paddingRight: 10, paddingBottom: 10, color: '#c9f4ff', display: 'inline' }}><small>#{tag}</small></h5>
                 </Link>)
             i++;
         })

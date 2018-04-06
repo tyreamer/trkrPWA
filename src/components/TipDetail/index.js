@@ -6,6 +6,7 @@ import TagList from '../TagList'
 import * as firebase from 'firebase'
 import PostActionsButton from '../Misc/PostActionsButton'
 import './index.css'
+import { ToastContainer, toast } from 'react-toastify';
 
 class TipDetail extends Component {
 
@@ -52,6 +53,8 @@ class TipDetail extends Component {
                     }
                 }
             });
+                        
+            toast.success('Successfully deleted', { position: toast.POSITION.BOTTOM_CENTER });
 
             this.props.handleDeletedTip(key);
         }
@@ -99,6 +102,7 @@ class TipDetail extends Component {
                             </Row>
                     </Container>
                 </Col>
+                <ToastContainer autoClose={2000} />
             </Row>);
     }
 }

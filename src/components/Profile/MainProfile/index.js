@@ -45,7 +45,7 @@ class MainProfile extends Component {
         var myTreks = []
         if (this.state.user !== undefined && this.state.user !== null) {
             //retrieve posts
-            firebase.database().ref('/user-posts').child(this.state.user).once('value')
+            firebase.database().ref(constants.databaseSchema.USER_TREKS.root).child(this.state.user).once('value')
                 .then(function (snapshot) {
                     snapshot.forEach(function (child) {
                         myTreks.unshift({ id: child.key, details: child.val() })
@@ -55,13 +55,13 @@ class MainProfile extends Component {
                 .catch((e) => console.log('Fetch Error (treks): ' + e))
 
             //retrieve photo
-            firebase.database().ref('/users').child(this.state.user).once('value')
+            firebase.database().ref(constants.databaseSchema.USERS.root).child(this.state.user).once('value')
                 .then(function (snapshot) {
                     if (snapshot.hasChild('photo')) {
                         self.setState({ userPhoto: snapshot.child('photo').val() })
                     }
                 })
-                .catch((e) => console.log('Fetch Error (treks): ' + e))
+                .catch((e) => console.log('Fetch Error (' + constants.databaseSchema.USERS.root +'): ' + e))
         }   
 
         var myResources = [];
