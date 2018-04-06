@@ -5,10 +5,15 @@ import TrekDetail from '../../TrekDetail'
 import TipDetail from '../../TipDetail'
 import ResourceDetail from '../../ResourceDetail'
 import * as firebase from 'firebase';
-import Spinner from '../../Misc/Spinner'
+import Spinner from '../../Misc/Spinner';
+import * as constants from '../../../constants'
+import { withRouter } from 'react-router-dom';
 
 
-export default class SearchFeed extends Component {
+const WAIT_INTERVAL = 800;
+const ENTER_KEY = 13;
+
+class SearchFeed extends Component {
 
     state = {
         searchText: '',
@@ -16,7 +21,18 @@ export default class SearchFeed extends Component {
     }
 
     componentWillMount() {
+        this.timer = null;
         this.getSearchText()
+
+        this.triggerSearch = this.triggerSearch.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location.state.searchText !== this.state.searchText) {
+            this.setState({ searchText: nextProps.location.state.searchText });
+            this.searchSubmit(nextProps.location.state.searchText)
+        }
     }
 
     componentDidMount() {
@@ -45,9 +61,9 @@ export default class SearchFeed extends Component {
         let text = searchText.toLowerCase();
         
         switch (type) {
-            case "treks": return this.filterForTreks(data, text)
-            case "tips": return this.filterForTips(data, text)
-            case "resources": return this.filterForResources(data, text)
+            case constants.databaseSchema.TREKS.root: return this.filterForTreks(data, text)
+            case constants.databaseSchema.TIPS.root: return this.filterForTips(data, text)
+            case constants.databaseSchema.RESOURCES.root: return this.filterForResources(data, text)
             default: return;
         }
     }
@@ -72,6 +88,7 @@ export default class SearchFeed extends Component {
     }
 
     filterForResources(data, text) {
+
         //first check titles
         if (data.resourceTitle.toLowerCase().indexOf(text) !== -1) {
             return true
@@ -86,6 +103,7 @@ export default class SearchFeed extends Component {
     }
 
     filterForTreks(data, text) {
+        
         //first check titles
         if (data.title.toLowerCase().indexOf(text) !== -1) {
             return true
@@ -96,7 +114,9 @@ export default class SearchFeed extends Component {
             for (var i = 0, len = data.days.length; i < len; i++) {
                 if (typeof data.days[i].stops !== "undefined") {
                     for (var j = 0, len2 = data.days[i].stops.length; j < len2; j++) {
-                        if (data.days[i].stops[j].stopName.toLowerCase().indexOf(text) !== -1) return true
+                        if (data.days[i].stops[j].length > 0) {
+                            if (data.days[i].stops[j].stopName.toLowerCase().indexOf(text) !== -1) return true
+                        }
                     }
                 }
             }
@@ -140,8 +160,27 @@ export default class SearchFeed extends Component {
             })
     }
 
-    searchSubmit(e) {
-        let searchText = e.target.value
+    handleChange(e) {
+        clearTimeout(this.timer);
+
+        this.setState({ searchText: e.target.value});
+
+        this.timer = setTimeout(this.triggerSearch, WAIT_INTERVAL);
+    }
+
+    handleKeyDown(e) {
+        if (e.keyCode === ENTER_KEY) {
+            this.triggerSearch();
+        }
+    }
+
+    triggerSearch() {
+        this.searchSubmit(this.state.searchText);
+    }
+
+    searchSubmit(text) {
+        //Check if this was a parameter being passed or from the input
+        var searchText = text;
 
         if (searchText !== undefined) {
             this.updateSearchText(searchText)
@@ -231,8 +270,9 @@ export default class SearchFeed extends Component {
                             <Input
                                 innerRef={(input) => { this.searchInput = input; }}
                                 value={this.state.searchText}
-                                placeholder={this.state.searchText ? this.state.searchText : 'search' }
-                                onChange={this.searchSubmit.bind(this)}
+                                placeholder={this.state.searchText ? this.state.searchText : 'search'}
+                                onChange={this.handleChange.bind(this)}
+                                onKeyDown={this.handleKeyDown}
                             />
                             <InputGroupAddon addonType = "append">
                                 <Button color="link" style={{color: '#f8f8f8'}}><FontAwesome.FaSearch /></Button>
@@ -243,7 +283,7 @@ export default class SearchFeed extends Component {
                 <hr/>
                 <Row>
                     <Col xs="12">
-                        {this.state.showSpinner ? <Spinner /> : null}
+                        {this.state.showSpinner ? <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner /></div> : null}
                         {this.getResults()}
                     </Col>
                 </Row>
@@ -251,3 +291,6 @@ export default class SearchFeed extends Component {
         );
     }
 }
+
+
+export default withRouter(SearchFeed);

@@ -3,18 +3,17 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Account",
-    "\\src\\components\\Account\\PasswordChange",
-    "\\src\\components\\Account\\UsernameChange",
     "\\src\\components\\Create",
-    "\\src\\components\\Create\\Resource",
-    "\\src\\components\\Create\\Tip",
-    "\\src\\components\\Interactions",
-    "\\src\\components\\Profile",
-    "\\src\\components\\Profile\\MainProfile",
-    "\\src\\components\\TipDetail",
-    "\\src\\firebase"
+    "\\src\\components\\Create\\Trip",
+    "\\src\\components\\Create\\Trip\\TrekDay",
+    "\\src\\components\\Create\\Trip\\TrekItem",
+    "\\src\\components\\Navigation",
+    "\\src\\components\\TrekDetail",
+    "\\src\\components\\ViewTrek",
+    "\\src\\components\\ViewTrek\\MainViewTrek",
+    "\\src\\constants",
+    "\\src\\helpers"
   ],
-  "SelectedNode": "\\src\\components\\Account\\UsernameChange\\index.js",
+  "SelectedNode": "\\src\\components\\TipDetail\\index.js",
   "PreviewInSolutionExplorer": false
 }

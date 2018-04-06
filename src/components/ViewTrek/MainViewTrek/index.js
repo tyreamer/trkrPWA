@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import * as FontAwesome from 'react-icons/lib/fa'
-import * as IonIcon from 'react-icons/lib/io'
+import * as FontAwesome from 'react-icons/lib/fa';
 import * as constants from '../../../constants';
 import * as helpers from '../../../helpers';
 //import DynamicGMap from '../../DynamicGMap'
