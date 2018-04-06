@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import * as FontAwesome from 'react-icons/lib/fa'
-import * as IonIcon from 'react-icons/lib/io'
+import * as FontAwesome from 'react-icons/lib/fa';
 import * as constants from '../../../constants';
 import * as helpers from '../../../helpers';
 //import DynamicGMap from '../../DynamicGMap'
@@ -33,16 +32,19 @@ class MainViewTrek extends Component {
 
         if (days !== undefined) {
             for (var i = 0; i < this.state.trek.days.length; i++) {
-                days.push(
-                    <Container style={{ marginTop: 0, marginBottom: 0, paddingLeft: 0, paddingRight: 0 }} key={"Day" + i + 1}>
-                        <Row style={{ backgroundColor: '#f8f8f8' }}>
+
+                if (this.state.trek.days[i].stops !== undefined) {    
+                    days.push(
+                    <Container style={{ marginTop: 10, marginBottom: 0, paddingLeft: 0, paddingRight: 0 }} key={"Day" + i + 1}>
+                        <Row style={{ color: '#fff',  }}>
                             <Col xs="12">
-                                <h4>day {i + 1}</h4>
+                                <h3>Day {i + 1}</h3>
                             </Col>
                         </Row>
                         {this.renderStops(this.state.trek.days[i]) }
-                    </Container >
-                );
+                    </Container>
+                    );
+                }
             }
         }
 
@@ -60,8 +62,8 @@ class MainViewTrek extends Component {
                             i !== day.stops.length - 1
                             ?
                                 (<div style={{ position: 'relative', left: 0, top: 0, zIndex: 1}}>
-                                    <svg style={{ position: 'absolute', top: 0, left: -8, zIndex: 1 }} >
-                                        <line className="markerLine" x1="20" x2="20" y1="20" y2="100" stroke="#c9f4ff" strokeWidth="5" strokeDasharray="3, 4" />
+                                    <svg style={{ position: 'absolute', top: 5, left: -8, zIndex: 1, width: 45 }} >
+                                        <line className="markerLine" x1="20" x2="20" y1="20" y2="75" stroke="#c9f4ff" strokeWidth="5" strokeDasharray="3, 4" />
                                     </svg>
                                 </div>)
                             :
@@ -70,11 +72,11 @@ class MainViewTrek extends Component {
                         <Row>
                             <Col xs="2">
                                 <h4 style={{ position: 'absolute', zIndex: 15 }}>
-                                    <IonIcon.IoAndroidPin style={{ color: '#' + helpers.getColorFromString(day.stops[i].stopName).substring(2) }} />
+                                    <FontAwesome.FaDotCircleO style={{ color: '#' + helpers.getColorFromString(day.stops[i].stopName).substring(2) }} />
                                 </h4>                                
                             </Col>
                             <Col xs="10">
-                                <h6 style={{ fontWeight: 'normal', paddingTop: 10 }}>{day.stops[i].stopName}</h6>
+                                <h6 style={{ fontWeight: 'normal', paddingTop: 10, color: '#fff' }}>{day.stops[i].stopName}</h6>
                             </Col>
                         </Row>                        
                         <br/>
@@ -120,21 +122,26 @@ class MainViewTrek extends Component {
         
         return (
             <Container>
-                <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
-                    <Col xs="12">
+                <Row style={{ position: 'sticky', top: 0, color: '#fff' }}>
+                    <Col xs="2">
                         <h3 style={{ float: 'left'}}>
                             <FontAwesome.FaChevronLeft style={{ color: '#fff' }} onClick={() => {
                                     this.props.history.goBack()
                             }} />                            
                         </h3>
-                        <h3 style={{ color: '#fff', float: 'right' }}>
+                    </Col>
+                    <Col xs="8">
+                        <center><b><h3>{trek.title}</h3></b></center>
+                    </Col>
+                    <Col xs="2">
+                        <h3 style={{ float: 'right' }}>
                             <FontAwesome.FaBookmarkO onClick={() => { window.confirm('Save trip?') }} />
                         </h3>
                     </Col>
                 </Row>
                 <Row>
                     <Container>
-                        <Row style={{ color: '#fff', backgroundColor: 'rgba(109,181,255, .8)', paddingBottom: 5 }}>
+                        <Row style={{ color: '#fff', backgroundColor: 'rgba(255,255,255, .1)', padding: 15 }}>
                             <Col xs="3" style={styles.HeaderColStyle}>
                                 <h5 style={{ display: 'inline' }}><FontAwesome.FaCalendarO /></h5>
                                 <h6 style={{ display: 'inline' }}> {trek.days.length}</h6>
@@ -151,33 +158,28 @@ class MainViewTrek extends Component {
                         <Row style={{padding: 0}}>
                             <StaticGMap trekDays={trek.days} size="5000x300" />
                         </Row>
-                        <Row style={{ backgroundColor: '#6db5ff' }}>
-                            <Col xs="12">
-                               <center> <p style={{ fontWeight: 'bold', fontSize: 20, color: '#fff' }}>{trek.title}</p> </center>
-                            </Col>
-                        </Row>
-                        <Row style={{ paddingTop: 5 }}>
+                        <Row style={{ color: '#fff', backgroundColor: 'rgba(255,255,255, .1)', padding: 15 }}>
                             <Col xs="2">
-                                <h4><FontAwesome.FaMapO style={{ color: '#6db5ff'}} /></h4>
+                                <h4><FontAwesome.FaMapO /></h4>
                             </Col>
                             <Col xs="10">                            
                                 {trek.summary === null || trek.summary === "" ? null : <p>{trek.summary}</p>}
                             </Col>
                         </Row>
                     </Container>
-                </Row>                
+                </Row>   
+                <br />
                 {this.renderDays()}
-                <Row style={{ backgroundColor: '#f8f8f8', paddingTop: 10 }}>
+                <br />
+                <Row style={{ paddingTop: 10 }}>
                     <Col xs="12">
                         <p style={{ textAlign: 'right', lineHeight: .9, overflowX: 'auto', overflowY: 'hidden' }}
                             onClick={() => {
                                 this.props.history.push({ pathname: constants.routes.PROFILE, state: { user: trek.user === null ? '' : trek.user } })
                             }}>
-                            <small>
                                 posted by: <b>{trek.user}</b>
                                 <br />
                                 {date}
-                            </small>
                         </p>
                     </Col>
                 </Row>

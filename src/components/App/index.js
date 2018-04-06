@@ -24,7 +24,7 @@ import './index.css';
 const App = () =>
   <Router>
         <div className="app">            
-            <Container style={{ padding: 0, backgroundColor: '#fff', width: '100%' }}>
+            <Container style={{ padding: 0, width: '100%' }}>
                 <Row>
                     <NavbarBrand href="/" id="navbar-brand" style={{margin: '0 auto'}}><img id="navbar-logo" style={{ height: 100, width: 'auto', padding: 15 }} src={logo} alt="" /></NavbarBrand>
                 </Row>

@@ -1,0 +1,17 @@
+#create-tip-button {
+    background: #6db5ff; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6db5ff, #6dfeff); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6db5ff, #6dfeff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#create-trip-button {
+    background: #ff8142; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f7b733, #ffe042); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ff8142, #ffe042); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#create-resource-button {
+    background: #5b4fff; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #b34fff, #5b4fff); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #b34fff, #5b4fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

@@ -27,4 +27,31 @@ export function getColorFromString(str) {
 
         return colour;
     }      
-  }
+}
+
+
+ /**
+ * Summary.
+ *  Function to format a number to a shorter form based on an input string.
+ * 
+ * Description.
+ *  We employ this method to reduce the length of long numbers on the app
+ *
+ *
+ * @param {string} str Input string
+ * 
+ * @return {string} Number formatted with the K, M, or G if necessary
+ *
+ */
+export function formatNumber(num) {
+    if (num >= 1000000000) {
+        return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+    }
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    if (num >= 1000) {
+        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
+    return num;
+}

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import * as constants from '../../constants';
-import { Row, Col, } from 'reactstrap'
-import { withRouter } from 'react-router-dom';
+import { Row, Col, Container } from 'reactstrap'
+import { withRouter, Link } from 'react-router-dom';
 import TagList from '../TagList'
 import * as firebase from 'firebase'
 import PostActionsButton from '../Misc/PostActionsButton'
+import './index.css'
 
 class TipDetail extends Component {
 
@@ -65,34 +66,53 @@ class TipDetail extends Component {
     render() {
         var date = new Date(this.props.tip.datePosted);
         date = (date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
-        return (<Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }}  style={{ borderLeft: '1px solid #f8f8f8', borderRight: '1px solid #f8f8f8', borderBottom: '1px solid #f8f8f8', marginBottom: '50px' }}>
-                    <Row>
-                        <Col xs="12">
-                            <h4 style={{ fontWeight: 'bold' }}>{this.props.tip.tipTitle}</h4>
-                        </Col>
-                    </Row>                    
-                    <Row>
-                        <Col xs="12">
-                            <p>{this.props.tip.tipText}</p>
-                            <div style={{ overflowX: 'auto', overflowY: 'hidden', paddingBottom: 5 }}>
-                                    <TagList tags={this.props.tip.tipTags} />
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs="2">
-                            {this.renderEditable()}
-                        </Col>
-                        <Col xs="10">
-                            <p style={{ textAlign: 'right', lineHeight: .9  }}
-                                onClick={() => { this.props.history.push(constants.routes.PROFILE) }}>
-                                <b> {this.props.tip.user ? this.props.tip.user : ""} </b>                            
-                                <br/>
-                                <small>{date}</small>
-                            </p>
-                        </Col>
-                    </Row>
-        </Col>);
+        return (<Row style={{ marginBottom: 50 }} >
+                    <Col xs="12" sm={{ size: 6, offset: 3 }} lg={{ size: 4, offset: 4 }} >
+                        <Container className="tip-highlight">
+                            <Row className="tip-header" style={styles.HeaderStyle}>
+                                <Col xs="12">
+                                    <h4 style={{ fontWeight: 'bold' }}>{this.props.tip.tipTitle}</h4>
+                                </Col>
+                            </Row> 
+                            <Row style={styles.BodyStyle}>                        
+                                <Col xs="12">
+                                    <br />
+                                    <p>{this.props.tip.tipText}</p>
+                                    <div style={{ overflowX: 'auto', overflowY: 'hidden', paddingBottom: 5, marginBottom: 5 }}>
+                                            <TagList tags={this.props.tip.tipTags} />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row style={styles.BodyStyle}>
+                                <Col xs="2" style={{ paddingLeft: 0 }}>
+                                    {this.renderEditable()}
+                                </Col>
+                                <Col xs="10" style={{ textAlign: 'right' }}>
+                                    <Link style={{ color: '#fff' }} to={{ pathname: constants.routes.PROFILE, state: { user: this.props.tip.user ? this.props.tip.user : "" } }}>                                     
+                                        <p style={{ textAlign: 'right', lineHeight: .9 }}>
+                                            <b> {this.props.tip.user ? this.props.tip.user : ""} </b>
+                                            <br />
+                                            <small>{date}</small>
+                                        </p>
+                                    </Link>
+                                </Col>
+                            </Row>
+                    </Container>
+                </Col>
+            </Row>);
+    }
+}
+
+const styles = {
+    HeaderStyle: {       
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        color: '#fff',
+        paddingTop: 5
+    },
+    BodyStyle: {
+        backgroundColor: 'rgba(255,255,255,.1)',
+        color: '#fff'
     }
 }
 

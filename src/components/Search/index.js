@@ -4,13 +4,13 @@ import withAuthorization from '../Session/withAuthorization';
 
 class SearchPage extends Component {
     
-  render() {
-    return (
-        <div>
-            <SearchFeed />
-        </div>
-    );
-  }
+    render() {      
+        return (
+            <div>
+                <SearchFeed />
+            </div>
+        );
+    }
 }
 
 const authCondition = (authUser) => !!authUser;

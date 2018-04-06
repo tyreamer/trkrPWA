@@ -6,9 +6,10 @@ import StaticGMap from '../StaticGMap'
 import { Container, Row, Col } from 'reactstrap'
 import * as constants from '../../constants';
 import { withRouter } from 'react-router-dom';
-import TagList from '../TagList'
-import Interactions from '../Interactions'
-import PostActionsButton from '../Misc/PostActionsButton'
+import TagList from '../TagList';
+import Interactions from '../Interactions';
+import PostActionsButton from '../Misc/PostActionsButton';
+import './index.css';
 
 class TrekDetail extends Component {
 
@@ -47,13 +48,6 @@ class TrekDetail extends Component {
 
     render() {
         
-        //date
-        var date = new Date(this.props.trekRecord.datePosted);
-        date = ((date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
-         
-        //budget
-        var budget = this.formatNumber(this.props.trekRecord.budget)
-
         //stops 
         var totalStops = 0;
         if (this.props.trekRecord.days !== undefined && this.props.trekRecord.days !== null) {
@@ -63,42 +57,52 @@ class TrekDetail extends Component {
                 }
             } 
         }
+        else {
+            return null;
+        }
 
-        return ( 
-            <Col xs="12" sm={{ size: 6 }} lg={{size: 4}} onClick={() => this.goToPost()} style={{ width: 300 }}> 
-                <Row style={{ backgroundColor: '#6db5ff', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15  }}>
+
+        //date
+        var date = new Date(this.props.trekRecord.datePosted);
+        date = ((date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear());
+
+        //budget
+        var budget = this.formatNumber(this.props.trekRecord.budget)
+
+
+        return (
+            <Col className="trek-highlight" xs="12" sm={{ size: 6 }} lg={{ size: 4 }} style={{ width: 300, marginBottom: 50 }}> 
+                <Row className="trek-link trek-header" onClick={() => this.goToPost()} style={{ backgroundColor: 'rgba(255,255,255,.2)', color: '#fff', paddingTop: 5, borderTopLeftRadius: 15, borderTopRightRadius: 15  }}>
                     <Col xs="12">
                         <h3><b>{this.props.trekRecord.title}</b></h3>                            
                     </Col>
                 </Row>
-                <Row style={{ color: '#fff', backgroundColor: 'rgba(109,181,255, .8)', paddingBottom: 5 }}>
-                    <Col className="col-xs-3">                                             
+                <Row style={{ color: '#fff', backgroundColor: 'rgba(255,255,255,.1)', padding: 15 }}>
+                    <Col className="col-xs-3" style={{ textAlign: 'center' }}>                                             
                         <h5 style={{ display: 'inline' }}><FontAwesome.FaCalendarO /></h5>
                         <h6 style={{ display: 'inline' }}> {this.props.trekRecord.days.length}</h6>                       
                     </Col>
-                    <Col className="col-xs-6">                        
+                    <Col className="col-xs-6" style={{ textAlign: 'center' }}>                         
                         <h5 style={{ display: 'inline' }}><FontAwesome.FaDollar /></h5>
                         <h6 style={{ display: 'inline' }}> {budget}</h6>
                     </Col>
-                    <Col className="col-xs-3">                       
+                    <Col className="col-xs-3" style={{ textAlign: 'center' }}>                        
                         <h5 style={{ display: 'inline' }}><FontAwesome.FaMapPin /></h5>
                         <h6 style={{ display: 'inline' }}>  {totalStops}</h6> 
                     </Col>
                 </Row>
-                <Row>
+                <Row className="trek-link" onClick={() => this.goToPost()} >
                     {
                         (this.props.trekRecord.featuredImage === '' || this.props.trekRecord.featuredImage) === undefined
                         ? <StaticGMap trekDays={this.props.trekRecord.days} size="350x300" />
                         : <img src={this.props.trekRecord.featuredImage} alt="trekFeatured" style={{ height: 300, width: '100%', margin: '0 auto' }} />
                     }  
                 </Row>
-                <Row style={{ borderLeft: '1px solid #f8f8f8', borderRight: '1px solid #f8f8f8', borderBottom: '1px solid #f8f8f8' }}>
-                    <Container>
-                        <Row>
-                            <Col xs="12" style={{ paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
-                                <Interactions id={this.props.id} user={this.props.trekRecord.user} summary={this.props.trekRecord.summary} title={this.props.trekRecord.title} />
-                            </Col>
-                        </Row>
+                <Row>
+                    <Container style={{ backgroundColor: 'rgba(255,255,255,.1)', color: '#fff', padding: 10 }} >
+                        <Interactions id={this.props.id} user={this.props.trekRecord.user} summary={this.props.trekRecord.summary} title={this.props.trekRecord.title} />
+                    </Container>
+                    <Container style={{ backgroundColor: 'rgba(255,255,255,.2)', color: '#fff' }} >
                         <Row>
                             <Col xs="12">
                                 <TagList tags={this.props.trekRecord.trekTags} />

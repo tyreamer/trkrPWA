@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { withRouter } from 'react-router-dom';
-import { Container, Col, Row, Button, Form, FormGroup, Input } from 'reactstrap'
+import { Container, Col, Row, Button, Form, InputGroup, InputGroupAddon, Input } from 'reactstrap'
 import * as FontAwesome from 'react-icons/lib/fa'
 import * as constants from '../../../constants';
 import TagList from '../../TagList'
@@ -47,7 +47,7 @@ class CreateTipPage extends Component {
                 // Write the new post's data simultaneously in the resources list and the user's resource list.
                 var updates = {};
                 updates['/' + constants.databaseSchema.TIPS.root +'/' + newTipKey] = tipData;
-                updates['/' + constants.databaseSchema.TIPS.root +'/' + user + '/' + newTipKey] = tipData;
+                updates['/' + constants.databaseSchema.USER_TIPS.root +'/' + user + '/' + newTipKey] = tipData;
 
                 var tagRef = firebase.database().ref().child(constants.databaseSchema.TAGS.root)
 
@@ -102,125 +102,102 @@ class CreateTipPage extends Component {
     render() {
 
         return (
-            <Container>
-                <Row style={{ position: 'sticky', top: 0, backgroundColor: '#6db5ff' }}>
-                    <Col xs="12">
-                        <h3>
-                            <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .6)' }} onClick={() => {
-                                if (window.confirm('Are you sure you want to go back and cancel your post?')) {
-                                    this.props.history.goBack()
-                                }
-                            }} />
-                        </h3>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12">
-                        <Form style={[styles.HeaderInputStyle, { height: '100%', borderLeftWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, borderRightWidth: 0 }]}>                     
-                            <FormGroup xs="12" style={styles.IconTextSameLine}>
-                                <FontAwesome.FaInfoCircle style={{ color: '#fff' }} />
-                                <Input
-                                    type="text"
-                                    placeholder='title'
-                                    value={this.state.tipTitle}
-                                    onChange={tipTitle => this.setState({ tipTitle: tipTitle.target.value })}
-                                    style={[styles.HeaderInputStyle, { color: '#fff', textDecorationLine: 'none' }]}
-                                />
-                            </FormGroup>
-                            <FormGroup style={styles.IconTextSameLine}>                                   
-                                <Input
-                                    type="text"
-                                    placeholder='add tags'
-                                    value={this.state.currentTag}
-                                    onChange={(currentTag) => { this.setState({ currentTag: currentTag.target.value.replace(' ', '') }) }}
-                                    style={[styles.HeaderInputStyle, { color: '#fff', textDecorationLine: 'none' }]}
-                                />                                 
-                                {                                   
-                                    this.state.currentTag !== ''
-                                    ? <FontAwesome.FaPlus
-                                            onClick={() => {
-                                                if (this.state.tipTags.indexOf(this.state.currentTag) === -1) {
-                                                    var ct = this.state.tipTags;
-                                                    ct.push(this.state.currentTag)
-                                                    this.setState({ trekTags: ct })
-                                                }
-                                                this.setState({ currentTag: '' })
-                                            }}
-                                            style={{ fontWeight: 'bold', color: 'grey'}}/>
-                                    : null
-                                }        
-                            </FormGroup>
-                            <FormGroup>
-                                {this.state.tipTags !== [] ? this.renderTagList() : null}
-                            </FormGroup>
-                            <FormGroup>                                    
-                                <Input
-                                    type="textarea"
-                                    placeholder='tip'
-                                    value={this.state.tipText}
-                                    onChange={tipText => this.setState({ tipText: tipText.target.value })}
-                                    style={{ float: 'left' }}
-                                />  
-                            </FormGroup> 
-                        </Form>
-                    </Col>
-                </Row>
-                <hr/>
-                <Row>
-                    <Col xs="12" style={{padding: 0}}>
-                        <FormGroup>
-                            <Button
-                                color="primary"
-                                style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
-                                title="Submit"
-                                onClick={() => { this.insertPost() }}>
-                                <h4>
-                                    submit post &nbsp;&nbsp;
-                                    <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
-                                </h4>
-                            </Button>
-                        </FormGroup>
-                    </Col>
-                </Row>
-            </Container>
+            <Row>
+                <Col xs="12" sm={{ size: 8, offset: 2 }}>
+                    <Container style={{ paddingTop: 10}}> 
+                        <Row style={{ top: 0, }}>
+                            <Col xs="4" style={{ paddingLeft: 0 }}>
+                                <h3>
+                                    <FontAwesome.FaChevronLeft style={{ color: 'rgba(255,255,255, .9)' }} onClick={() => {
+                                        if (window.confirm('Are you sure you want to go back and cancel your post?')) {
+                                            this.props.history.goBack()
+                                        }
+                                    }} />
+                                </h3>
+                            </Col>
+                            <Col xs="4" style={{color: '#fff'}}>
+                            </Col>
+                        </Row>
+                        <br />
+                        <br/>
+                        <Row>
+                            <Col xs="12">
+                                <Form style={{ height: '100%', borderLeftWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, borderRightWidth: 0 }}>                     
+                                    <InputGroup>                                       
+                                        <Input
+                                            type="text"
+                                            placeholder='title'
+                                            value={this.state.tipTitle}
+                                            onChange={tipTitle => this.setState({ tipTitle: tipTitle.target.value })}
+                                        />
+                                    </InputGroup>
+                                    <br/>
+                                    <InputGroup>
+                                        <Input
+                                            placeholder='add tags'
+                                            type="text"
+                                            value={this.state.currentTag}
+                                            onChange={currentTag => this.setState({ currentTag: currentTag.target.value.replace(' ', '') })}
+                                        />
+                                        {this.state.currentTag !== ''
+                                            ?
+                                            (<InputGroupAddon addonType="append">
+                                                <Button
+                                                    color="link"
+                                                    onClick={() => {
+                                                        if (this.state.tipTags.indexOf(this.state.currentTag) === -1) {
+                                                            var ct = this.state.tipTags;
+                                                            ct.push(this.state.currentTag)
+                                                            this.setState({ tipTags: ct })
+                                                        }
+                                                        this.setState({ currentTag: '' })
+                                                    }}>
+                                                    <FontAwesome.FaPlusSquare style={{color: '#fff'}} />
+                                                </Button>
+                                            </InputGroupAddon>)
+                                            :
+                                            null
+                                        }
+                                    </InputGroup>
+                                    <br />
+                                    <InputGroup>
+                                        {this.state.tipTags !== [] ? this.renderTagList() : null}
+                                    </InputGroup>
+                                    <br />
+                                    <InputGroup>                                    
+                                        <Input
+                                            type="textarea"
+                                            placeholder='tip'
+                                            value={this.state.tipText}
+                                            onChange={tipText => this.setState({ tipText: tipText.target.value })}
+                                            style={{ float: 'left' }}
+                                        />  
+                                    </InputGroup> 
+                                </Form>
+                            </Col>
+                        </Row>
+                        <br/>
+                        <Row>
+                            <Col xs="12" style={{padding: 0}}>
+                                <InputGroup>
+                                    <Button
+                                        color="primary"
+                                        style={{ float: 'right', width: '100%', textAlign: 'right', zIndex: 10, borderRadius: 0 }}
+                                        title="Submit"
+                                        onClick={() => { this.insertPost() }}>
+                                        <h4>
+                                            submit post &nbsp;&nbsp;
+                                            <FontAwesome.FaChevronRight style={{ marginBottom: 4 }} />
+                                        </h4>
+                                    </Button>
+                                </InputGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Col>
+            </Row>
         );
     }
-}
-
-const styles = {
-    MainContainer:
-    {
-        flex: 1,
-        backgroundColor: "#6db5ff",
-        height: '100%'
-    },
-    HeaderStyle:
-    {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-    },
-    HeaderCardItemStyle:
-    {
-        width: '100%',
-        borderTopWidth: 0,
-        borderLeftWidth: 0,
-        borderRightWidth: 0,
-        borderBottomWidth: .5,
-        borderBottomColor: '#fff'
-    },
-    HeaderButtonStyle:
-    {
-        marginTop: 5,
-        marginRight: 5
-    },
-    IconTextSameLine:
-    {
-        paddingLeft: 8,
-        width: 100,
-        flex: 1,
-        display: 'inline'
-    },
 }
 
 export default withRouter(CreateTipPage);

@@ -1,5 +1,5 @@
 import React from 'react';
-import loading from '../../../images/loading.gif'
+import loading from '../../../images/loading.svg'
 
 const Spinner = () =>
       <img src={loading} alt="loading" />

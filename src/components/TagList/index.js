@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import * as constants from '../../constants';
 
 class TagList extends Component {
     
@@ -11,12 +12,14 @@ class TagList extends Component {
         var i = 0;
         this.props.tags.forEach((tag) => {
            
-            list.push(<a key={tag + i} style={{ height: 20, paddingLeft: 0, marginBottom: 5, paddingBottom: 18, borderBottomWidth: 0, marginLeft: 0 }}
-                        onClick={() => {
-                            //this.props.history.push(constants.routes.SEARCH, '#' + tag )
-                        }}>
-                        <p style={{ paddingRight: 10, paddingBottom: 10, color: '#A6C3D7', display: 'inline' }}><small>#{tag}</small></p>
-            </a>)
+            list.push(
+                <Link
+                    key={tag + i}
+                    state={'#' + tag}
+                    style={{ height: 20, paddingLeft: 0, marginBottom: 5, paddingBottom: 18, borderBottomWidth: 0, marginLeft: 0 }}
+                    to={{ pathname: constants.routes.SEARCH, state: { searchText: '#' + tag } }}>
+                    <p style={{ paddingRight: 10, paddingBottom: 10, color: '#fff', display: 'inline' }}><small>#{tag}</small></p>
+                </Link>)
             i++;
         })
         return list;

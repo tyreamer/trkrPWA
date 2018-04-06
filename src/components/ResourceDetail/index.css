@@ -1,0 +1,12 @@
+.resource-header {
+    background: #5b4fff; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #b34fff, #5b4fff); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #b34fff, #5b4fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.resource-highlight:active {
+    box-shadow: 0 0px 20px 0px #f8f8f8;
+}

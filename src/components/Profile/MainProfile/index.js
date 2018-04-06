@@ -68,7 +68,7 @@ class MainProfile extends Component {
         firebase.database().ref('/' + constants.databaseSchema.USER_RESOURCES.root ).child(this.state.user).once('value')
             .then(function (snapshot) {
                 snapshot.forEach(function (child) {
-                    myResources.unshift(child.val())
+                    myResources.unshift({ id: child.key, details: child.val() })
                 })
             })
             .then(() => self.setState({ resources: myResources }))
@@ -78,7 +78,7 @@ class MainProfile extends Component {
         firebase.database().ref('/' + constants.databaseSchema.USER_TIPS.root ).child(this.state.user).once('value')
             .then(function (snapshot) {
                 snapshot.forEach(function (child) {
-                    myTips.unshift(child.val())
+                    myTips.unshift({ id: child.key, details: child.val() })
                 })
             })
             .then(() => self.setState({ tips: myTips }))
@@ -124,6 +124,36 @@ class MainProfile extends Component {
         this.setState({ treks: newTrekList })
     }
 
+    removeTip(key) {
+        var idx;
+
+        for (var i = 0; i < this.state.tips.length; i++) {
+            if (this.state.feedList[i].id === key) {
+                idx = i;
+                break;
+            }
+        }
+
+        var newFeedList = this.state.feedList;
+        newFeedList.splice(idx, 1);
+        this.setState({ feedList: newFeedList })
+    }
+
+    removeResource(key) {
+        var idx;
+
+        for (var i = 0; i < this.state.resources.length; i++) {
+            if (this.state.feedList[i].id === key) {
+                idx = i;
+                break;
+            }
+        }
+
+        var newFeedList = this.state.feedList;
+        newFeedList.splice(idx, 1);
+        this.setState({ feedList: newFeedList })
+    }
+
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -138,13 +168,14 @@ class MainProfile extends Component {
 
         if (this.state.treks !== undefined) {
             this.state.treks.forEach(function (trek) {
-                  list.push(<div style={{ display: 'flex', justifyContent: 'center', marginBottom: 50 }} key={trek.id}>
-                                <TrekDetail id={trek.id} trekRecord={trek.details} handleDeletedTrek={self.removeTrek} />
+                  list.push(<div style={{ display: 'flex', justifyContent: 'center'}} key={trek.id}>
+                                <TrekDetail key={trek.id} id={trek.id} trekRecord={trek.details} handleDeletedTrek={self.removeItem} />
                             </div>)
             })
 
             if (list.length === 0) {
-                return (<Container style={{ padding: 75, alignItems: 'center', justifyContent: 'center' }}>
+                return (
+                <Container style={{ padding: 75, alignItems: 'center', justifyContent: 'center' }}>
                     <Row>
                         <h2 style={{ fontSize: 20, margin: '0 auto' }}><FontAwesome.FaLightbulbO /></h2>
                     </Row>
@@ -160,10 +191,11 @@ class MainProfile extends Component {
     }
 
     createResourceList() {
+        
         var list = []
-        if (this.state.resources !== undefined) {
+        if (this.state.resources !== undefined) {            
             this.state.resources.forEach(function (resource) {
-                list.push(<ResourceDetail key={resource.datePosted + resource.user} resource={resource} />)
+                list.push(<ResourceDetail key={resource.id} id={resource.id} resource={resource.details} handleDeletedResource={this.removeResource} />)
             })
 
             if (list.length === 0) {
@@ -187,9 +219,8 @@ class MainProfile extends Component {
 
         if (this.state.tips !== undefined) {
             for (var i = this.state.tips.length - 1; i >= 0; i--) {
-                list.push(<TipDetail key={this.state.tips[i].datePosted + this.state.tips[i].tipTitle} tip={this.state.tips[i]} />)
+                list.push(<TipDetail key={this.state.tips[i].id} id={this.state.tips[i].id} tip={this.state.tips[i].details} handleDeletedTip={this.removeTip} />)
             }
-
 
             if (list.length === 0) {
                 return <Container style={{padding: 75, alignItems: 'center', justifyContent: 'center' }}>
@@ -211,32 +242,32 @@ class MainProfile extends Component {
 
         return (
             <Container>
-                <Row style={{ textAlign: 'center', fontWeight: 'bold', color: 'grey', boxShadow: '0 10px 2px -2px #f8f8f8', backgroundColor: '#f8f8f8', height: 50 }}>
+                <Row style={{ textAlign: 'center', fontWeight: 'bold', color: '#fff', boxShadow: '0 2px 2px -2px #f8f8f8', height: 50 }}>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '1' })}>
                         <NavLink onClick={() => { this.toggle('1'); }}>
-                            <FontAwesome.FaPlane style={{fontSize: 25 }}/>
+                            <h3><FontAwesome.FaPlane style={{fontSize: 25 }}/></h3>
                         </NavLink>
                     </Col>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '2' })}>
                         <NavLink onClick={() => { this.toggle('2'); }}>
-                            <FontAwesome.FaExternalLink style={{ fontSize: 25 }} />
+                            <h3><FontAwesome.FaExternalLink style={{ fontSize: 25 }} /></h3>
                         </NavLink>
                     </Col>
                     <Col xs="4" className={classnames({ active: this.state.activeTab === '3' })}>
                         <NavLink onClick={() => { this.toggle('3'); }}>
-                            <FontAwesome.FaLightbulbO style={{ fontSize: 25}} />
+                            <h3><FontAwesome.FaLightbulbO style={{ fontSize: 25 }} /></h3>
                         </NavLink>
                     </Col>
                 </Row>
                 <br/>
                 <TabContent activeTab={this.state.activeTab} >
-                    <TabPane tabId="1" style={{ backgroundColor: '#fff', color: '#000' }}>
+                    <TabPane tabId="1">
                         {this.createTrekList()}
                     </TabPane>
-                    <TabPane tabId="2" style={{ backgroundColor: '#fff', color: '#000' }}>
+                    <TabPane tabId="2">
                         {this.createResourceList()}
                     </TabPane>
-                    <TabPane tabId="3" style={{ backgroundColor: '#fff', color: '#000' }}>
+                    <TabPane tabId="3">
                         {this.createTipsList()}
                     </TabPane>
                 </TabContent>
@@ -266,8 +297,8 @@ class MainProfile extends Component {
 
     getPhotoEditElements() {
         return (
-                  <label className="editImg">                
-                    <FontAwesome.FaPlus size={25} />
+            <label className="editImg">
+                <FontAwesome.FaPlus size={25} />
                     <FileUploader
                         hidden
                         accept="image/*"
@@ -322,7 +353,7 @@ class MainProfile extends Component {
                     </div>);
         
         return (<div>
-                    <Row style={{ backgroundColor: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 5px 2px -2px #f8f8f8' }}>
+                    <Row style={{color: '#fff', paddingTop: 20, paddingBottom: 20, boxShadow: '0 1px 2px -2px #f8f8f8' }}>
                         <Col xs="8">
                             <h5 style={{ marginLeft: 5 }}><b> {this.state.user}</b></h5>
                         </Col>
@@ -405,13 +436,13 @@ const styles = {
     headerTextStyle:
     {
         fontSize: 14,
-        color: '#000',
+        color: '#fff',
         fontWeight: 'bold',
         alignSelf: 'center'
     },
     headerIconStyle:
     {
-        color: 'rgba(0,0,0,.6)',
+        color: '#fff',
         fontSize: 20,
         alignSelf: 'center'
     },
